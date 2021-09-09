@@ -2,276 +2,187 @@
 #include "pacman.h"
 #include <QGraphicsPixmapItem>
 #include <QPainter>
+#include <QDebug>
 
-int Pacman::m_X = STARTING_X;
-int Pacman::m_Y = STARTING_Y;
-
-Pacman::Pacman()
+Pacman::Pacman() : MovableCharacterInterface(startingX_, startingY_, Direction::left)
 {
-    LoadImages();
-
-    m_AnimationState = 0;
-    m_AnimationModifyFactor = 6;
-
-    m_Direction = Direction::LEFT;
-    m_NextDirection = Direction::NONE;
-    m_X = STARTING_X;
-    m_Y = STARTING_Y;
+    movementTimer_.setInterval(MovableCharacterInterface::normalSpeed_);
+    loadImages();
+    Pacman::reset();
 }
 
-void Pacman::Reset()
+void Pacman::reset()
 {
-    m_AnimationState = 0;
-    m_AnimationModifyFactor = 6;
-
-    m_Direction = Direction::LEFT;
-    m_NextDirection = Direction::NONE;
-    m_X = STARTING_X;
-    m_Y = STARTING_Y;
+    MovableCharacterInterface::reset();
+    direction_ = Direction::left;
+    setCoordinates(startingX_, startingY_);
 }
 
-void Pacman::AdvanceAnimation()
+void Pacman::advanceAnimation()
 {
-    if(m_AnimationState > 8 * m_AnimationModifyFactor - 2)
+    if(moving_)
     {
-        m_AnimationState = 0;
-    }
-    else
-    {
-        m_AnimationState++;
+        if(animationState_ >= 8 * animationSpeedFactor_)
+        {
+            animationState_ = 0;
+        }
+        else
+        {
+            animationState_++;
+        }
     }
 }
 
-void Pacman::LoadImages()
+void Pacman::loadImages()
 {
-    m_Right1Pixmap.load(":/pacman/images/pacman_images/pacclose.png");
-    m_Right2Pixmap.load(":/pacman/images/pacman_images/pacopen1.png");
-    m_Right3Pixmap.load(":/pacman/images/pacman_images/pacopen2.png");
-    m_Right4Pixmap.load(":/pacman/images/pacman_images/pacopen3.png");
+    assert(left1Pixmap_.load(":/pacman/images/pacman/pacman_left_close.png"));
+    assert(left2Pixmap_.load(":/pacman/images/pacman/pacman_left_open_1.png"));
+    assert(left3Pixmap_.load(":/pacman/images/pacman/pacman_left_open_2.png"));
+    assert(left4Pixmap_.load(":/pacman/images/pacman/pacman_left_open_3.png"));
 
-    m_Up1Pixmap.load(":/pacman/images/pacman_images/paccloseu.png");
-    m_Up2Pixmap.load(":/pacman/images/pacman_images/pacopen1u.png");
-    m_Up3Pixmap.load(":/pacman/images/pacman_images/pacopen2u.png");
-    m_Up4Pixmap.load(":/pacman/images/pacman_images/pacopen3u.png");
+    assert(right1Pixmap_.load(":/pacman/images/pacman/pacman_right_close.png"));
+    assert(right2Pixmap_.load(":/pacman/images/pacman/pacman_right_open_1.png"));
+    assert(right3Pixmap_.load(":/pacman/images/pacman/pacman_right_open_2.png"));
+    assert(right4Pixmap_.load(":/pacman/images/pacman/pacman_right_open_3.png"));
 
-    m_Down1Pixmap.load(":/pacman/images/pacman_images/pacclosed.png");
-    m_Down2Pixmap.load(":/pacman/images/pacman_images/pacopen1d.png");
-    m_Down3Pixmap.load(":/pacman/images/pacman_images/pacopen2d.png");
-    m_Down4Pixmap.load(":/pacman/images/pacman_images/pacopen3d.png");
+    assert(up1Pixmap_.load(":/pacman/images/pacman/pacman_up_close.png"));
+    assert(up2Pixmap_.load(":/pacman/images/pacman/pacman_up_open_1.png"));
+    assert(up3Pixmap_.load(":/pacman/images/pacman/pacman_up_open_2.png"));
+    assert(up4Pixmap_.load(":/pacman/images/pacman/pacman_up_open_3.png"));
 
-    m_Left1Pixmap.load(":/pacman/images/pacman_images/pacclosel.png");
-    m_Left2Pixmap.load(":/pacman/images/pacman_images/pacopen1l.png");
-    m_Left3Pixmap.load(":/pacman/images/pacman_images/pacopen2l.png");
-    m_Left4Pixmap.load(":/pacman/images/pacman_images/pacopen3l.png");
+    assert(down1Pixmap_.load(":/pacman/images/pacman/pacman_down_close.png"));
+    assert(down2Pixmap_.load(":/pacman/images/pacman/pacman_down_open_1.png"));
+    assert(down3Pixmap_.load(":/pacman/images/pacman/pacman_down_open_2.png"));
+    assert(down4Pixmap_.load(":/pacman/images/pacman/pacman_down_open_3.png"));
 }
 
-void Pacman::SetNextDirection(Direction direction)
+void Pacman::startMovement()
 {
-    m_NextDirection=direction;
+    movementTimer_.start();
 }
 
-void Pacman::Move()
+void Pacman::stopMovement()
 {
-    /*Path point which is tested for validity*/
-    QPoint point;
+    movementTimer_.stop();
+}
 
-    if(m_NextDirection != m_Direction)
-    {
-        switch(m_NextDirection)
-        {
-        case Direction::LEFT:
-            point.setX(m_X - 1);
-            point.setY(m_Y);
+void Pacman::resumeMovement()
+{
+    movementTimer_.start();
+}
 
-            if(GameMap::IsPointAvailable(point))
-            {
-                m_Direction = m_NextDirection;
-                m_NextDirection = Direction::NONE;
-            }
-            break;
-
-        case Direction::UP:
-            point.setX(m_X);
-            point.setY(m_Y - 1);
-            if(GameMap::IsPointAvailable(point))
-            {
-                m_Direction = m_NextDirection;
-                m_NextDirection = Direction::NONE;
-            }
-            break;
-
-        case Direction::DOWN:
-            point.setX(m_X);
-            point.setY(m_Y + 1);
-            if(GameMap::IsPointAvailable(point))
-            {
-                m_Direction = m_NextDirection;
-                m_NextDirection = Direction::NONE;
-            }
-            break;
-
-        case Direction::RIGHT:
-            point.setX(m_X + 1);
-            point.setY(m_Y);
-            if(GameMap::IsPointAvailable(point))
-            {
-                m_Direction=m_NextDirection;
-                m_NextDirection = Direction::NONE;
-            }
-            break;
-
-        case Direction::NONE:
-            break;
-        }
-    }
-
-    switch(m_Direction)
-    {
-    case Direction::LEFT:
-        point.setX(m_X - 1);
-        point.setY(m_Y);
-
-        if(GameMap::IsPointAvailable(point))
-        {
-            m_X = m_X - 1;
-        }
-        break;
-
-    case Direction::UP:
-        point.setX(m_X);
-        point.setY(m_Y - 1);
-
-        if(GameMap::IsPointAvailable(point))
-        {
-            m_Y= m_Y - 1;
-        }
-        break;
-
-    case Direction::DOWN:
-        point.setX(m_X);
-        point.setY(m_Y + 1);
-
-        if(GameMap::IsPointAvailable(point))
-        {
-            m_Y= m_Y + 1;
-        }
-        break;
-
-    case Direction::RIGHT:
-        point.setX(m_X + 1);
-        point.setY(m_Y);
-
-        if(GameMap::IsPointAvailable(point))
-        {
-            m_X = m_X + 1;
-        }
-        break;
-
-    case Direction::NONE:
-        break;
-    }
-
-    /*Teleportation when reached left boundary of middle horizontal line*/
-    if(m_X <= 0)
-    {
-        m_X = 613;
-    }
-
-    /*Teleportation when reached right boundary of middle horizontal line*/
-    if(m_X >= 614)
-    {
-        m_X = 1;
-    }
+void Pacman::move()
+{
+    processNewDirection();
+    validateAndProcessMovement();
+    checkAndProcessGameAreaBoundaryReach();
 }
 
 QRectF Pacman::boundingRect() const
 {
-    return QRect(m_X + OFFSET_X, m_Y + OFFSET_Y, DIAMETER, DIAMETER);
+    return QRect(x_ + offsetX_, y_ + offsetY_, diameter_, diameter_);
 }
 
 void Pacman::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/)
 {
-    QRect boundingRect(m_X + OFFSET_X, m_Y + OFFSET_Y, DIAMETER, DIAMETER);
+    QRect boundingRect(x_ + offsetX_, y_ + offsetY_, diameter_, diameter_);
 
-    switch(m_Direction)
+    switch(direction_)
     {
-    case Direction::LEFT:
-        if(m_AnimationState < 2 * m_AnimationModifyFactor)
+    case Direction::left:
+        if(animationState_ < 2 * animationSpeedFactor_)
         {
-            painter->drawPixmap(boundingRect, m_Left1Pixmap);
+            painter->drawPixmap(boundingRect, left1Pixmap_);
         }
-        else if(m_AnimationState < 4 * m_AnimationModifyFactor)
+        else if(animationState_ < 4 * animationSpeedFactor_)
         {
-            painter->drawPixmap(boundingRect, m_Left2Pixmap);
+            painter->drawPixmap(boundingRect, left2Pixmap_);
         }
-        else if(m_AnimationState < 6 * m_AnimationModifyFactor)
+        else if(animationState_ < 6 * animationSpeedFactor_)
         {
-            painter->drawPixmap(boundingRect, m_Left3Pixmap);
+            painter->drawPixmap(boundingRect, left3Pixmap_);
         }
-        else if(m_AnimationState < 8 * m_AnimationModifyFactor)
+        else if(animationState_ <= 8 * animationSpeedFactor_)
         {
-            painter->drawPixmap(boundingRect, m_Left4Pixmap);
+            painter->drawPixmap(boundingRect, left4Pixmap_);
         }
-        break;
-
-    case Direction::RIGHT:
-        if(m_AnimationState < 2 * m_AnimationModifyFactor)
+        else
         {
-            painter->drawPixmap(boundingRect, m_Right1Pixmap);
-        }
-        else if(m_AnimationState < 4 * m_AnimationModifyFactor)
-        {
-            painter->drawPixmap(boundingRect, m_Right2Pixmap);
-        }
-        else if(m_AnimationState < 6 * m_AnimationModifyFactor)
-        {
-            painter->drawPixmap(boundingRect, m_Right3Pixmap);
-        }
-        else if(m_AnimationState < 8 * m_AnimationModifyFactor)
-        {
-            painter->drawPixmap(boundingRect, m_Right4Pixmap);
+            qDebug() << "LEFT NOTHING=" << animationState_;
         }
         break;
 
-    case Direction::DOWN:
-        if(m_AnimationState < 2 * m_AnimationModifyFactor)
+    case Direction::right:
+        if(animationState_ < 2 * animationSpeedFactor_)
         {
-            painter->drawPixmap(boundingRect, m_Down1Pixmap);
+            painter->drawPixmap(boundingRect, right1Pixmap_);
         }
-        else if(m_AnimationState < 4 * m_AnimationModifyFactor)
+        else if(animationState_ < 4 * animationSpeedFactor_)
         {
-            painter->drawPixmap(boundingRect, m_Down2Pixmap);
+            painter->drawPixmap(boundingRect, right2Pixmap_);
         }
-        else if(m_AnimationState < 6 * m_AnimationModifyFactor)
+        else if(animationState_ < 6 * animationSpeedFactor_)
         {
-            painter->drawPixmap(boundingRect, m_Down3Pixmap);
+            painter->drawPixmap(boundingRect, right3Pixmap_);
         }
-        else if(m_AnimationState < 8 * m_AnimationModifyFactor)
+        else if(animationState_ <= 8 * animationSpeedFactor_)
         {
-            painter->drawPixmap(boundingRect, m_Down4Pixmap);
+            painter->drawPixmap(boundingRect, right4Pixmap_);
         }
-        break;
-
-    case Direction::UP:
-        if(m_AnimationState < 2 * m_AnimationModifyFactor)
+        else
         {
-            painter->drawPixmap(boundingRect ,m_Up1Pixmap);
-        }
-        else if(m_AnimationState < 4 * m_AnimationModifyFactor)
-        {
-            painter->drawPixmap(boundingRect, m_Up2Pixmap);
-        }
-        else if(m_AnimationState < 6 * m_AnimationModifyFactor)
-        {
-            painter->drawPixmap(boundingRect, m_Up3Pixmap);
-        }
-        else if(m_AnimationState < 8 * m_AnimationModifyFactor)
-        {
-            painter->drawPixmap(boundingRect, m_Up4Pixmap);
+            qDebug() << "RIGHT NOTHING=" << animationState_;
         }
         break;
 
-    case Direction::NONE:
+    case Direction::up:
+        if(animationState_ < 2 * animationSpeedFactor_)
+        {
+            painter->drawPixmap(boundingRect ,up1Pixmap_);
+        }
+        else if(animationState_ < 4 * animationSpeedFactor_)
+        {
+            painter->drawPixmap(boundingRect, up2Pixmap_);
+        }
+        else if(animationState_ < 6 * animationSpeedFactor_)
+        {
+            painter->drawPixmap(boundingRect, up3Pixmap_);
+        }
+        else if(animationState_ <= 8 * animationSpeedFactor_)
+        {
+            painter->drawPixmap(boundingRect, up4Pixmap_);
+        }
+        else
+        {
+            qDebug() << "UP NOTHING=" << animationState_;
+        }
+        break;
+
+    case Direction::down:
+        if(animationState_ < 2 * animationSpeedFactor_)
+        {
+            painter->drawPixmap(boundingRect, down1Pixmap_);
+        }
+        else if(animationState_ < 4 * animationSpeedFactor_)
+        {
+            painter->drawPixmap(boundingRect, down2Pixmap_);
+        }
+        else if(animationState_ < 6 * animationSpeedFactor_)
+        {
+            painter->drawPixmap(boundingRect, down3Pixmap_);
+        }
+        else if(animationState_ <= 8 * animationSpeedFactor_)
+        {
+            painter->drawPixmap(boundingRect, down4Pixmap_);
+        }
+        else
+        {
+            qDebug() << "DOWN NOTHING=" << animationState_;;
+        }
+        break;
+
+    case Direction::none:
+        qDebug() << "NONE";
         break;
     }
 }

@@ -1,17 +1,21 @@
 #pragma once
 
-#include <QString>
+/*Including this file activates logging to LogManager::logFileName_*/
+/*Please change LogManager::logFileName_ to log data to another file*/
+
+/*By default every program run truncates log file*/
+/*In order to append to the log file please change LogManager::appendMode_ to true*/
+
 #include <fstream>
 
 class LogManager
 {
 public:
-    static void ActivateLogging(QString fileName = "");
-    static void LogToFile(std::string &&logMessage);
-
+    LogManager();
+    ~LogManager();
 private:
-    inline static std::string DEFAULT_LOG_FILE_NAME = "log.txt";
-
-    static std::ofstream m_LogFile;
-    static bool m_LoggingActive;
+    const std::string logFileName_ = "log.txt";
+    const bool appendMode_ = false;
 };
+
+extern std::ofstream logFile;

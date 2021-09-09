@@ -2,43 +2,43 @@
 
 Sounds::Sounds()
 {
-    m_BeginningSound.setMedia(QUrl("qrc:/sounds/pacman_beginning.wav"));
-    m_EatFoodballSound1.setMedia(QUrl("qrc:/sounds/pacman_eat.wav"));
-    m_EatFoodballSound2.setMedia(QUrl("qrc:/sounds/pacman_eat.wav"));
-    m_EatGhostSound.setMedia(QUrl("qrc:/sounds/pacman_eatghost.wav"));
-    m_PacmanDeathSound.setMedia(QUrl("qrc:/sounds/pacman_death.wav"));
-    m_Siren.setMedia(QUrl("qrc:/sounds/pacman_siren.wav"));
+    beginningSound_.setMedia(QUrl("qrc:/sounds/pacman_beginning.wav"));
+    eatFoodballSound1_.setMedia(QUrl("qrc:/sounds/pacman_eat.wav"));
+    eatFoodballSound2_.setMedia(QUrl("qrc:/sounds/pacman_eat.wav"));
+    eatGhostSound_.setMedia(QUrl("qrc:/sounds/pacman_eat_ghost.wav"));
+    pacmanDeathSound_.setMedia(QUrl("qrc:/sounds/pacman_death.wav"));
+    siren_.setMedia(QUrl("qrc:/sounds/pacman_siren.wav"));
 }
 
-void Sounds::PlayBeginningSound()
+void Sounds::playBeginningSound()
 {
-    m_BeginningSound.play();
+    beginningSound_.play();
 }
 
-void Sounds::PlayEatFoodballSound1()
+void Sounds::playEatFoodballSound1()
 {
-    if(m_EatFoodballSound1.state()==QMediaPlayer::StoppedState)
+    if(eatFoodballSound1_.state() == QMediaPlayer::StoppedState)
     {
-        m_EatFoodballSound1.play();
+        eatFoodballSound1_.play();
     }
 
-    if(m_EatFoodballSound1.state()==QMediaPlayer::PlayingState)
+    if(eatFoodballSound1_.state()  == QMediaPlayer::PlayingState)
     {
-        m_EatFoodballSound2.play();
+        eatFoodballSound2_.play();
     }
 }
 
-void Sounds::PlayEatGhostSound()
+void Sounds::playEatGhostSound()
 {
-    m_EatGhostSound.play();
+    eatGhostSound_.play();
 }
 
-void Sounds::PlayPacmanDeathSound()
+void Sounds::playPacmanDeathSound()
 {
-    m_PacmanDeathSound.play();
+    pacmanDeathSound_.play();
 }
 
-void Sounds::PlaySirenSound()
+void Sounds::playSirenSound()
 {
-    m_Siren.play();
+    siren_.play();
 }

@@ -1,44 +1,40 @@
 #pragma once
 
-#include <QGraphicsItem>
-#include "utilities.h"
+#include "movable_character_interface.h"
 
-class Pacman : public QGraphicsItem
+#include <QGraphicsItem>
+#include <QTimer>
+
+class Pacman : public QGraphicsItem, public MovableCharacterInterface
 {
 public:
-    static int GetX() {return m_X;}
-    static int GetY() {return m_Y;}
-
     Pacman();
-    void Reset();
-    void AdvanceAnimation();
-    void SetNextDirection(Direction direction);
-    Direction GetNextDirection() const {return m_NextDirection;}
-    void Move();
+
+    QTimer& getMovementTimer() {return movementTimer_;}
+
+    void advanceAnimation()  override;
+    void reset() override;
+    void startMovement() override;
+    void stopMovement() override;
+    void resumeMovement() override;
+
+    void move();
 
 private:
-    static const int STARTING_X = 320;
-    static const int STARTING_Y = 514;
-    static int m_X;
-    static int m_Y;
-
-    const int DIAMETER = 30;
-    const int OFFSET_X = -15;
-    const int OFFSET_Y = -15;
-
-    QPixmap m_Left1Pixmap, m_Left2Pixmap, m_Left3Pixmap, m_Left4Pixmap;
-    QPixmap m_Up1Pixmap, m_Up2Pixmap, m_Up3Pixmap, m_Up4Pixmap;
-    QPixmap m_Down1Pixmap, m_Down2Pixmap, m_Down3Pixmap, m_Down4Pixmap;
-    QPixmap m_Right1Pixmap, m_Right2Pixmap, m_Right3Pixmap, m_Right4Pixmap;
-
-    int m_AnimationState;
-    int m_AnimationModifyFactor;
-
-    Direction m_Direction;
-    Direction m_NextDirection;
-
-    void LoadImages();
-
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+    void loadImages();
+
+    static const int startingX_ = 320;
+    static const int startingY_ = 514;
+
+    QTimer movementTimer_;
+
+    QPixmap left1Pixmap_, left2Pixmap_, left3Pixmap_, left4Pixmap_;
+    QPixmap up1Pixmap_, up2Pixmap_, up3Pixmap_, up4Pixmap_;
+    QPixmap down1Pixmap_, down2Pixmap_, down3Pixmap_, down4Pixmap_;
+    QPixmap right1Pixmap_, right2Pixmap_, right3Pixmap_, right4Pixmap_;
+
+    const int animationSpeedFactor_ = 6;
 };

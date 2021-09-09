@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui
-QT += widgets
-QT += multimedia
+QT += core gui widgets multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,27 +25,41 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    drawer.cpp \
+    game_engine.cpp \
     game_map.cpp \
     game_window.cpp \
+    ghost_base.cpp \
+    ghost_blue.cpp \
+    ghost_orange.cpp \
+    ghost_purple.cpp \
+    ghost_red.cpp \
     main.cpp \
+    movable_character_interface.cpp \
     pacman.cpp \
     foodball.cpp \
     powerball.cpp \
-    ghost.cpp \
     sounds.cpp \
     score_display.cpp \
     screen_text_display.cpp \
     log_manager.cpp
 
 HEADERS += \
+    common.h \
+    drawer.h \
+    game_engine.h \
     game_map.h \
     game_window.h \
+    ghost_base.h \
+    ghost_blue.h \
+    ghost_orange.h \
+    ghost_purple.h \
+    ghost_red.h \
+    movable_character_interface.h \
     pacman.h \
     foodball.h \
     powerball.h \
-    ghost.h \
     sounds.h \
-    utilities.h \
     score_display.h \
     screen_text_display.h \
     log_manager.h

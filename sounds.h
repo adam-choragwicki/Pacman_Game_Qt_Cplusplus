@@ -6,17 +6,17 @@ class Sounds
 {
 public:
     Sounds();
-    void PlayBeginningSound();
-    void PlayEatFoodballSound1();
-    void PlayEatGhostSound();
-    void PlayPacmanDeathSound();
-    void PlaySirenSound();
+    void playBeginningSound();
+    void playEatFoodballSound1();
+    void playEatGhostSound();
+    void playPacmanDeathSound();
+    void playSirenSound();
 
 private:
-    QMediaPlayer m_BeginningSound;
-    QMediaPlayer m_EatFoodballSound1;
-    QMediaPlayer m_EatFoodballSound2;
-    QMediaPlayer m_EatGhostSound;
-    QMediaPlayer m_PacmanDeathSound;
-    QMediaPlayer m_Siren;
+    QMediaPlayer beginningSound_;
+    QMediaPlayer eatFoodballSound1_;
+    QMediaPlayer eatFoodballSound2_;
+    QMediaPlayer eatGhostSound_;
+    QMediaPlayer pacmanDeathSound_;
+    QMediaPlayer siren_;
 };

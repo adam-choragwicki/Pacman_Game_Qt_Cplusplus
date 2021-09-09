@@ -3,26 +3,26 @@
 
 ScoreDisplay::ScoreDisplay()
 {
-    m_Score = 0;
+    score_ = 0;
 }
 
-void ScoreDisplay::SetScore(int score)
+void ScoreDisplay::setScore(int score)
 {
-    m_Score = score;
+    score_ = score;
 }
 
 QRectF ScoreDisplay::boundingRect() const
 {
-    return QRect(X, Y, WIDTH, HEIGHT);
+    return QRect(x_, y_, width_, height_);
 }
 
 void ScoreDisplay::paint(QPainter *painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
     QFont font = painter->font();
-    font.setPointSize(POINT_SIZE);
+    font.setPointSize(pointSize_);
 
     painter->setPen(QPen(Qt::white));
     painter->setFont(font);
 
-    painter->drawText(boundingRect(),Qt::AlignTop | Qt::AlignHCenter, "Score: " + QString::number(m_Score));
+    painter->drawText(boundingRect(),Qt::AlignTop | Qt::AlignHCenter, "Score: " + QString::number(score_));
 }

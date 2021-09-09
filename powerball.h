@@ -10,11 +10,11 @@ public:
     Powerball(int x, int y);
 
 private:
-    const int DIAMETER = 15;
-
-    int m_X;
-    int m_Y;
-
     QRectF boundingRect() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+
+    const int diameter_ = 15;
+
+    int x_;
+    int y_;
 };

@@ -1,42 +1,38 @@
 #include "log_manager.h"
+
+#include <ctime>
+#include <exception>
+#include <iomanip>
 #include <QDebug>
-#include <chrono>
 
-std::ofstream LogManager::m_LogFile;
-bool LogManager::m_LoggingActive = false;
+std::ofstream logFile;
+LogManager logManager;
 
-void LogManager::ActivateLogging(QString fileName)
+LogManager::LogManager()
 {
-    if(fileName.isEmpty())
+    if(appendMode_)
     {
-        m_LogFile.open(DEFAULT_LOG_FILE_NAME, std::ios_base::out);
+        logFile.open(logFileName_, std::ios_base::app);
     }
     else
     {
-        m_LogFile.open(fileName.toStdString(), std::ios_base::out);
+        logFile.open(logFileName_, std::ios_base::out);
     }
 
-    if(m_LogFile.is_open())
+    if(logFile.is_open())
     {
-        auto currentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-
-        m_LogFile << "\n\n<<<<<" << std::ctime(&currentTime) << ">>>>>\n\n";
+        std::time_t currentTime = std::time(nullptr);
+        struct tm* localTime = localtime(&currentTime);
+        const char* formatString = "%d-%m-%Y %H:%M";
+        logFile << "<<<<<<<<<<<<<<<<<<<<" << std::put_time(localTime, formatString) << ">>>>>>>>>>>>>>>>>>>>" << std::endl;
     }
     else
     {
-        qDebug() << "Cannot open log file";
-        assert(false);
+        throw std::runtime_error("Cannot open log file");
     }
-
-    m_LoggingActive = true;
 }
 
-void LogManager::LogToFile(std::string&& logMessage)
+LogManager::~LogManager()
 {
-    if(m_LoggingActive == true)
-    {
-        m_LogFile << logMessage << std::endl;
-        m_LogFile.flush();
-    }
+    logFile.close();
 }
-

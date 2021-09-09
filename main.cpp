@@ -6,8 +6,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    LogManager::ActivateLogging();
-
     GameWindow gameWindow;
     gameWindow.show();
 

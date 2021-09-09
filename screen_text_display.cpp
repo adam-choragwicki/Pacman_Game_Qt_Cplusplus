@@ -2,13 +2,13 @@
 
 ScreenTextDisplay::ScreenTextDisplay()
 {
-    m_GameResult = GameResult::NO_RESULT_YET;
-    m_Score = 0;
+    gameResult_ = GameResult::noResultYet;
+    score_ = 0;
 }
 
 QRectF ScreenTextDisplay::boundingRect() const
 {
-    return QRect(X, Y, WIDTH, HEIGHT);
+    return QRect(x_, y_, width_, height_);
 }
 
 void ScreenTextDisplay::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/)
@@ -18,27 +18,27 @@ void ScreenTextDisplay::paint(QPainter *painter, const QStyleOptionGraphicsItem 
     QPen penBlue(Qt::blue);
     painter->setPen(penRed);
     QFont font = painter->font();
-    font.setPointSize (POINT_SIZE);
+    font.setPointSize (pointSize_);
     painter->setFont(font);
 
-    if(m_GameResult == GameResult::GAME_WIN)
+    if(gameResult_ == GameResult::gameWin)
     {
         painter->setPen(penYellow);
         painter->drawText(boundingRect(),Qt::AlignTop | Qt::AlignHCenter,"CONGRATULATIONS");
-        painter->drawText(boundingRect(),Qt::AlignCenter, "FINAL SCORE : " + QString::number(m_Score));
+        painter->drawText(boundingRect(),Qt::AlignCenter, "FINAL SCORE : " + QString::number(score_));
         painter->setPen(penBlue);
         painter->drawText(boundingRect(),Qt::AlignBottom | Qt::AlignHCenter,"PRESS SPACE TO RESTART");
     }
-    else if(m_GameResult == GameResult::GAME_LOST)
+    else if(gameResult_ == GameResult::gameLost)
     {
         painter->setPen(penRed);
         painter->drawText(boundingRect(),Qt::AlignTop | Qt::AlignHCenter,"GAME OVER");
         painter->setPen(penYellow);
-        painter->drawText(boundingRect(),Qt::AlignCenter, "FINAL SCORE : " + QString::number(m_Score));
+        painter->drawText(boundingRect(),Qt::AlignCenter, "FINAL SCORE : " + QString::number(score_));
         painter->setPen(penBlue);
         painter->drawText(boundingRect(),Qt::AlignBottom | Qt::AlignHCenter,"PRESS SPACE TO RESTART");
     }
-    else if(m_GameResult == GameResult::NO_RESULT_YET)
+    else if(gameResult_ == GameResult::noResultYet)
     {
         painter->drawText(boundingRect(),Qt::AlignCenter, "PRESS SPACE TO START");
     }
