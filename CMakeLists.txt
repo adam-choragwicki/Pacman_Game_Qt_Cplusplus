@@ -1,0 +1,50 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(Pacman LANGUAGES CXX)
+
+set(QT_VERSION_MAJOR 5)
+set(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(PROJECT_DIR ${CMAKE_SOURCE_DIR})
+
+set(MAIN_PROJECT_INCLUDES_PATH ${PROJECT_DIR}/inc)
+set(MAIN_PROJECT_SOURCES_PATH ${PROJECT_DIR}/src)
+set(MAIN_PROJECT_UI_FORMS_PATH ${PROJECT_DIR}/ui_forms)
+set(RESOURCE_FILES_PATH ${PROJECT_DIR}/resource_files)
+
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${MAIN_PROJECT_UI_FORMS_PATH})
+
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia REQUIRED)
+
+set(MAIN_PROJECT_SOURCES
+    ${MAIN_PROJECT_SOURCES_PATH}/main.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/common.h
+    ${MAIN_PROJECT_INCLUDES_PATH}/game_window.h ${MAIN_PROJECT_SOURCES_PATH}/game_window.cpp ${MAIN_PROJECT_UI_FORMS_PATH}/game_window.ui
+    ${MAIN_PROJECT_INCLUDES_PATH}/game_engine.h ${MAIN_PROJECT_SOURCES_PATH}/game_engine.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/movable_character_interface.h ${MAIN_PROJECT_SOURCES_PATH}/movable_character_interface.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/pacman.h ${MAIN_PROJECT_SOURCES_PATH}/pacman.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_base.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_base.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_blue.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_blue.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_orange.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_orange.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_purple.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_purple.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_red.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_red.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/foodball.h ${MAIN_PROJECT_SOURCES_PATH}/foodball.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/powerball.h ${MAIN_PROJECT_SOURCES_PATH}/powerball.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/sounds.h ${MAIN_PROJECT_SOURCES_PATH}/sounds.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/game_map.h ${MAIN_PROJECT_SOURCES_PATH}/game_map.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/drawer.h ${MAIN_PROJECT_SOURCES_PATH}/drawer.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/score_display.h ${MAIN_PROJECT_SOURCES_PATH}/score_display.cpp
+    ${MAIN_PROJECT_INCLUDES_PATH}/screen_text_display.h ${MAIN_PROJECT_SOURCES_PATH}/screen_text_display.cpp
+    ${RESOURCE_FILES_PATH}/images.qrc
+    ${RESOURCE_FILES_PATH}/sounds.qrc
+)
+
+add_executable(${PROJECT_NAME} WIN32 ${MAIN_PROJECT_SOURCES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${MAIN_PROJECT_INCLUDES_PATH})
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
+
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/executable_windows)
