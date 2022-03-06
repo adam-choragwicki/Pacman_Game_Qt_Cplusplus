@@ -2,49 +2,51 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Pacman LANGUAGES CXX)
 
-set(QT_VERSION_MAJOR 5)
-set(CMAKE_CXX_STANDARD 14)
+set(QT_VERSION_MAJOR 6)
+set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(PROJECT_DIR ${CMAKE_SOURCE_DIR})
+set(PROJECT_ROOT ${CMAKE_SOURCE_DIR})
 
-set(MAIN_PROJECT_INCLUDES_PATH ${PROJECT_DIR}/inc)
-set(MAIN_PROJECT_SOURCES_PATH ${PROJECT_DIR}/src)
-set(MAIN_PROJECT_UI_FORMS_PATH ${PROJECT_DIR}/ui_forms)
-set(RESOURCE_FILES_PATH ${PROJECT_DIR}/resource_files)
+set(INCLUDES_DIR ${PROJECT_ROOT}/inc)
+set(SOURCES_DIR ${PROJECT_ROOT}/src)
+set(UI_FORMS_DIR ${PROJECT_ROOT}/ui_forms)
+set(RESOURCE_FILES_DIR ${PROJECT_ROOT}/resource_files)
 
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${MAIN_PROJECT_UI_FORMS_PATH})
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${UI_FORMS_DIR})
 
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-set(MAIN_PROJECT_SOURCES
-    ${MAIN_PROJECT_SOURCES_PATH}/main.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/common.h
-    ${MAIN_PROJECT_INCLUDES_PATH}/game_window.h ${MAIN_PROJECT_SOURCES_PATH}/game_window.cpp ${MAIN_PROJECT_UI_FORMS_PATH}/game_window.ui
-    ${MAIN_PROJECT_INCLUDES_PATH}/game_engine.h ${MAIN_PROJECT_SOURCES_PATH}/game_engine.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/movable_character_interface.h ${MAIN_PROJECT_SOURCES_PATH}/movable_character_interface.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/pacman.h ${MAIN_PROJECT_SOURCES_PATH}/pacman.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_base.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_base.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_blue.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_blue.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_orange.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_orange.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_purple.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_purple.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/ghost_red.h ${MAIN_PROJECT_SOURCES_PATH}/ghost_red.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/foodball.h ${MAIN_PROJECT_SOURCES_PATH}/foodball.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/powerball.h ${MAIN_PROJECT_SOURCES_PATH}/powerball.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/sounds.h ${MAIN_PROJECT_SOURCES_PATH}/sounds.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/game_map.h ${MAIN_PROJECT_SOURCES_PATH}/game_map.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/drawer.h ${MAIN_PROJECT_SOURCES_PATH}/drawer.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/score_display.h ${MAIN_PROJECT_SOURCES_PATH}/score_display.cpp
-    ${MAIN_PROJECT_INCLUDES_PATH}/screen_text_display.h ${MAIN_PROJECT_SOURCES_PATH}/screen_text_display.cpp
-    ${RESOURCE_FILES_PATH}/images.qrc
-    ${RESOURCE_FILES_PATH}/sounds.qrc
+set(SOURCE_FILES
+    ${SOURCES_DIR}/main.cpp
+    ${INCLUDES_DIR}/common.h
+    ${INCLUDES_DIR}/game_window.h ${SOURCES_DIR}/game_window.cpp ${UI_FORMS_DIR}/game_window.ui
+    ${INCLUDES_DIR}/game_engine.h ${SOURCES_DIR}/game_engine.cpp
+    ${INCLUDES_DIR}/movable_character_interface.h ${SOURCES_DIR}/movable_character_interface.cpp
+    ${INCLUDES_DIR}/pacman.h ${SOURCES_DIR}/pacman.cpp
+    ${INCLUDES_DIR}/ghost_base.h ${SOURCES_DIR}/ghost_base.cpp
+    ${INCLUDES_DIR}/ghost_blue.h ${SOURCES_DIR}/ghost_blue.cpp
+    ${INCLUDES_DIR}/ghost_orange.h ${SOURCES_DIR}/ghost_orange.cpp
+    ${INCLUDES_DIR}/ghost_purple.h ${SOURCES_DIR}/ghost_purple.cpp
+    ${INCLUDES_DIR}/ghost_red.h ${SOURCES_DIR}/ghost_red.cpp
+    ${INCLUDES_DIR}/foodball.h ${SOURCES_DIR}/foodball.cpp
+    ${INCLUDES_DIR}/powerball.h ${SOURCES_DIR}/powerball.cpp
+    ${INCLUDES_DIR}/game_map.h ${SOURCES_DIR}/game_map.cpp
+    ${INCLUDES_DIR}/drawer.h ${SOURCES_DIR}/drawer.cpp
+    ${INCLUDES_DIR}/score_display.h ${SOURCES_DIR}/score_display.cpp
+    ${INCLUDES_DIR}/screen_text_display.h ${SOURCES_DIR}/screen_text_display.cpp
+    ${RESOURCE_FILES_DIR}/images.qrc
 )
 
-add_executable(${PROJECT_NAME} WIN32 ${MAIN_PROJECT_SOURCES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${MAIN_PROJECT_INCLUDES_PATH})
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
+add_executable(Pacman WIN32 ${SOURCE_FILES})
+target_include_directories(Pacman PUBLIC ${INCLUDES_DIR})
+target_link_libraries(Pacman PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/executable_windows)
+if(WIN32)
+    set_target_properties(Pacman PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT}/executable_windows)
+elseif(UNIX)
+    set_target_properties(Pacman PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT}/executable_linux)
+endif(WIN32)

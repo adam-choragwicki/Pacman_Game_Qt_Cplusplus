@@ -1,8 +1,17 @@
-# Pacman Single Player
-The project is my implementation of slightly simplified version of classic Pacman game. This repository features single player version of the game. For client-server based multiplayer version see: 
+# Pacman
+C++ implementation of classic Pacman game using Qt 6.2.3 library.
 
-Multiplayer: https://github.com/adamchor1992/Pacman_Game_Multiplayer_Qt_Cplusplus
+**Windows and Linux executables are provided.**
 
 See screenshot.jpg for quick glance at game window.
 
-Run executable/Pacman.exe to start the game.
+# Tests
+Unit tested using Google Test 1.11.0
+
+# How to run on Windows
+Run\
+**executable_windows/Pacman.exe**
+
+# How to run on Linux
+Run\
+**executable_linux/Pacman.sh**
