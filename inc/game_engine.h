@@ -10,7 +10,6 @@
 #include "ghost_orange.h"
 #include "screen_text_display.h"
 #include "score_display.h"
-#include "sounds.h"
 
 class GameEngine : public QObject
 {
@@ -55,7 +54,6 @@ private:
     ScreenTextDisplay screenTextDisplay_;
     ScoreDisplay scoreDisplay_;
 
-    Sounds sounds_;
     GameState gameState_;
 
     QTimer gameTickTimer_;

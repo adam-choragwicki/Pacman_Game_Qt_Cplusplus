@@ -64,8 +64,6 @@ void GameEngine::populateMapWithBalls()
 
 void GameEngine::startGame()
 {
-    sounds_.playBeginningSound();
-
     if(gameState_ != GameState::beforeFirstRun)
     {
         populateMapWithBalls();
@@ -104,11 +102,6 @@ void GameEngine::endGame(GameResult gameResult)
     screenTextDisplay_.setScore(scoreDisplay_.getScore());
     screenTextDisplay_.setGameResult(gameResult);
     screenTextDisplay_.show();
-
-    if(gameResult == GameResult::gameLost)
-    {
-        sounds_.playPacmanDeathSound();
-    }
 
     Drawer::updateScene();
 }
@@ -151,7 +144,6 @@ void GameEngine::checkAndProcessCollisionWithGhost()
             }
             else
             {
-                sounds_.playEatGhostSound();
                 scoreDisplay_.rewardPlayerForEatingGhost();
                 ghost->reset();
             }
@@ -169,7 +161,6 @@ void GameEngine::checkAndProcessCollisionWithFoodball()
         {
             foodballGraphicsItems_.erase(iter);
             scoreDisplay_.rewardPlayerForEatingFoodball();
-            sounds_.playEatFoodballSound1();
             return;
         }
 
@@ -187,7 +178,6 @@ void GameEngine::checkAndProcessCollisionWithPowerball()
         {
             powerballGraphicsItems_.erase(iter);
             scoreDisplay_.rewardPlayerForEatingPowerball();
-            sounds_.playEatFoodballSound1();
 
             for(GhostBase* ghost : ghosts_)
             {
