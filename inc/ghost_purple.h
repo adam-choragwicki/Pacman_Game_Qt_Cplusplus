@@ -9,7 +9,7 @@ public:
     void reset() override;
 
 private:
-    QVector<QString> getImagesUrls();
+    QVector<std::string> getImagesUrls();
 
     static const int startingX_ = 307;
     static const int startingY_ = 318;

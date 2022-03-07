@@ -27,9 +27,9 @@ public:
     void startMovement() override;
     void stopMovement() override;
 
-    ScaredState getScaredState() const {return scaredState_;}
+    [[nodiscard]] ScaredState getScaredState() const {return scaredState_;}
     QTimer& getMovementTimer() {return movementTimer_;}
-    bool isInsideStartingBox() const;
+    [[nodiscard]] bool isInsideStartingBox() const;
 
     void setScaredState(ScaredState scaredState) {scaredState_ = scaredState;}
 
@@ -39,10 +39,10 @@ public:
     void scare();
 
 protected:
-    void loadImages(QVector<QString> imagesUrls);
+    void loadImages(const QVector<std::string>& imagesUrls);
 
 private:
-    QRectF boundingRect() const override;
+    [[nodiscard]] QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     void reduceSpeed();

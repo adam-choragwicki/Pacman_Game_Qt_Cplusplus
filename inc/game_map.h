@@ -9,8 +9,8 @@ public:
     GameMap();
     static bool isPathPointValid(QPoint const& point);
     static QVector<QPoint> const& getPathPoints() {return pathPoints_;}
-    QVector<QPoint> generateFoodballPositions() const;
-    QVector<QPoint> generatePowerballPositions() const;
+    [[nodiscard]] QVector<QPoint> generateFoodballPositions() const;
+    [[nodiscard]] QVector<QPoint> generatePowerballPositions() const;
 
 private:
     void generatePathPoints(int startX, int startY, int endX, int endY);

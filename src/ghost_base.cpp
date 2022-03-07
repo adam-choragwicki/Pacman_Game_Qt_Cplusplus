@@ -20,6 +20,8 @@ GhostBase::GhostBase(int x, int y, int startTimeout) : MovableCharacterInterface
     connect(&scaredBlueStateTimer_, &QTimer::timeout, this, &GhostBase::transformToScaredWhite);
     connect(&scaredWhiteStateTimer_, &QTimer::timeout, this, &GhostBase::transformToNoScared);
 
+    timeToLeaveStartingBox_ = false;
+    scaredState_ = ScaredState::noScared;
     GhostBase::reset();
 }
 
@@ -152,21 +154,34 @@ void GhostBase::resumeMovement()
     movementTimer_.start();
 }
 
-void GhostBase::loadImages(QVector<QString> imagesUrls)
+void GhostBase::loadImages(const QVector<std::string>& imagesUrls)
 {
-    assert(left1Pixmap_.load(imagesUrls.at(0)));
-    assert(left2Pixmap_.load(imagesUrls.at(1)));
-    assert(right1Pixmap_.load(imagesUrls.at(2)));
-    assert(right2Pixmap_.load(imagesUrls.at(3)));
-    assert(up1Pixmap_.load(imagesUrls.at(4)));
-    assert(up2Pixmap_.load(imagesUrls.at(5)));
-    assert(down1Pixmap_.load(imagesUrls.at(6)));
-    assert(down2Pixmap_.load(imagesUrls.at(7)));
+    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&left1Pixmap_,  imagesUrls.at(0)},
+                                                              {&left2Pixmap_,  imagesUrls.at(1)},
 
-    assert(scaredBlue1Pixmap_.load(imagesUrls.at(8)));
-    assert(scaredBlue2Pixmap_.load(imagesUrls.at(9)));
-    assert(scaredWhite1Pixmap_.load(imagesUrls.at(10)));
-    assert(scaredWhite2Pixmap_.load(imagesUrls.at(11)));
+                                                              {&right1Pixmap_,  imagesUrls.at(2)},
+                                                              {&right2Pixmap_,  imagesUrls.at(3)},
+
+                                                              {&up1Pixmap_, imagesUrls.at(4)},
+                                                              {&up2Pixmap_, imagesUrls.at(5)},
+
+                                                              {&down1Pixmap_, imagesUrls.at(6)},
+                                                              {&down2Pixmap_, imagesUrls.at(7)},
+
+                                                              {&scaredBlue1Pixmap_,    imagesUrls.at(8)},
+                                                              {&scaredBlue2Pixmap_,    imagesUrls.at(9)},
+
+                                                              {&scaredWhite1Pixmap_,    imagesUrls.at(10)},
+                                                              {&scaredWhite2Pixmap_,    imagesUrls.at(11)}};
+
+    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair) {
+        return pixmapToPathPair.first->load(QString::fromStdString(pixmapToPathPair.second));
+    };
+
+    if(!std::all_of(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), loadImage))
+    {
+        throw std::runtime_error("Cannot load Ghost images");
+    }
 }
 
 void GhostBase::scare()
@@ -280,9 +295,5 @@ void GhostBase::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*opti
         {
             painter->drawPixmap(boundingRect, scaredWhite2Pixmap_);
         }
-    }
-    else
-    {
-        assert(false);
     }
 }

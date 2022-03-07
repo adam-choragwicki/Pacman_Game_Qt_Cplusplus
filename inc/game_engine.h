@@ -17,7 +17,7 @@ class GameEngine : public QObject
 
 public:
     GameEngine();
-    void processKey(QString key);
+    void processKey(const QString& key);
 
 private:
     enum class GameState

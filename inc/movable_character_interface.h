@@ -13,8 +13,8 @@ public:
     virtual void resumeMovement() = 0;
     virtual void reset() = 0;
 
-    int getX() const {return x_;}
-    int getY() const {return y_;}
+    [[nodiscard]] int getX() const {return x_;}
+    [[nodiscard]] int getY() const {return y_;}
 
     void setNextDirection(Direction direction) {nextDirection_ = direction;}
 
@@ -34,8 +34,8 @@ protected:
 
     int x_;
     int y_;
-    int animationState_;
-    bool moving_;
+    int animationState_{};
+    bool moving_{};
     Direction direction_;
     Direction nextDirection_;
 };

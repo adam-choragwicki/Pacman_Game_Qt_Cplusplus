@@ -113,16 +113,6 @@ void GameMap::generatePathPoints(int startX, int startY, int endX, int endY)
                 }
             }
         }
-        /*Single point*/
-        else if(startY == endY)
-        {
-            point.setX(startX);
-            point.setY(startY);
-            if (!pathPoints_.contains(point))
-            {
-                pathPoints_.push_front(point);
-            }
-        }
     }
 
     /*Horizontal line*/
@@ -139,16 +129,6 @@ void GameMap::generatePathPoints(int startX, int startY, int endX, int endY)
                 {
                     pathPoints_.push_front(point);
                 }
-            }
-        }
-        /*Single point*/
-        else if(startX == endX)
-        {
-            point.setX(startX);
-            point.setY(startY);
-            if (!pathPoints_.contains(point))
-            {
-                pathPoints_.push_front(point);
             }
         }
     }
@@ -199,8 +179,6 @@ QVector<QPoint> GameMap::generateFoodballPositions() const
         }
     }
 
-    assert(foodballPositions.size() == targetFoodballCount_);
-
     return foodballPositions;
 }
 
@@ -217,8 +195,6 @@ QVector<QPoint> GameMap::generatePowerballPositions() const
     powerballPositions.push_back(powerball2Position);
     powerballPositions.push_back(powerball3Position);
     powerballPositions.push_back(powerball4Position);
-
-    assert(powerballPositions.size() == targetPowerballCount_);
 
     return powerballPositions;
 }

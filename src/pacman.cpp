@@ -35,25 +35,34 @@ void Pacman::advanceAnimation()
 
 void Pacman::loadImages()
 {
-    assert(left1Pixmap_.load(":/pacman/images/pacman/pacman_left_close.png"));
-    assert(left2Pixmap_.load(":/pacman/images/pacman/pacman_left_open_1.png"));
-    assert(left3Pixmap_.load(":/pacman/images/pacman/pacman_left_open_2.png"));
-    assert(left4Pixmap_.load(":/pacman/images/pacman/pacman_left_open_3.png"));
+    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&left1Pixmap_,  ":/pacman/images/pacman/pacman_left_close.png"},
+                                                          {&left2Pixmap_,  ":/pacman/images/pacman/pacman_left_open_1.png"},
+                                                          {&left3Pixmap_,  ":/pacman/images/pacman/pacman_left_open_2.png"},
+                                                          {&left4Pixmap_,  ":/pacman/images/pacman/pacman_left_open_3.png"},
 
-    assert(right1Pixmap_.load(":/pacman/images/pacman/pacman_right_close.png"));
-    assert(right2Pixmap_.load(":/pacman/images/pacman/pacman_right_open_1.png"));
-    assert(right3Pixmap_.load(":/pacman/images/pacman/pacman_right_open_2.png"));
-    assert(right4Pixmap_.load(":/pacman/images/pacman/pacman_right_open_3.png"));
+                                                          {&right1Pixmap_, ":/pacman/images/pacman/pacman_right_close.png"},
+                                                          {&right2Pixmap_, ":/pacman/images/pacman/pacman_right_open_1.png"},
+                                                          {&right3Pixmap_, ":/pacman/images/pacman/pacman_right_open_2.png"},
+                                                          {&right4Pixmap_, ":/pacman/images/pacman/pacman_right_open_3.png"},
 
-    assert(up1Pixmap_.load(":/pacman/images/pacman/pacman_up_close.png"));
-    assert(up2Pixmap_.load(":/pacman/images/pacman/pacman_up_open_1.png"));
-    assert(up3Pixmap_.load(":/pacman/images/pacman/pacman_up_open_2.png"));
-    assert(up4Pixmap_.load(":/pacman/images/pacman/pacman_up_open_3.png"));
+                                                          {&up1Pixmap_,    ":/pacman/images/pacman/pacman_up_close.png"},
+                                                          {&up2Pixmap_,    ":/pacman/images/pacman/pacman_up_open_1.png"},
+                                                          {&up3Pixmap_,    ":/pacman/images/pacman/pacman_up_open_2.png"},
+                                                          {&up4Pixmap_,    ":/pacman/images/pacman/pacman_up_open_3.png"},
 
-    assert(down1Pixmap_.load(":/pacman/images/pacman/pacman_down_close.png"));
-    assert(down2Pixmap_.load(":/pacman/images/pacman/pacman_down_open_1.png"));
-    assert(down3Pixmap_.load(":/pacman/images/pacman/pacman_down_open_2.png"));
-    assert(down4Pixmap_.load(":/pacman/images/pacman/pacman_down_open_3.png"));
+                                                          {&down1Pixmap_,  ":/pacman/images/pacman/pacman_down_close.png"},
+                                                          {&down2Pixmap_,  ":/pacman/images/pacman/pacman_down_open_1.png"},
+                                                          {&down3Pixmap_,  ":/pacman/images/pacman/pacman_down_open_2.png"},
+                                                          {&down4Pixmap_,  ":/pacman/images/pacman/pacman_down_open_3.png"}};
+
+    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair) {
+        return pixmapToPathPair.first->load(QString::fromStdString(pixmapToPathPair.second));
+    };
+
+    if(!std::all_of(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), loadImage))
+    {
+        throw std::runtime_error("Cannot load Pacman images");
+    }
 }
 
 void Pacman::startMovement()
@@ -106,10 +115,6 @@ void Pacman::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*
         {
             painter->drawPixmap(boundingRect, left4Pixmap_);
         }
-        else
-        {
-            qDebug() << "LEFT NOTHING=" << animationState_;
-        }
         break;
 
     case Direction::right:
@@ -128,10 +133,6 @@ void Pacman::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*
         else if(animationState_ <= 8 * animationSpeedFactor_)
         {
             painter->drawPixmap(boundingRect, right4Pixmap_);
-        }
-        else
-        {
-            qDebug() << "RIGHT NOTHING=" << animationState_;
         }
         break;
 
@@ -152,10 +153,6 @@ void Pacman::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*
         {
             painter->drawPixmap(boundingRect, up4Pixmap_);
         }
-        else
-        {
-            qDebug() << "UP NOTHING=" << animationState_;
-        }
         break;
 
     case Direction::down:
@@ -175,14 +172,9 @@ void Pacman::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*
         {
             painter->drawPixmap(boundingRect, down4Pixmap_);
         }
-        else
-        {
-            qDebug() << "DOWN NOTHING=" << animationState_;;
-        }
         break;
 
     case Direction::none:
-        qDebug() << "NONE";
         break;
     }
 }

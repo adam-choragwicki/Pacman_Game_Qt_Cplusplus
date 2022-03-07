@@ -11,22 +11,22 @@ void GhostBlue::reset()
     setCoordinates(startingX_, startingY_);
 }
 
-QVector<QString> GhostBlue::getImagesUrls()
+QVector<std::string> GhostBlue::getImagesUrls()
 {
-    QVector<QString> imagesUrl {
-        ":/ghost/images/ghost/ghost_blue_left_1.png",
-        ":/ghost/images/ghost/ghost_blue_left_2.png",
-        ":/ghost/images/ghost/ghost_blue_right_1.png",
-        ":/ghost/images/ghost/ghost_blue_right_2.png",
-        ":/ghost/images/ghost/ghost_blue_up_1.png",
-        ":/ghost/images/ghost/ghost_blue_up_2.png",
-        ":/ghost/images/ghost/ghost_blue_down_1.png",
-        ":/ghost/images/ghost/ghost_blue_down_2.png",
+    QVector<std::string> imagesUrl{
+            ":/ghost/images/ghost/ghost_blue_left_1.png",
+            ":/ghost/images/ghost/ghost_blue_left_2.png",
+            ":/ghost/images/ghost/ghost_blue_right_1.png",
+            ":/ghost/images/ghost/ghost_blue_right_2.png",
+            ":/ghost/images/ghost/ghost_blue_up_1.png",
+            ":/ghost/images/ghost/ghost_blue_up_2.png",
+            ":/ghost/images/ghost/ghost_blue_down_1.png",
+            ":/ghost/images/ghost/ghost_blue_down_2.png",
 
-        ":/ghost/images/ghost/ghost_scared_blue_1.png",
-        ":/ghost/images/ghost/ghost_scared_blue_2.png",
-        ":/ghost/images/ghost/ghost_scared_white_1.png",
-        ":/ghost/images/ghost/ghost_scared_white_2.png",
+            ":/ghost/images/ghost/ghost_scared_blue_1.png",
+            ":/ghost/images/ghost/ghost_scared_blue_2.png",
+            ":/ghost/images/ghost/ghost_scared_white_1.png",
+            ":/ghost/images/ghost/ghost_scared_white_2.png",
     };
 
     return imagesUrl;

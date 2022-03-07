@@ -10,7 +10,7 @@ public:
     Foodball(int x, int y);
 
 private:    
-    QRectF boundingRect() const override;
+    [[nodiscard]] QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
 
     const int diameter_ = 7;

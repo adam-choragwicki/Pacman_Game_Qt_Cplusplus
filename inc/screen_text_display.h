@@ -13,7 +13,7 @@ public:
     void setGameResult(GameResult gameResult) {gameResult_ = gameResult;}
 
 private:
-    QRectF boundingRect() const override;
+    [[nodiscard]] QRectF boundingRect() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
     const int width_ = 600;

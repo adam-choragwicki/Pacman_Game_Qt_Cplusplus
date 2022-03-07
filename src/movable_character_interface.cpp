@@ -3,6 +3,7 @@
 
 MovableCharacterInterface::MovableCharacterInterface(int x, int y, Direction initialDirection) : x_(x), y_(y), direction_(initialDirection)
 {
+    nextDirection_ = Direction::none;
     MovableCharacterInterface::reset();
 }
 

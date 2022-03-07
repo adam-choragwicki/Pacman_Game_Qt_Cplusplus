@@ -224,7 +224,7 @@ void GameEngine::gameTickHandler()
     checkAndProcessCollisionWithFoodball();
     checkAndProcessCollisionWithPowerball();
 
-    if(gameState_ == GameState::gameRunning && foodballGraphicsItems_.size() == 0)
+    if(gameState_ == GameState::gameRunning && foodballGraphicsItems_.empty())
     {
         endGame(GameResult::gameWin);
     }
@@ -261,7 +261,7 @@ void GameEngine::ghostMovementHandler(GhostBase* ghost)
     }
 }
 
-void GameEngine::processKey(QString key)
+void GameEngine::processKey(const QString& key)
 {
     if(gameState_ == GameState::gameRunning)
     {

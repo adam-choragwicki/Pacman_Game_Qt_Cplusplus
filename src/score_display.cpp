@@ -6,11 +6,6 @@ ScoreDisplay::ScoreDisplay()
     score_ = 0;
 }
 
-void ScoreDisplay::setScore(int score)
-{
-    score_ = score;
-}
-
 QRectF ScoreDisplay::boundingRect() const
 {
     return QRect(x_, y_, width_, height_);

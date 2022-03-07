@@ -42,8 +42,4 @@ void ScreenTextDisplay::paint(QPainter *painter, const QStyleOptionGraphicsItem 
     {
         painter->drawText(boundingRect(),Qt::AlignCenter, "PRESS SPACE TO START");
     }
-    else
-    {
-        assert(false);
-    }
 }

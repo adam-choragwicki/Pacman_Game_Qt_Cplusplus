@@ -7,9 +7,7 @@ class ScoreDisplay : public QGraphicsItem
 public:
     ScoreDisplay();
 
-    int getScore() {return score_;}
-
-    void setScore(int score);
+    [[nodiscard]] int getScore() const {return score_;}
 
     void rewardPlayerForEatingFoodball() {score_ += 1;}
     void rewardPlayerForEatingGhost() {score_ += 200;}
@@ -17,7 +15,7 @@ public:
     void resetScore(){score_ = 0;}
 
 private:    
-    QRectF boundingRect() const override;
+    [[nodiscard]] QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     const int x_ = 0;

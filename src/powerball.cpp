@@ -1,6 +1,5 @@
 #include "powerball.h"
 #include <QPoint>
-#include <QVector>
 #include <QPainter>
 #include <QDebug>
 
