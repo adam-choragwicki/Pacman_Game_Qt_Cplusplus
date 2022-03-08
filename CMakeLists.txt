@@ -41,12 +41,17 @@ set(SOURCE_FILES
     ${RESOURCE_FILES_DIR}/images.qrc
 )
 
+add_library(libPacman ${SOURCE_FILES})
+target_include_directories(libPacman PUBLIC ${INCLUDES_DIR})
+target_link_libraries(libPacman Qt${QT_VERSION_MAJOR}::Widgets)
+
 add_executable(Pacman WIN32 ${SOURCE_FILES})
-target_include_directories(Pacman PUBLIC ${INCLUDES_DIR})
-target_link_libraries(Pacman PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Pacman PRIVATE libPacman)
 
 if(WIN32)
     set_target_properties(Pacman PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT}/executable_windows)
 elseif(UNIX)
     set_target_properties(Pacman PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT}/executable_linux)
 endif(WIN32)
+
+add_subdirectory(tests)
