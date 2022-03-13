@@ -4,7 +4,9 @@ project(MinesweeperTest LANGUAGES CXX)
 
 set(TEST_SOURCES
     src/main.cpp
-    src/common_test_fixture.cpp)
+    src/common_test_fixture.cpp
+    src/pacman_test.cpp
+    src/ghost_test.cpp)
 
 add_subdirectory(lib)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
