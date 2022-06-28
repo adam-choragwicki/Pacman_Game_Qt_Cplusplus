@@ -28,18 +28,19 @@ set(SOURCE_FILES
     ${INCLUDES_DIR}/movable_character_interface.h ${SOURCES_DIR}/movable_character_interface.cpp
     ${INCLUDES_DIR}/pacman.h ${SOURCES_DIR}/pacman.cpp
     ${INCLUDES_DIR}/ghost_base.h ${SOURCES_DIR}/ghost_base.cpp
-    ${INCLUDES_DIR}/ghost_blue.h ${SOURCES_DIR}/ghost_blue.cpp
-    ${INCLUDES_DIR}/ghost_orange.h ${SOURCES_DIR}/ghost_orange.cpp
-    ${INCLUDES_DIR}/ghost_purple.h ${SOURCES_DIR}/ghost_purple.cpp
-    ${INCLUDES_DIR}/ghost_red.h ${SOURCES_DIR}/ghost_red.cpp
-    ${INCLUDES_DIR}/foodball.h ${SOURCES_DIR}/foodball.cpp
-    ${INCLUDES_DIR}/powerball.h ${SOURCES_DIR}/powerball.cpp
+    ${INCLUDES_DIR}/ghosts/ghost_blue.h ${SOURCES_DIR}/ghosts/ghost_blue.cpp
+    ${INCLUDES_DIR}/ghosts/ghost_orange.h ${SOURCES_DIR}/ghosts/ghost_orange.cpp
+    ${INCLUDES_DIR}/ghosts/ghost_purple.h ${SOURCES_DIR}/ghosts/ghost_purple.cpp
+    ${INCLUDES_DIR}/ghosts/ghost_red.h ${SOURCES_DIR}/ghosts/ghost_red.cpp
+    ${INCLUDES_DIR}/ball.h ${SOURCES_DIR}/ball.cpp
     ${INCLUDES_DIR}/game_map.h ${SOURCES_DIR}/game_map.cpp
     ${INCLUDES_DIR}/drawer.h ${SOURCES_DIR}/drawer.cpp
     ${INCLUDES_DIR}/score_display.h ${SOURCES_DIR}/score_display.cpp
     ${INCLUDES_DIR}/screen_text_display.h ${SOURCES_DIR}/screen_text_display.cpp
-    ${RESOURCE_FILES_DIR}/images.qrc
-)
+    ${INCLUDES_DIR}/log_manager.h ${SOURCES_DIR}/log_manager.cpp
+    ${INCLUDES_DIR}/ball_items_manager.h ${SOURCES_DIR}/ball_items_manager.cpp
+    ${INCLUDES_DIR}/coordinates.h ${SOURCES_DIR}/coordinates.cpp
+    ${RESOURCE_FILES_DIR}/images.qrc src/ball.cpp inc/ball.h)
 
 add_library(libPacman ${SOURCE_FILES})
 target_include_directories(libPacman PUBLIC ${INCLUDES_DIR})

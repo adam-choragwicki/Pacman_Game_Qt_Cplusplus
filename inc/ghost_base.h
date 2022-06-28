@@ -9,6 +9,7 @@
 class GhostBase : public QObject, public QGraphicsItem, public MovableCharacterInterface
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 
 public:
     enum class ScaredState
@@ -18,12 +19,11 @@ public:
         scaredWhite
     };
 
-    GhostBase(int x, int y, int startTimeout);
+    GhostBase(const Coordinates& coordinates, std::chrono::seconds startTimeout, const GameMap& gameMap);
+    ~GhostBase() override;
 
-    void advanceAnimation() override;
     virtual bool isItTimeToLeaveStartingBox() {return timeToLeaveStartingBox_;}
     void reset() override;
-    void resumeMovement() override;
     void startMovement() override;
     void stopMovement() override;
 
@@ -33,7 +33,7 @@ public:
 
     void setScaredState(ScaredState scaredState) {scaredState_ = scaredState;}
 
-    void move(int pacmanX, int pacmanY);
+    void move(const Coordinates& pacmanCoordinates);
     void moveInsideStartingBox();
     void moveOutOfStartingBox();
     void scare();
@@ -45,11 +45,12 @@ private:
     [[nodiscard]] QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+    void advanceAnimation() override;
     void reduceSpeed();
     void resetSpeed();
 
-    const int scaredBlueTime = 4000; /* 2 seconds */
-    const int scaredWhiteTime = 2000; /* 1 second */
+    const std::chrono::seconds scaredBlueTime {4};
+    const std::chrono::seconds scaredWhiteTime {2};
 
     bool timeToLeaveStartingBox_;
 

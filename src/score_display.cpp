@@ -1,9 +1,18 @@
 #include "score_display.h"
+#include "drawer.h"
+
 #include <QPainter>
 
 ScoreDisplay::ScoreDisplay()
 {
     score_ = 0;
+
+    Drawer::drawItem(this);
+}
+
+ScoreDisplay::~ScoreDisplay()
+{
+    Drawer::eraseItem(this);
 }
 
 QRectF ScoreDisplay::boundingRect() const

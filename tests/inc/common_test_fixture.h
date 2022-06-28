@@ -1,10 +1,20 @@
 #pragma once
 
 #include "gtest/gtest.h"
+#include "game_map.h"
+#include "drawer.h"
+
+#include <QGraphicsScene>
 
 class CommonTestFixture : public ::testing::Test
 {
+public:
+    CommonTestFixture()
+    {
+        Drawer::setScene(&scene_);
+    }
+
 protected:
-    void SetUp() override;
-    void TearDown() override;
+    QGraphicsScene scene_;
+    GameMap gameMap_;
 };

@@ -5,38 +5,28 @@
 class PacmanTest : public CommonTestFixture
 {
 protected:
-    Pacman pacman_;
-    GameMap gameMap_;
+    Pacman pacman_{gameMap_};
 };
 
 TEST_F(PacmanTest, CreatePacman)
 {
-    EXPECT_EQ(pacman_.getX(), 320);
-    EXPECT_EQ(pacman_.getY(), 514);
+    EXPECT_EQ(pacman_.getCoordinates(), Coordinates(320, 514));
 }
 
 TEST_F(PacmanTest, MovePacman)
 {
-    EXPECT_EQ(pacman_.getX(), 320);
-    EXPECT_EQ(pacman_.getY(), 514);
-
     pacman_.move();
 
-    EXPECT_EQ(pacman_.getX(), 319);
-    EXPECT_EQ(pacman_.getY(), 514);
+    EXPECT_EQ(pacman_.getCoordinates(), Coordinates(319, 514));
 
     pacman_.setNextDirection(Direction::right);
     pacman_.move();
 
-    EXPECT_EQ(pacman_.getX(), 320);
-    EXPECT_EQ(pacman_.getY(), 514);
+    EXPECT_EQ(pacman_.getCoordinates(), Coordinates(320, 514));
 }
 
 TEST_F(PacmanTest, ResetPacman)
 {
-    EXPECT_EQ(pacman_.getX(), 320);
-    EXPECT_EQ(pacman_.getY(), 514);
-
     pacman_.move();
     pacman_.move();
     pacman_.move();
@@ -45,6 +35,5 @@ TEST_F(PacmanTest, ResetPacman)
 
     pacman_.reset();
 
-    EXPECT_EQ(pacman_.getX(), 320);
-    EXPECT_EQ(pacman_.getY(), 514);
+    EXPECT_EQ(pacman_.getCoordinates(), Coordinates(320, 514));
 }

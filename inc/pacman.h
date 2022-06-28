@@ -8,15 +8,14 @@
 class Pacman : public QGraphicsItem, public MovableCharacterInterface
 {
 public:
-    Pacman();
+    explicit Pacman(const GameMap& gameMap);
+    ~Pacman() override;
 
     QTimer& getMovementTimer() {return movementTimer_;}
 
-    void advanceAnimation()  override;
     void reset() override;
     void startMovement() override;
     void stopMovement() override;
-    void resumeMovement() override;
 
     void move();
 
@@ -24,10 +23,10 @@ private:
     [[nodiscard]] QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+    void advanceAnimation()  override;
     void loadImages();
 
-    static const int startingX_ = 320;
-    static const int startingY_ = 514;
+    inline static const Coordinates startingCoordinates_{320, 514};
 
     QTimer movementTimer_;
 

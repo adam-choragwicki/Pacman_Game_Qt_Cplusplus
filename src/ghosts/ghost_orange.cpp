@@ -1,14 +1,19 @@
-#include "ghost_orange.h"
+#include "ghosts/ghost_orange.h"
 
-GhostOrange::GhostOrange() : GhostBase(startingX_, startingY_, startTimeout_)
+GhostOrange::GhostOrange(const GameMap& gameMap) : GhostBase(startingCoordinates_, startTimeout_, gameMap)
 {
     loadImages(getImagesUrls());
+}
+
+GhostOrange::~GhostOrange()
+{
+
 }
 
 void GhostOrange::reset()
 {
     GhostBase::reset();
-    setCoordinates(startingX_, startingY_);
+    setCoordinates(startingCoordinates_);
 }
 
 QVector<std::string> GhostOrange::getImagesUrls()

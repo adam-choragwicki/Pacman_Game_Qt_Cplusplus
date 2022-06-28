@@ -2,22 +2,27 @@
 
 #include "game_map.h"
 #include "pacman.h"
-#include "powerball.h"
-#include "foodball.h"
-#include "ghost_red.h"
-#include "ghost_purple.h"
-#include "ghost_blue.h"
-#include "ghost_orange.h"
+#include "ball_items_manager.h"
+#include "ghosts/ghost_red.h"
+#include "ghosts/ghost_purple.h"
+#include "ghosts/ghost_blue.h"
+#include "ghosts/ghost_orange.h"
 #include "screen_text_display.h"
 #include "score_display.h"
+
+#include <memory>
 
 class GameEngine : public QObject
 {
     Q_OBJECT
 
+signals:
+    void restartGame();
+
 public:
     GameEngine();
-    void processKey(const QString& key);
+    ~GameEngine() override;
+    void processKey(Key key);
 
 private:
     enum class GameState
@@ -31,39 +36,38 @@ private:
     void checkAndProcessCollisionWithGhost();
     void checkAndProcessCollisionWithFoodball();
     void checkAndProcessCollisionWithPowerball();
-    void drawGraphicsItems();
     void endGame(GameResult gameResult);
     void showGraphicsItems();
     void hideGraphicsItems();
-    void populateMapWithBalls();
-    void removeBalls();
+
     void startGame();
     void togglePause();
 
-    GameMap gameMap_;
-    Pacman pacman_;
-    GhostBlue ghostBlue_;
-    GhostOrange ghostOrange_;
-    GhostPurple ghostPurple_;
-    GhostRed ghostRed_;
+    static GameMap gameMap_;
 
-    std::array<MovableCharacterInterface*, 5> movableCharacters {&pacman_, &ghostBlue_, &ghostOrange_, &ghostPurple_, &ghostRed_};
-    std::array<GhostBase*, 4> ghosts_ {&ghostBlue_, &ghostOrange_, &ghostPurple_, &ghostRed_};
-    std::array<QGraphicsItem*, 6> graphicsItems_ {&pacman_, &ghostBlue_, &ghostOrange_, &ghostPurple_, &ghostRed_, &scoreDisplay_};
+    Pacman pacman_{gameMap_};
+    GhostBlue ghostBlue_{gameMap_};
+    GhostOrange ghostOrange_{gameMap_};
+    GhostPurple ghostPurple_{gameMap_};
+    GhostRed ghostRed_{gameMap_};
+
+    std::array<MovableCharacterInterface*, 5> movableCharacters {};
+    std::array<GhostBase*, 4> ghosts_ {};
+    std::array<QGraphicsItem*, 6> graphicsItems_ {};
 
     ScreenTextDisplay screenTextDisplay_;
+
     ScoreDisplay scoreDisplay_;
 
-    GameState gameState_;
+    inline static GameState gameState_ = GameState::beforeFirstRun;
 
     QTimer gameTickTimer_;
     QTimer sceneUpdateTimer_;
 
-    std::vector<std::unique_ptr<Foodball>> foodballGraphicsItems_;
-    std::vector<std::unique_ptr<Powerball>> powerballGraphicsItems_;
+    BallItemsManager ballItemsManager_;
 
-    const int gameTickFrequency_ = 30; /* 4 milliseconds */
-    const int sceneUpdateFrequency_ = 16; /* 16 milliseconds is enough for 60Hz display */
+    const std::chrono::milliseconds gameTickFrequency_ {30};
+    const std::chrono::milliseconds sceneUpdateFrequency_ {16};
 
 private slots:
     void gameTickHandler();

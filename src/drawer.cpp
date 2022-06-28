@@ -1,8 +1,4 @@
 #include "drawer.h"
-#include "log_manager.h"
-
-QGraphicsScene* Drawer::scene_ = nullptr;
-QGraphicsPixmapItem* Drawer::mapItem_ = nullptr;
 
 void Drawer::drawGameArena()
 {
@@ -23,10 +19,15 @@ void Drawer::setGameArenaVisibility(bool isVisible)
 
 void Drawer::updateScene()
 {
-    scene_->update(scene_->sceneRect());
+    scene_->update();
 }
 
 void Drawer::drawItem(QGraphicsItem* item)
 {
     scene_->addItem(item);
+}
+
+void Drawer::eraseItem(QGraphicsItem* item)
+{
+    scene_->removeItem(item);
 }

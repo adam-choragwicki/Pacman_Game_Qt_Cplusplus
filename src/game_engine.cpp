@@ -1,13 +1,15 @@
 #include "game_engine.h"
 #include "drawer.h"
-#include "log_manager.h"
+
+GameMap GameEngine::gameMap_;
 
 GameEngine::GameEngine()
 {
-    gameState_ = GameState::beforeFirstRun;
+    movableCharacters = {&pacman_, &ghostBlue_, &ghostOrange_, &ghostPurple_, &ghostRed_};
+    ghosts_ = {&ghostBlue_, &ghostOrange_, &ghostPurple_, &ghostRed_};
+    graphicsItems_ = {&pacman_, &ghostBlue_, &ghostOrange_, &ghostPurple_, &ghostRed_, &scoreDisplay_};
 
-    drawGraphicsItems();
-    populateMapWithBalls();
+    ballItemsManager_.populateMapWithBalls(gameMap_);
 
     gameTickTimer_.setInterval(gameTickFrequency_);
     sceneUpdateTimer_.setInterval(sceneUpdateFrequency_);
@@ -16,57 +18,29 @@ GameEngine::GameEngine()
 
     connect(&gameTickTimer_, &QTimer::timeout, this, &GameEngine::gameTickHandler);
     connect(&sceneUpdateTimer_, &QTimer::timeout, this, &GameEngine::sceneUpdateHandler);
+
     connect(&pacman_.getMovementTimer(), &QTimer::timeout, this, &GameEngine::pacmanMovementHandler);
     connect(&ghostBlue_.getMovementTimer(), &QTimer::timeout, this, [this](){ghostMovementHandler(&ghostBlue_);});
     connect(&ghostOrange_.getMovementTimer(), &QTimer::timeout, this, [this](){ghostMovementHandler(&ghostOrange_);});
     connect(&ghostPurple_.getMovementTimer(), &QTimer::timeout, this, [this](){ghostMovementHandler(&ghostPurple_);});
     connect(&ghostRed_.getMovementTimer(), &QTimer::timeout, this, [this](){ghostMovementHandler(&ghostRed_);});
+
+    if(gameState_ != GameState::beforeFirstRun)
+    {
+        startGame();
+    }
 }
 
-void GameEngine::drawGraphicsItems()
+GameEngine::~GameEngine()
 {
-    Drawer::drawItem(&pacman_);
-    Drawer::drawItem(&ghostRed_);
-    Drawer::drawItem(&ghostPurple_);
-    Drawer::drawItem(&ghostBlue_);
-    Drawer::drawItem(&ghostOrange_);
-    Drawer::drawItem(&screenTextDisplay_);
-    Drawer::drawItem(&scoreDisplay_);
-}
 
-void GameEngine::populateMapWithBalls()
-{
-    const QVector<QPoint> powerballPositions = gameMap_.generatePowerballPositions();
-    const QVector<QPoint> foodballPositions = gameMap_.generateFoodballPositions();
-
-    for(auto& powerballPosition : powerballPositions)
-    {
-        powerballGraphicsItems_.push_back(std::make_unique<Powerball>(powerballPosition.x(),
-                                                                      powerballPosition.y()));
-    }
-
-    for(auto& foodballPosition : foodballPositions)
-    {
-        foodballGraphicsItems_.push_back(std::make_unique<Foodball>(foodballPosition.x(),
-                                                                    foodballPosition.y()));
-    }
-
-    for(auto& powerballGraphicalItem : powerballGraphicsItems_)
-    {
-        Drawer::drawItem(powerballGraphicalItem.get());
-    }
-
-    for(auto& foodballGraphicalItem : foodballGraphicsItems_)
-    {
-        Drawer::drawItem(foodballGraphicalItem.get());
-    }
 }
 
 void GameEngine::startGame()
 {
     if(gameState_ != GameState::beforeFirstRun)
     {
-        populateMapWithBalls();
+        ballItemsManager_.populateMapWithBalls(gameMap_);
     }
 
     scoreDisplay_.resetScore();
@@ -89,7 +63,7 @@ void GameEngine::endGame(GameResult gameResult)
 
     gameState_ = GameState::gameStopped;
 
-    removeBalls();
+    ballItemsManager_.removeBalls();
 
     hideGraphicsItems();
 
@@ -104,12 +78,6 @@ void GameEngine::endGame(GameResult gameResult)
     screenTextDisplay_.show();
 
     Drawer::updateScene();
-}
-
-void GameEngine::removeBalls()
-{
-    foodballGraphicsItems_.clear();
-    powerballGraphicsItems_.clear();
 }
 
 void GameEngine::showGraphicsItems()
@@ -153,41 +121,22 @@ void GameEngine::checkAndProcessCollisionWithGhost()
 
 void GameEngine::checkAndProcessCollisionWithFoodball()
 {
-    auto iter = std::begin(foodballGraphicsItems_);
-
-    for(auto& foodballGraphicalItem : foodballGraphicsItems_)
+    if(ballItemsManager_.checkAndProcessCollisionWithFoodball(pacman_))
     {
-        if(pacman_.collidesWithItem(foodballGraphicalItem.get()))
-        {
-            foodballGraphicsItems_.erase(iter);
-            scoreDisplay_.rewardPlayerForEatingFoodball();
-            return;
-        }
-
-        ++iter;
+        scoreDisplay_.rewardPlayerForEatingFoodball();
     }
 }
 
 void GameEngine::checkAndProcessCollisionWithPowerball()
 {
-    auto iter = std::begin(powerballGraphicsItems_);
-
-    for(auto& powerballGraphicalItem : powerballGraphicsItems_)
+    if(ballItemsManager_.checkAndProcessCollisionWithPowerball(pacman_))
     {
-        if(pacman_.collidesWithItem(powerballGraphicalItem.get()))
+        scoreDisplay_.rewardPlayerForEatingPowerball();
+
+        for(GhostBase* ghost : ghosts_)
         {
-            powerballGraphicsItems_.erase(iter);
-            scoreDisplay_.rewardPlayerForEatingPowerball();
-
-            for(GhostBase* ghost : ghosts_)
-            {
-                ghost->scare();
-            }
-
-            return;
+            ghost->scare();
         }
-
-        ++iter;
     }
 }
 
@@ -210,9 +159,8 @@ void GameEngine::togglePause()
 
         for(MovableCharacterInterface* movableCharacter : movableCharacters)
         {
-            movableCharacter->resumeMovement();
+            movableCharacter->startMovement();
         }
-
 
         gameState_ = GameState::gameRunning;
     }
@@ -224,7 +172,7 @@ void GameEngine::gameTickHandler()
     checkAndProcessCollisionWithFoodball();
     checkAndProcessCollisionWithPowerball();
 
-    if(gameState_ == GameState::gameRunning && foodballGraphicsItems_.empty())
+    if(gameState_ == GameState::gameRunning && ballItemsManager_.getRemainingFoodballsCount() == 0)
     {
         endGame(GameResult::gameWin);
     }
@@ -238,7 +186,6 @@ void GameEngine::sceneUpdateHandler()
 void GameEngine::pacmanMovementHandler()
 {
     pacman_.move();
-    pacman_.advanceAnimation();
 }
 
 void GameEngine::ghostMovementHandler(GhostBase* ghost)
@@ -256,46 +203,52 @@ void GameEngine::ghostMovementHandler(GhostBase* ghost)
     }
     else
     {
-        ghost->move(pacman_.getX(), pacman_.getY());
-        ghost->advanceAnimation();
+        ghost->move(Coordinates{pacman_.getCoordinates().x_, pacman_.getCoordinates().y_});
     }
 }
 
-void GameEngine::processKey(const QString& key)
+void GameEngine::processKey(const Key key)
 {
     if(gameState_ == GameState::gameRunning)
     {
-        if(key == "left")
+        if(key == Key::left)
         {
             pacman_.setNextDirection(Direction::left);
         }
-        else if(key == "right")
+        else if(key == Key::right)
         {
             pacman_.setNextDirection(Direction::right);
         }
-        else if(key == "up")
+        else if(key == Key::up)
         {
             pacman_.setNextDirection(Direction::up);
         }
-        else if(key == "down")
+        else if(key == Key::down)
         {
             pacman_.setNextDirection(Direction::down);
         }
-        else if(key == "pause")
+        else if(key == Key::pause)
         {
             togglePause();
         }
     }
-    else if(gameState_ == GameState::beforeFirstRun || gameState_ == GameState::gameStopped)
+    else if(gameState_ == GameState::beforeFirstRun)
     {
-        if(key == "space")
+        if(key == Key::space)
         {
             startGame();
         }
     }
+    else if(gameState_ == GameState::gameStopped)
+    {
+        if(key == Key::space)
+        {
+            emit restartGame();
+        }
+    }
     else if(gameState_ == GameState::gamePaused)
     {
-        if(key == "pause")
+        if(key == Key::pause)
         {
             togglePause();
         }

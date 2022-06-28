@@ -6,6 +6,7 @@ class ScoreDisplay : public QGraphicsItem
 {
 public:
     ScoreDisplay();
+    ~ScoreDisplay() override;
 
     [[nodiscard]] int getScore() const {return score_;}
 

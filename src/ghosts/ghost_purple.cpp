@@ -1,14 +1,19 @@
-#include "ghost_purple.h"
+#include "ghosts/ghost_purple.h"
 
-GhostPurple::GhostPurple() : GhostBase(startingX_, startingY_, startTimeout_)
+GhostPurple::GhostPurple(const GameMap& gameMap) : GhostBase(startingCoordinates_, startTimeout_, gameMap)
 {
     loadImages(getImagesUrls());
+}
+
+GhostPurple::~GhostPurple()
+{
+
 }
 
 void GhostPurple::reset()
 {
     GhostBase::reset();
-    setCoordinates(startingX_, startingY_);
+    setCoordinates(startingCoordinates_);
 }
 
 QVector<std::string> GhostPurple::getImagesUrls()

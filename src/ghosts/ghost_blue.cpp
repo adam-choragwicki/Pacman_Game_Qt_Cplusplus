@@ -1,14 +1,19 @@
-#include "ghost_blue.h"
+#include "ghosts/ghost_blue.h"
 
-GhostBlue::GhostBlue() : GhostBase(startingX_, startingY_, startTimeout_)
+GhostBlue::GhostBlue(const GameMap& gameMap) : GhostBase(startingCoordinates_, startTimeout_, gameMap)
 {
     loadImages(getImagesUrls());
+}
+
+GhostBlue::~GhostBlue()
+{
+
 }
 
 void GhostBlue::reset()
 {
     GhostBase::reset();
-    setCoordinates(startingX_, startingY_);
+    setCoordinates(startingCoordinates_);
 }
 
 QVector<std::string> GhostBlue::getImagesUrls()

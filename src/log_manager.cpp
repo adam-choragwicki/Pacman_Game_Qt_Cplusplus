@@ -2,7 +2,6 @@
 
 #include <ctime>
 #include <iomanip>
-#include <QDebug>
 
 std::ofstream logFile;
 LogManager logManager;

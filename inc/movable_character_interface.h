@@ -1,26 +1,27 @@
 #pragma once
 
 #include "common.h"
+#include "game_map.h"
+#include "coordinates.h"
+
+#include <chrono>
+#include <memory>
 
 class MovableCharacterInterface
 {
 public:
-    MovableCharacterInterface(int x, int y, Direction initialDirection);
+    MovableCharacterInterface(const Coordinates& coordinates, Direction initialDirection, const GameMap& gameMap);
 
     virtual void advanceAnimation() = 0;
     virtual void startMovement() = 0;
     virtual void stopMovement() = 0;
-    virtual void resumeMovement() = 0;
     virtual void reset() = 0;
 
-    [[nodiscard]] int getX() const {return x_;}
-    [[nodiscard]] int getY() const {return y_;}
-
+    [[nodiscard]] const Coordinates& getCoordinates() const {return coordinates_;}
+    void setCoordinates(const Coordinates& coordinates){coordinates_ = coordinates;}
     void setNextDirection(Direction direction) {nextDirection_ = direction;}
 
 protected:
-    void setCoordinates(int x, int y);
-
     void processNewDirection();
     void validateAndProcessMovement();
     void checkAndProcessGameAreaBoundaryReach();
@@ -29,13 +30,13 @@ protected:
     const int offsetX_ = -15;
     const int offsetY_ = -15;
 
-    const int normalSpeed_ = 6;
-    const int reducedSpeed_ = 50;
+    const std::chrono::milliseconds normalSpeed_ {6};
+    const std::chrono::milliseconds reducedSpeed_ {50};
 
-    int x_;
-    int y_;
+    Coordinates coordinates_;
     int animationState_{};
     bool moving_{};
     Direction direction_;
     Direction nextDirection_;
+    const GameMap& gameMap_;
 };

@@ -1,9 +1,17 @@
 #include "screen_text_display.h"
+#include "drawer.h"
 
 ScreenTextDisplay::ScreenTextDisplay()
 {
     gameResult_ = GameResult::noResultYet;
     score_ = 0;
+
+    Drawer::drawItem(this);
+}
+
+ScreenTextDisplay::~ScreenTextDisplay()
+{
+    Drawer::eraseItem(this);
 }
 
 QRectF ScreenTextDisplay::boundingRect() const

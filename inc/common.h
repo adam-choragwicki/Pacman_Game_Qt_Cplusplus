@@ -15,3 +15,8 @@ enum class GameResult
     gameLost,
     gameWin
 };
+
+enum class Key
+{
+    left, right, up, down, pause, space
+};

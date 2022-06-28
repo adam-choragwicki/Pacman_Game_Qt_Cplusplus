@@ -1,14 +1,19 @@
-#include "ghost_red.h"
+#include "ghosts/ghost_red.h"
 
-GhostRed::GhostRed() : GhostBase(startingX_, startingY_, startTimeout_)
+GhostRed::GhostRed(const GameMap& gameMap) : GhostBase(startingCoordinates_, startTimeout_, gameMap)
 {
     loadImages(getImagesUrls());
+}
+
+GhostRed::~GhostRed()
+{
+
 }
 
 void GhostRed::reset()
 {
     GhostBase::reset();
-    setCoordinates(afterRespawnX_, afterRespawnY_);
+    setCoordinates(coordinatesAfterRespawn_);
 }
 
 QVector<std::string> GhostRed::getImagesUrls()

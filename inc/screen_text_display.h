@@ -9,6 +9,8 @@ class ScreenTextDisplay : public QGraphicsItem
 {
 public:
     ScreenTextDisplay();
+    ~ScreenTextDisplay() override;
+
     void setScore(int score) {score_ = score;}
     void setGameResult(GameResult gameResult) {gameResult_ = gameResult;}
 

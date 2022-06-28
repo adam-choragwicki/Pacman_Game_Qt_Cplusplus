@@ -1,6 +1,7 @@
 #include "game_window.h"
 #include "ui_game_window.h"
 #include "drawer.h"
+#include "common.h"
 
 GameWindow::GameWindow(QWidget* parent) : QDialog(parent), ui_(new Ui::GameWindow)
 {
@@ -12,6 +13,7 @@ GameWindow::GameWindow(QWidget* parent) : QDialog(parent), ui_(new Ui::GameWindo
     Drawer::drawGameArena();
 
     gameEngine_ = std::make_unique<GameEngine>();
+    QObject::connect(gameEngine_.get(), &GameEngine::restartGame, this, &GameWindow::processRestartGameSlot);
 }
 
 GameWindow::~GameWindow()
@@ -40,30 +42,37 @@ void GameWindow::keyPressEvent(QKeyEvent *event)
     {
     case Qt::Key_Left:
     case Qt::Key_A:
-        gameEngine_->processKey("left");
+        gameEngine_->processKey(Key::left);
         break;
 
     case Qt::Key_Right:
     case Qt::Key_D:
-        gameEngine_->processKey("right");
+        gameEngine_->processKey(Key::right);
         break;
 
     case Qt::Key_Up:
     case Qt::Key_W:
-        gameEngine_->processKey("up");
+        gameEngine_->processKey(Key::up);
         break;
 
     case Qt::Key_Down:
     case Qt::Key_S:
-        gameEngine_->processKey("down");
+        gameEngine_->processKey(Key::down);
         break;
 
     case Qt::Key_P:
-        gameEngine_->processKey("pause");
+        gameEngine_->processKey(Key::pause);
         break;
 
     case Qt::Key_Space:
-        gameEngine_->processKey("space");
+        gameEngine_->processKey(Key::space);
         break;
     }
+}
+
+void GameWindow::processRestartGameSlot()
+{
+    gameEngine_.reset();
+    gameEngine_ = std::make_unique<GameEngine>();
+    QObject::connect(gameEngine_.get(), &GameEngine::restartGame, this, &GameWindow::processRestartGameSlot);
 }

@@ -1,10 +1,11 @@
 #include "ghost_base.h"
 #include "game_map.h"
 #include "pacman.h"
-#include <QRandomGenerator>
-#include <QDebug>
+#include "drawer.h"
 
-GhostBase::GhostBase(int x, int y, int startTimeout) : MovableCharacterInterface(x, y, Direction::up)
+#include <QRandomGenerator>
+
+GhostBase::GhostBase(const Coordinates& coordinates, std::chrono::seconds startTimeout, const GameMap& gameMap) : MovableCharacterInterface(coordinates, Direction::up, gameMap)
 {
     startTimer_.setSingleShot(true);
     scaredBlueStateTimer_.setSingleShot(true);
@@ -17,12 +18,19 @@ GhostBase::GhostBase(int x, int y, int startTimeout) : MovableCharacterInterface
 
     startTimer_.callOnTimeout(this, &GhostBase::setLeaveStartingBox);
 
-    connect(&scaredBlueStateTimer_, &QTimer::timeout, this, &GhostBase::transformToScaredWhite);
-    connect(&scaredWhiteStateTimer_, &QTimer::timeout, this, &GhostBase::transformToNoScared);
+    QObject::connect(&scaredBlueStateTimer_, &QTimer::timeout, this, &GhostBase::transformToScaredWhite);
+    QObject::connect(&scaredWhiteStateTimer_, &QTimer::timeout, this, &GhostBase::transformToNoScared);
 
     timeToLeaveStartingBox_ = false;
     scaredState_ = ScaredState::noScared;
     GhostBase::reset();
+
+    Drawer::drawItem(this);
+}
+
+GhostBase::~GhostBase()
+{
+    Drawer::eraseItem(this);
 }
 
 void GhostBase::reset()
@@ -50,28 +58,31 @@ void GhostBase::advanceAnimation()
     }
 }
 
-void GhostBase::move(int pacmanX, int pacmanY)
+void GhostBase::move(const Coordinates& pacmanCoordinates)
 {
+    const int pacmanX = pacmanCoordinates.x_;
+    const int pacmanY = pacmanCoordinates.y_;
+
     if(moving_)
     {
-        if((direction_ == Direction::right && y_ < pacmanY) || (direction_ == Direction::left && y_ > pacmanY))
+        if((direction_ == Direction::right && coordinates_.y_ < pacmanY) || (direction_ == Direction::left && coordinates_.y_ > pacmanY))
         {
-            if(direction_ == Direction::left && y_ > pacmanY)
+            if(direction_ == Direction::left && coordinates_.y_ > pacmanY)
             {
                 setNextDirection(Direction::up);
             }
-            else if(direction_ == Direction::right && y_ < pacmanY)
+            else if(direction_ == Direction::right && coordinates_.y_ < pacmanY)
             {
                 setNextDirection(Direction::down);
             }
         }
-        else if((direction_ == Direction::down && x_ < pacmanX) || (direction_ == Direction::up && x_ > pacmanX))
+        else if((direction_ == Direction::down && coordinates_.x_ < pacmanX) || (direction_ == Direction::up && coordinates_.x_ > pacmanX))
         {
-            if(direction_ == Direction::up && x_ > pacmanX)
+            if(direction_ == Direction::up && coordinates_.x_ > pacmanX)
             {
                 setNextDirection(Direction::left);
             }
-            else if(direction_ == Direction::down && x_ < pacmanX)
+            else if(direction_ == Direction::down && coordinates_.x_ < pacmanX)
             {
                 setNextDirection(Direction::right);
             }
@@ -85,19 +96,20 @@ void GhostBase::move(int pacmanX, int pacmanY)
     processNewDirection();
     validateAndProcessMovement();
     checkAndProcessGameAreaBoundaryReach();
+    advanceAnimation();
 }
 
 bool GhostBase::isInsideStartingBox() const
 {
-    return ((x_ > 209 && x_ < 406) && (y_ > 252 && y_ < 384));
+    return ((coordinates_.x_ > 209 && coordinates_.x_ < 406) && (coordinates_.y_ > 252 && coordinates_.y_ < 384));
 }
 
 void GhostBase::moveInsideStartingBox()
 {
     const int centerY = 318;
-    const int  maxVerticalMovementOffset = 15;
+    const int maxVerticalMovementOffset = 15;
 
-    if(y_ == centerY - maxVerticalMovementOffset || y_ == centerY + maxVerticalMovementOffset)
+    if((coordinates_.y_ == centerY - maxVerticalMovementOffset) || (coordinates_.y_ == centerY + maxVerticalMovementOffset))
     {
         if(direction_ == Direction::up)
         {
@@ -111,11 +123,11 @@ void GhostBase::moveInsideStartingBox()
 
     if(direction_ == Direction::up)
     {
-        y_ -= 1;
+        coordinates_.y_ = coordinates_.y_ - 1;
     }
     else if(direction_ == Direction::down)
     {
-        y_ += 1;
+        coordinates_.y_ = coordinates_.y_ + 1;
     }
 }
 
@@ -123,18 +135,18 @@ void GhostBase::moveOutOfStartingBox()
 {
     const int centerX = 307;
 
-    if(x_ > centerX)
+    if(coordinates_.x_ > centerX)
     {
-        x_ -= 1;
+        coordinates_.x_ = coordinates_.x_ - 1;
     }
-    else if(x_ < centerX)
+    else if(coordinates_.x_ < centerX)
     {
-        x_ += 1;
+        coordinates_.x_ = coordinates_.x_ + 1;
     }
 
-    if(x_ == centerX)
+    if(coordinates_.x_ == centerX)
     {
-        y_ -= 1;
+        coordinates_.y_ = coordinates_.y_ - 1;
     }
 }
 
@@ -149,32 +161,28 @@ void GhostBase::stopMovement()
     movementTimer_.stop();
 }
 
-void GhostBase::resumeMovement()
-{
-    movementTimer_.start();
-}
-
 void GhostBase::loadImages(const QVector<std::string>& imagesUrls)
 {
-    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&left1Pixmap_,  imagesUrls.at(0)},
-                                                              {&left2Pixmap_,  imagesUrls.at(1)},
+    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&left1Pixmap_,        imagesUrls.at(0)},
+                                                              {&left2Pixmap_,        imagesUrls.at(1)},
 
-                                                              {&right1Pixmap_,  imagesUrls.at(2)},
-                                                              {&right2Pixmap_,  imagesUrls.at(3)},
+                                                              {&right1Pixmap_,       imagesUrls.at(2)},
+                                                              {&right2Pixmap_,       imagesUrls.at(3)},
 
-                                                              {&up1Pixmap_, imagesUrls.at(4)},
-                                                              {&up2Pixmap_, imagesUrls.at(5)},
+                                                              {&up1Pixmap_,          imagesUrls.at(4)},
+                                                              {&up2Pixmap_,          imagesUrls.at(5)},
 
-                                                              {&down1Pixmap_, imagesUrls.at(6)},
-                                                              {&down2Pixmap_, imagesUrls.at(7)},
+                                                              {&down1Pixmap_,        imagesUrls.at(6)},
+                                                              {&down2Pixmap_,        imagesUrls.at(7)},
 
-                                                              {&scaredBlue1Pixmap_,    imagesUrls.at(8)},
-                                                              {&scaredBlue2Pixmap_,    imagesUrls.at(9)},
+                                                              {&scaredBlue1Pixmap_,  imagesUrls.at(8)},
+                                                              {&scaredBlue2Pixmap_,  imagesUrls.at(9)},
 
-                                                              {&scaredWhite1Pixmap_,    imagesUrls.at(10)},
-                                                              {&scaredWhite2Pixmap_,    imagesUrls.at(11)}};
+                                                              {&scaredWhite1Pixmap_, imagesUrls.at(10)},
+                                                              {&scaredWhite2Pixmap_, imagesUrls.at(11)}};
 
-    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair) {
+    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair)
+    {
         return pixmapToPathPair.first->load(QString::fromStdString(pixmapToPathPair.second));
     };
 
@@ -215,63 +223,63 @@ void GhostBase::transformToNoScared()
 
 QRectF GhostBase::boundingRect() const
 {
-    return QRect(x_ + offsetX_, y_ + offsetY_, diameter_, diameter_);
+    return QRect(coordinates_.x_ + offsetX_, coordinates_.y_ + offsetY_, diameter_, diameter_);
 }
 
 void GhostBase::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/)
 {
-    QRect boundingRect(x_ + offsetX_, y_ + offsetY_, diameter_, diameter_);
+    QRect boundingRect(coordinates_.x_ + offsetX_, coordinates_.y_ + offsetY_, diameter_, diameter_);
 
     if(scaredState_ == ScaredState::noScared)
     {
         switch(direction_)
         {
-        case Direction::left:
-            if(animationState_ == 0)
-            {
-                painter->drawPixmap(boundingRect, left1Pixmap_);
-            }
-            else
-            {
-                painter->drawPixmap(boundingRect, left2Pixmap_);
-            }
-            break;
+            case Direction::left:
+                if(animationState_ == 0)
+                {
+                    painter->drawPixmap(boundingRect, left1Pixmap_);
+                }
+                else
+                {
+                    painter->drawPixmap(boundingRect, left2Pixmap_);
+                }
+                break;
 
-        case Direction::right:
-            if(animationState_ == 0)
-            {
-                painter->drawPixmap(boundingRect, right1Pixmap_);
-            }
-            else
-            {
-                painter->drawPixmap(boundingRect, right2Pixmap_);
-            }
-            break;
+            case Direction::right:
+                if(animationState_ == 0)
+                {
+                    painter->drawPixmap(boundingRect, right1Pixmap_);
+                }
+                else
+                {
+                    painter->drawPixmap(boundingRect, right2Pixmap_);
+                }
+                break;
 
-        case Direction::down:
-            if(animationState_ == 0)
-            {
-                painter->drawPixmap(boundingRect, down1Pixmap_);
-            }
-            else
-            {
-                painter->drawPixmap(boundingRect, down2Pixmap_);
-            }
-            break;
+            case Direction::down:
+                if(animationState_ == 0)
+                {
+                    painter->drawPixmap(boundingRect, down1Pixmap_);
+                }
+                else
+                {
+                    painter->drawPixmap(boundingRect, down2Pixmap_);
+                }
+                break;
 
-        case Direction::up:
-            if(animationState_ == 0)
-            {
-                painter->drawPixmap(boundingRect, up1Pixmap_);
-            }
-            else
-            {
-                painter->drawPixmap(boundingRect, up2Pixmap_);
-            }
-            break;
+            case Direction::up:
+                if(animationState_ == 0)
+                {
+                    painter->drawPixmap(boundingRect, up1Pixmap_);
+                }
+                else
+                {
+                    painter->drawPixmap(boundingRect, up2Pixmap_);
+                }
+                break;
 
-        case Direction::none:
-            break;
+            case Direction::none:
+                throw std::runtime_error("Painting Ghost Direction::none");
         }
     }
     else if(scaredState_ == ScaredState::scaredBlue)

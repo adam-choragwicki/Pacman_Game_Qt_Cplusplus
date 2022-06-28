@@ -1,22 +1,31 @@
 #pragma once
 
-#include <QVector>
-#include <QPixmap>
+#include "coordinates.h"
+
+#include <QSet>
+#include <QPoint>
 
 class GameMap
 {
 public:
     GameMap();
-    static bool isPathPointValid(QPoint const& point);
-    static QVector<QPoint> const& getPathPoints() {return pathPoints_;}
-    [[nodiscard]] QVector<QPoint> generateFoodballPositions() const;
-    [[nodiscard]] QVector<QPoint> generatePowerballPositions() const;
+    ~GameMap();
+
+    [[nodiscard]] bool isPathPointValid(const QPoint& point) const;
+    [[nodiscard]] const QSet<QPoint>& getFoodballPositions() const {return foodballPositions_;};
+    [[nodiscard]] const QSet<QPoint>& getPowerballPositions() const {return powerballPositions_;};
 
 private:
-    void generatePathPoints(int startX, int startY, int endX, int endY);
+    static const int targetFoodballCount_ = 88;
+    static const int targetPowerballCount_ = 4;
 
-    const int targetFoodballCount_ = 88;
-    const int targetPowerballCount_ = 4;
+    inline static QSet<QPoint> pathPoints_;
+    inline static QSet<QPoint> foodballPositions_;
+    inline static QSet<QPoint> powerballPositions_;
+    inline static bool allGenerated = false;
 
-    static QVector<QPoint> pathPoints_;
+    void generatePathPointsBetweenPoints(int startX, int startY, int endX, int endY);
+    void generateAllPaths();
+    void generateFoodballPositions() const;
+    void generatePowerballPositions() const;
 };
