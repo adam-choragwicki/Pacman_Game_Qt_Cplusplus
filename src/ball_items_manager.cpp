@@ -1,64 +1,42 @@
 #include "ball_items_manager.h"
-#include "drawer.h"
 
-BallItemsManager::BallItemsManager()
+BallItemsManager::BallItemsManager(const GameMap& gameMap)
 {
-
+    createBalls(gameMap);
 }
 
-BallItemsManager::~BallItemsManager()
-{
-
-}
-
-void BallItemsManager::populateMapWithBalls(const GameMap& gameMap)
+void BallItemsManager::createBalls(const GameMap& gameMap)
 {
     for(auto& foodballPosition : gameMap.getFoodballPositions())
     {
-        foodballGraphicsItems_.push_back(std::make_unique<Foodball>(foodballPosition));
+        foodballs_.emplace_back(foodballPosition);
     }
 
     for(auto& powerballPosition : gameMap.getPowerballPositions())
     {
-        powerballGraphicsItems_.push_back(std::make_unique<Powerball>(powerballPosition));
+        powerballs_.emplace_back(powerballPosition);
     }
 }
 
-void BallItemsManager::removeBalls()
+void BallItemsManager::resetBalls()
 {
-    foodballGraphicsItems_.clear();
-    powerballGraphicsItems_.clear();
-}
-
-bool BallItemsManager::checkAndProcessCollisionWithFoodball(const QGraphicsItem& pacman)
-{
-    for(auto iter = foodballGraphicsItems_.begin(); iter != foodballGraphicsItems_.end(); ++iter)
+    for(auto& foodball : foodballs_)
     {
-        if(pacman.collidesWithItem(iter->get()))
-        {
-            foodballGraphicsItems_.erase(iter);
-            return true;
-        }
+        foodball.setEaten(false);
     }
 
-    return false;
-}
-
-bool BallItemsManager::checkAndProcessCollisionWithPowerball(const QGraphicsItem& pacman)
-{
-    for(auto iter = powerballGraphicsItems_.begin(); iter != powerballGraphicsItems_.end(); ++iter)
+    for(auto& powerball : powerballs_)
     {
-        if(pacman.collidesWithItem(iter->get()))
-        {
-            powerballGraphicsItems_.erase(iter);
-            return true;
-        }
+        powerball.setEaten(false);
     }
-
-    return false;
 }
 
 uint BallItemsManager::getRemainingFoodballsCount()
 {
-    return foodballGraphicsItems_.size();
+    auto isNotEaten = [](const Foodball& foodball)
+    {
+        return !foodball.isEaten();
+    };
+
+    return std::ranges::count_if(foodballs_, isNotEaten);
 }

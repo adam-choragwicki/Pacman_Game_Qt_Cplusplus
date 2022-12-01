@@ -1,32 +1,18 @@
 #include "ball.h"
-#include "drawer.h"
 
-#include <QPainter>
-
-Ball::Ball(const Coordinates& coordinates, int diameter) : coordinates_(coordinates), diameter_(diameter)
+AbstractBall::AbstractBall(const Coordinates& coordinates) : coordinates_(coordinates)
 {
-    Drawer::drawItem(this);
+    eaten_ = false;
 }
 
-Ball::~Ball()
+AbstractBall::~AbstractBall() = default;
+
+Foodball::Foodball(const Coordinates& coordinates) : AbstractBall(coordinates)
 {
-    Drawer::eraseItem(this);
+
 }
 
-QRectF Ball::boundingRect() const
+Powerball::Powerball(const Coordinates& coordinates) : AbstractBall(coordinates)
 {
-    return QRect(coordinates_.x_, coordinates_.y_, diameter_, diameter_);
+
 }
-
-void Ball::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
-{
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(Qt::white));
-    painter->drawEllipse(coordinates_.x_, coordinates_.y_, diameter_, diameter_);
-}
-
-Foodball::Foodball(const Coordinates& coordinates) : Ball(coordinates, diameter_)
-{}
-
-Powerball::Powerball(const Coordinates& coordinates) : Ball(coordinates, diameter_)
-{}

@@ -1,12 +1,11 @@
-#include "game_window.h"
+#include "game.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication application(argc, argv);
-    GameWindow gameWindow;
-    gameWindow.show();
+    Game game;
 
     return QApplication::exec();
 }

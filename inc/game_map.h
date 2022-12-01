@@ -2,30 +2,32 @@
 
 #include "coordinates.h"
 
-#include <QSet>
-#include <QPoint>
+#include <set>
+#include <array>
 
 class GameMap
 {
 public:
     GameMap();
-    ~GameMap();
 
-    [[nodiscard]] bool isPathPointValid(const QPoint& point) const;
-    [[nodiscard]] const QSet<QPoint>& getFoodballPositions() const {return foodballPositions_;};
-    [[nodiscard]] const QSet<QPoint>& getPowerballPositions() const {return powerballPositions_;};
+    static const int TARGET_FOODBALLS_COUNT = 88;
+    static const int TARGET_POWERBALLS_COUNT = 4;
+
+    [[nodiscard]] bool isPathPointValid(const Coordinates& coordinates) const;
+
+    [[nodiscard]] const std::set<Coordinates>& getFoodballPositions() const
+    { return FOODBALL_POSITIONS; };
+
+    [[nodiscard]] const std::set<Coordinates>& getPowerballPositions() const
+    { return POWERBALL_POSITIONS; };
 
 private:
-    static const int targetFoodballCount_ = 88;
-    static const int targetPowerballCount_ = 4;
+    const std::set<Coordinates> PATH_POINTS;
+    const std::set<Coordinates> POWERBALL_POSITIONS;
+    const std::set<Coordinates> FOODBALL_POSITIONS;
 
-    inline static QSet<QPoint> pathPoints_;
-    inline static QSet<QPoint> foodballPositions_;
-    inline static QSet<QPoint> powerballPositions_;
-    inline static bool allGenerated = false;
-
-    void generatePathPointsBetweenPoints(int startX, int startY, int endX, int endY);
-    void generateAllPaths();
-    void generateFoodballPositions() const;
-    void generatePowerballPositions() const;
+    std::set<Coordinates> generatePathPointsBetweenPoints(int startX, int startY, int endX, int endY);
+    std::set<Coordinates> generatePathPoints();
+    std::set<Coordinates> generateFoodballPositions();
+    std::set<Coordinates> generatePowerballPositions();
 };

@@ -2,38 +2,36 @@
 
 #include "coordinates.h"
 
-#include <QGraphicsItem>
-
-class Ball : public QGraphicsItem
+class AbstractBall
 {
-protected:
-    Ball(const Coordinates& coordinates, int diameter);
-    ~Ball() override;
+public:
+    explicit AbstractBall(const Coordinates& coordinates);
+    virtual ~AbstractBall() = 0;
 
-    [[nodiscard]] QRectF boundingRect() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+    [[nodiscard]] const Coordinates& getCoordinates() const
+    { return coordinates_; }
+
+    [[nodiscard]] bool isEaten() const
+    { return eaten_; }
+
+    void setEaten(bool eaten)
+    { eaten_ = eaten; }
 
 private:
     const Coordinates coordinates_;
-    const int diameter_;
+    bool eaten_;
 };
 
-class Foodball : public Ball
+class Foodball : public AbstractBall
 {
 public:
     explicit Foodball(const Coordinates& coordinates);
     ~Foodball() override = default;
-
-private:
-    static const int diameter_ = 7;
 };
 
-class Powerball : public Ball
+class Powerball : public AbstractBall
 {
 public:
     explicit Powerball(const Coordinates& coordinates);
     ~Powerball() override = default;
-
-private:
-    static const int diameter_ = 15;
 };

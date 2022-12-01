@@ -1,6 +1,5 @@
 #include "common_test_fixture.h"
 #include "pacman.h"
-#include "game_map.h"
 
 class PacmanTest : public CommonTestFixture
 {
@@ -19,7 +18,7 @@ TEST_F(PacmanTest, MovePacman)
 
     EXPECT_EQ(pacman_.getCoordinates(), Coordinates(319, 514));
 
-    pacman_.setNextDirection(Direction::right);
+    pacman_.setNextDirection(Direction::RIGHT);
     pacman_.move();
 
     EXPECT_EQ(pacman_.getCoordinates(), Coordinates(320, 514));

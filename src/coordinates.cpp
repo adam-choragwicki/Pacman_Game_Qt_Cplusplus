@@ -31,9 +31,6 @@ Coordinates::Coordinates(int x, int y) : x_(x), y_(y)
 
 }
 
-Coordinates::Coordinates(const QPoint& coordinates) : x_(coordinates.x()), y_(coordinates.y())
-{}
-
 Coordinates Coordinates::operator+(const std::pair<int, int>& coordinates) const
 {
     return {x_ + coordinates.first, y_ + coordinates.second};
@@ -45,4 +42,10 @@ Coordinates& Coordinates::operator+=(const Coordinates& coordinates)
     y_ += coordinates.y_;
 
     return *this;
+}
+
+std::ostream& operator<<(std::ostream& os, const Coordinates& coordinates)
+{
+    os << "[" << coordinates.x_ << "," << coordinates.y_ << "]";
+    return os;
 }

@@ -1,19 +1,15 @@
 #pragma once
 
 #include <utility>
-#include <QPoint>
+#include <iostream>
 
 struct Coordinates
 {
+    friend std::ostream& operator<<(std::ostream& os, const Coordinates& coordinates);
+
     Coordinates(int x, int y);
-    Coordinates(const QPoint& coordinates);
     Coordinates operator+(const std::pair<int, int>& coordinates) const;
     Coordinates& operator+=(const Coordinates& coordinates);
-
-    operator QPoint()
-    {
-        return {x_, y_};
-    }
 
     int x_;
     int y_;

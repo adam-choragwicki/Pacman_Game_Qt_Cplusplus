@@ -16,43 +16,44 @@ set(SOURCES_DIR ${PROJECT_ROOT}/src)
 set(UI_FORMS_DIR ${PROJECT_ROOT}/ui_forms)
 set(RESOURCE_FILES_DIR ${PROJECT_ROOT}/resource_files)
 
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${UI_FORMS_DIR})
-
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(SOURCE_FILES
-    ${SOURCES_DIR}/main.cpp
-    ${INCLUDES_DIR}/common.h
-    ${INCLUDES_DIR}/game_window.h ${SOURCES_DIR}/game_window.cpp ${UI_FORMS_DIR}/game_window.ui
-    ${INCLUDES_DIR}/game_engine.h ${SOURCES_DIR}/game_engine.cpp
-    ${INCLUDES_DIR}/movable_character_interface.h ${SOURCES_DIR}/movable_character_interface.cpp
-    ${INCLUDES_DIR}/pacman.h ${SOURCES_DIR}/pacman.cpp
-    ${INCLUDES_DIR}/ghost_base.h ${SOURCES_DIR}/ghost_base.cpp
-    ${INCLUDES_DIR}/ghosts/ghost_blue.h ${SOURCES_DIR}/ghosts/ghost_blue.cpp
-    ${INCLUDES_DIR}/ghosts/ghost_orange.h ${SOURCES_DIR}/ghosts/ghost_orange.cpp
-    ${INCLUDES_DIR}/ghosts/ghost_purple.h ${SOURCES_DIR}/ghosts/ghost_purple.cpp
-    ${INCLUDES_DIR}/ghosts/ghost_red.h ${SOURCES_DIR}/ghosts/ghost_red.cpp
-    ${INCLUDES_DIR}/ball.h ${SOURCES_DIR}/ball.cpp
-    ${INCLUDES_DIR}/game_map.h ${SOURCES_DIR}/game_map.cpp
-    ${INCLUDES_DIR}/drawer.h ${SOURCES_DIR}/drawer.cpp
-    ${INCLUDES_DIR}/score_display.h ${SOURCES_DIR}/score_display.cpp
-    ${INCLUDES_DIR}/screen_text_display.h ${SOURCES_DIR}/screen_text_display.cpp
-    ${INCLUDES_DIR}/log_manager.h ${SOURCES_DIR}/log_manager.cpp
-    ${INCLUDES_DIR}/ball_items_manager.h ${SOURCES_DIR}/ball_items_manager.cpp
-    ${INCLUDES_DIR}/coordinates.h ${SOURCES_DIR}/coordinates.cpp
-    ${RESOURCE_FILES_DIR}/images.qrc src/ball.cpp inc/ball.h)
+        ${SOURCES_DIR}/main.cpp
+        ${INCLUDES_DIR}/game.h ${SOURCES_DIR}/game.cpp
+        ${INCLUDES_DIR}/common.h
+        ${INCLUDES_DIR}/view/main_window.h ${SOURCES_DIR}/view/main_window.cpp
+        ${INCLUDES_DIR}/view/score_display.h ${SOURCES_DIR}/view/score_display.cpp
+        ${INCLUDES_DIR}/view/screen_text_display.h ${SOURCES_DIR}/view/screen_text_display.cpp
+        ${INCLUDES_DIR}/controller.h ${SOURCES_DIR}/controller.cpp
+        ${INCLUDES_DIR}/model.h ${SOURCES_DIR}/model.cpp
+        ${INCLUDES_DIR}/movable_character.h ${SOURCES_DIR}/movable_character.cpp
+        ${INCLUDES_DIR}/pacman.h ${SOURCES_DIR}/pacman.cpp
+        ${INCLUDES_DIR}/ghosts/abstract_ghost.h ${SOURCES_DIR}/ghosts/abstract_ghost.cpp
+        ${INCLUDES_DIR}/ghosts/blue_ghost.h ${SOURCES_DIR}/ghosts/blue_ghost.cpp
+        ${INCLUDES_DIR}/ghosts/orange_ghost.h ${SOURCES_DIR}/ghosts/orange_ghost.cpp
+        ${INCLUDES_DIR}/ghosts/purple_ghost.h ${SOURCES_DIR}/ghosts/purple_ghost.cpp
+        ${INCLUDES_DIR}/ghosts/red_ghost.h ${SOURCES_DIR}/ghosts/red_ghost.cpp
+        ${INCLUDES_DIR}/ball.h ${SOURCES_DIR}/ball.cpp
+        ${INCLUDES_DIR}/game_map.h ${SOURCES_DIR}/game_map.cpp
+        ${INCLUDES_DIR}/log_manager.h
+        ${INCLUDES_DIR}/ball_items_manager.h ${SOURCES_DIR}/ball_items_manager.cpp
+        ${INCLUDES_DIR}/coordinates.h ${SOURCES_DIR}/coordinates.cpp
+        ${RESOURCE_FILES_DIR}/images.qrc src/ball.cpp inc/ball.h
+        src/view/game_arena.cpp inc/view/game_arena.h)
 
-add_library(libPacman ${SOURCE_FILES})
+
+add_library(libPacman ${SOURCE_FILES} src/view/pacman_frontend.cpp inc/view/pacman_frontend.h src/view/abstract_ghost_frontend.cpp inc/view/abstract_ghost_frontend.h src/view/blue_ghost_frontend.cpp inc/view/blue_ghost_frontend.h src/view/red_ghost_frontend.cpp inc/view/red_ghost_frontend.h src/view/purple_ghost_frontend.cpp inc/view/purple_ghost_frontend.h src/view/orange_ghost_frontend.cpp inc/view/orange_ghost_frontend.h src/view/ball_frontend.cpp inc/view/ball_frontend.h inc/score_manager.h src/screen_text_manager.cpp inc/screen_text_manager.h inc/collision_manager.cpp inc/collision_manager.h inc/view/gui_config.h src/speed_manager.cpp inc/speed_manager.h)
 target_include_directories(libPacman PUBLIC ${INCLUDES_DIR})
 target_link_libraries(libPacman Qt${QT_VERSION_MAJOR}::Widgets)
 
 add_executable(Pacman WIN32 ${SOURCE_FILES})
 target_link_libraries(Pacman PRIVATE libPacman)
 
-if(WIN32)
+if (WIN32)
     set_target_properties(Pacman PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT}/executable_windows)
-elseif(UNIX)
+elseif (UNIX)
     set_target_properties(Pacman PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT}/executable_linux)
-endif(WIN32)
+endif (WIN32)
 
 add_subdirectory(tests)

@@ -2,21 +2,20 @@
 
 enum class Direction
 {
-    none,
-    left,
-    up,
-    down,
-    right
+    NONE, LEFT, UP, DOWN, RIGHT
+};
+
+enum class GameState
+{
+    BEFORE_FIRST_RUN, RUNNING, STOPPED, PAUSED
 };
 
 enum class GameResult
 {
-    noResultYet,
-    gameLost,
-    gameWin
+    NO_RESULT_YET, LOST, WIN
 };
 
 enum class Key
 {
-    left, right, up, down, pause, space
+    LEFT, RIGHT, UP, DOWN, PAUSE, SPACE
 };
