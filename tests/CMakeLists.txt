@@ -1,15 +1,10 @@
-cmake_minimum_required(VERSION 3.10)
-
-project(MinesweeperTest LANGUAGES CXX)
-
 set(TEST_SOURCES
-    src/main.cpp
-    src/pacman_test.cpp
-    src/ghost_test.cpp)
+        src/main.cpp
+        src/pacman_test.cpp
+        src/ghost_test.cpp)
 
-add_subdirectory(lib)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+add_subdirectory(googletest)
 
-add_executable(PacmanTest_run ${TEST_SOURCES} ${RESOURCE_FILES_DIR}/images.qrc)
-target_include_directories(PacmanTest_run PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/inc)
-target_link_libraries(PacmanTest_run gtest gtest_main libPacman)
+add_executable(${PROJECT_NAME}Test_run ${TEST_SOURCES})
+target_include_directories(${PROJECT_NAME}Test_run PRIVATE inc)
+target_link_libraries(${PROJECT_NAME}Test_run PRIVATE gtest lib${PROJECT_NAME}Backend)

@@ -1,58 +1,77 @@
 #include "common_test_fixture.h"
-#include "ghosts/blue_ghost.h"
-#include "ghosts/orange_ghost.h"
-#include "ghosts/purple_ghost.h"
-#include "ghosts/red_ghost.h"
-#include "pacman.h"
+#include "model/ghosts/blue_ghost.h"
+#include "model/ghosts/orange_ghost.h"
+#include "model/ghosts/purple_ghost.h"
+#include "model/ghosts/red_ghost.h"
+#include "model/pacman.h"
+#include "movement_manager.h"
 
 class GhostTest : public CommonTestFixture
 {
-protected:
-    BlueGhost blueGhost_{gameMap_};
-    OrangeGhost orangeGhost_{gameMap_};
-    PurpleGhost purpleGhost_{gameMap_};
-    RedGhost redGhost_{gameMap_};
 };
 
-TEST_F(GhostTest, CreateGhosts)
+TEST_F(GhostTest, CreateBlueGhost)
 {
-    EXPECT_EQ(blueGhost_.getCoordinates(), Coordinates(265, 318));
-    EXPECT_EQ(orangeGhost_.getCoordinates(), Coordinates(349, 318));
-    EXPECT_EQ(purpleGhost_.getCoordinates(), Coordinates(307, 318));
-    EXPECT_EQ(redGhost_.getCoordinates(), Coordinates(307, 252));
+    BlueGhost blueGhost;
+    EXPECT_EQ(blueGhost.getCoordinates(), Coordinates(265, 318));
+}
+
+TEST_F(GhostTest, CreateOrangeGhost)
+{
+    OrangeGhost orangeGhost;
+    EXPECT_EQ(orangeGhost.getCoordinates(), Coordinates(349, 318));
+}
+
+TEST_F(GhostTest, CreatePurpleGhost)
+{
+    PurpleGhost purpleGhost;
+    EXPECT_EQ(purpleGhost.getCoordinates(), Coordinates(307, 318));
+}
+
+TEST_F(GhostTest, CreateRedGhost)
+{
+    RedGhost redGhost;
+    EXPECT_EQ(redGhost.getCoordinates(), Coordinates(307, 252));
 }
 
 TEST_F(GhostTest, ResetGhost)
 {
-    Pacman pacman{gameMap_};
+    Pacman pacman;
 
-    blueGhost_.move(pacman.getCoordinates());
-    orangeGhost_.move(pacman.getCoordinates());
-    purpleGhost_.move(pacman.getCoordinates());
-    redGhost_.move(pacman.getCoordinates());
+    BlueGhost blueGhost;
+    OrangeGhost orangeGhost;
+    PurpleGhost purpleGhost;
+    RedGhost redGhost;
 
-    blueGhost_.move(pacman.getCoordinates());
-    orangeGhost_.move(pacman.getCoordinates());
-    purpleGhost_.move(pacman.getCoordinates());
-    redGhost_.move(pacman.getCoordinates());
+    GhostMovementManager ghostMovementManager;
 
-    blueGhost_.move(pacman.getCoordinates());
-    orangeGhost_.move(pacman.getCoordinates());
-    purpleGhost_.move(pacman.getCoordinates());
-    redGhost_.move(pacman.getCoordinates());
+    ghostMovementManager.processMove(blueGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(orangeGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(purpleGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(redGhost, pacman.getCoordinates(), pathPoints_);
 
-    blueGhost_.move(pacman.getCoordinates());
-    orangeGhost_.move(pacman.getCoordinates());
-    purpleGhost_.move(pacman.getCoordinates());
-    redGhost_.move(pacman.getCoordinates());
+    ghostMovementManager.processMove(blueGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(orangeGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(purpleGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(redGhost, pacman.getCoordinates(), pathPoints_);
 
-    blueGhost_.reset();
-    orangeGhost_.reset();
-    purpleGhost_.reset();
-    redGhost_.reset();
+    ghostMovementManager.processMove(blueGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(orangeGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(purpleGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(redGhost, pacman.getCoordinates(), pathPoints_);
 
-    EXPECT_EQ(blueGhost_.getCoordinates(), Coordinates(265, 318));
-    EXPECT_EQ(orangeGhost_.getCoordinates(), Coordinates(349, 318));
-    EXPECT_EQ(purpleGhost_.getCoordinates(), Coordinates(307, 318));
-    EXPECT_EQ(redGhost_.getCoordinates(), Coordinates(307, 318));
+    ghostMovementManager.processMove(blueGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(orangeGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(purpleGhost, pacman.getCoordinates(), pathPoints_);
+    ghostMovementManager.processMove(redGhost, pacman.getCoordinates(), pathPoints_);
+
+    blueGhost.reset();
+    orangeGhost.reset();
+    purpleGhost.reset();
+    redGhost.reset();
+
+    EXPECT_EQ(blueGhost.getCoordinates(), Coordinates(265, 318));
+    EXPECT_EQ(orangeGhost.getCoordinates(), Coordinates(349, 318));
+    EXPECT_EQ(purpleGhost.getCoordinates(), Coordinates(307, 318));
+    EXPECT_EQ(redGhost.getCoordinates(), Coordinates(307, 252));
 }

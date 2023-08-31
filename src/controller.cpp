@@ -1,211 +1,201 @@
 #include "controller.h"
-#include "log_manager.h"
 #include "collision_manager.h"
+#include "config.h"
+#include "movement_manager.h"
+#include <QKeyEvent>
 
-Controller::Controller(Model* model, MainWindow* view)
+Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(view)
 {
-    model_ = model;
-    view_ = view;
-
-    //todo should it be here?
-    frontendUpdateTimer_.setInterval(FRONTEND_UPDATE_FREQUENCY);
-    frontendUpdateTimer_.start();
-
     subscribeToKeyEvents();
 
-    connect(&model_->getPacman().getMovementTimer(), &QTimer::timeout, this, &Controller::pacmanMovementHandler);
+    view_.getFrontendUpdateTimer().setInterval(Config::Timing::FRONTEND_UPDATE_FREQUENCY);
+    view_.getFrontendUpdateTimer().start();
 
-    connect(&model_->getBlueGhost().getMovementTimer(), &QTimer::timeout, this, [this]()
+    connect(&view_.getFrontendUpdateTimer(), &QTimer::timeout, this, &Controller::frontendUpdateHandler);
+
+    connect(&model_.getPacmanTimingManager().getMovementTimer(), &QTimer::timeout, this, &Controller::pacmanMovementHandler);
+
+    for(const auto& ghostAndTimingManagerPair : model_.getGhostToGhostTimingManagerMapping())
     {
-        ghostMovementHandler(&model_->getBlueGhost());
-    });
-
-    connect(&model_->getOrangeGhost().getMovementTimer(), &QTimer::timeout, this, [this]()
-    {
-        ghostMovementHandler(&model_->getOrangeGhost());
-    });
-
-    connect(&model_->getPurpleGhost().getMovementTimer(), &QTimer::timeout, this, [this]()
-    {
-        ghostMovementHandler(&model_->getPurpleGhost());
-    });
-
-    connect(&model_->getRedGhost().getMovementTimer(), &QTimer::timeout, this, [this]()
-    {
-        ghostMovementHandler(&model_->getRedGhost());
-    });
-
-    connect(&frontendUpdateTimer_, &QTimer::timeout, this, &Controller::frontendUpdateHandler);
+        connect(&ghostAndTimingManagerPair.second->getMovementTimer(), &QTimer::timeout, this, [&]()
+        {
+            ghostMovementHandler(*ghostAndTimingManagerPair.first);
+        });
+    }
 }
 
 void Controller::subscribeToKeyEvents()
 {
-    connect(view_, &MainWindow::keyPressedEvent, this, &Controller::processKeyPressedEvent);
+    connect(&view_, &MainWindow::keyPressedEvent, this, &Controller::processKeyPressedEvent);
 }
 
-void Controller::processKeyPressedEvent(Key key)
+void Controller::processKeyPressedEvent(QKeyEvent* keyEvent)
 {
-    GameState gameState = model_->getGameState();
+    switch(keyEvent->key())
+    {
+        case Qt::Key_Left:
+        case Qt::Key_A:
+            if(model_.getGameStateManager().isRunning())
+            {
+                model_.getPacman().setNextDirection(Direction::LEFT);
+            }
+            break;
 
-    if(gameState == GameState::RUNNING)
-    {
-        Pacman& pacman = model_->getPacman();
+        case Qt::Key_Right:
+        case Qt::Key_D:
+            if(model_.getGameStateManager().isRunning())
+            {
+                model_.getPacman().setNextDirection(Direction::RIGHT);
+            }
+            break;
 
-        if(key == Key::LEFT)
-        {
-            pacman.setNextDirection(Direction::LEFT);
-        }
-        else if(key == Key::RIGHT)
-        {
-            pacman.setNextDirection(Direction::RIGHT);
-        }
-        else if(key == Key::UP)
-        {
-            pacman.setNextDirection(Direction::UP);
-        }
-        else if(key == Key::DOWN)
-        {
-            pacman.setNextDirection(Direction::DOWN);
-        }
-        else if(key == Key::PAUSE)
-        {
+        case Qt::Key_Up:
+        case Qt::Key_W:
+            if(model_.getGameStateManager().isRunning())
+            {
+                model_.getPacman().setNextDirection(Direction::UP);
+            }
+            break;
+
+        case Qt::Key_Down:
+        case Qt::Key_S:
+            if(model_.getGameStateManager().isRunning())
+            {
+                model_.getPacman().setNextDirection(Direction::DOWN);
+            }
+            break;
+
+        case Qt::Key_P:
             togglePause();
-        }
-    }
-    else if(gameState == GameState::BEFORE_FIRST_RUN)
-    {
-        if(key == Key::SPACE)
-        {
-            startGame();
-        }
-    }
-    else if(gameState == GameState::STOPPED)
-    {
-        if(key == Key::SPACE)
-        {
-            emit restartEvent();
-        }
-    }
-    else if(gameState == GameState::PAUSED)
-    {
-        if(key == Key::PAUSE)
-        {
-            togglePause();
-        }
+            break;
+
+        case Qt::Key_Space:
+            if(model_.getGameStateManager().isBeforeFirstRun() || model_.getGameStateManager().isStopped())
+            {
+                startGame();
+            }
+            break;
     }
 }
 
 void Controller::startGame()
 {
-    model_->setGameState(GameState::RUNNING);
-
-    for(MovableCharacter* movableCharacter : model_->getMovableCharacters())
+    if(!model_.getGameStateManager().isBeforeFirstRun())
     {
-        movableCharacter->startMovement();
+        model_.reset();
     }
 
-    model_->getScoreManager().resetScore();
+    model_.getGameStateManager().startGame();
+
+    startAllCharacters();
+
+    model_.getScoreManager().resetScore();
 }
 
 void Controller::endGame(GameResult gameResult)
 {
-    model_->setGameState(GameState::STOPPED);
+    model_.getGameStateManager().endGame();
 
-    for(MovableCharacter* movableCharacter : model_->getMovableCharacters())
-    {
-        movableCharacter->stopMovement();
-        movableCharacter->reset();
-    }
+    stopAllCharacters();
 
-    model_->getScreenTextManager().setGameResult(gameResult);
+    model_.getScreenTextManager().setGameResult(gameResult);
 }
 
 void Controller::togglePause()
 {
-    GameState gameState = model_->getGameState();
-
-    if(gameState == GameState::RUNNING)
+    if(model_.getGameStateManager().isRunning())
     {
-        for(MovableCharacter* movableCharacter : model_->getMovableCharacters())
-        {
-            movableCharacter->stopMovement();
-        }
-
-        model_->setGameState(GameState::PAUSED);
+        stopAllCharacters();
+        model_.getGameStateManager().togglePause();
     }
-    else if(gameState == GameState::PAUSED)
+    else if(model_.getGameStateManager().isPaused())
     {
-        for(MovableCharacter* movableCharacter : model_->getMovableCharacters())
-        {
-            movableCharacter->startMovement();
-        }
-
-        model_->setGameState(GameState::RUNNING);
+        startAllCharacters();
+        model_.getGameStateManager().togglePause();
     }
 }
 
 void Controller::frontendUpdateHandler()
 {
-    view_->update();
+    view_.update();
 }
 
 void Controller::pacmanMovementHandler()
 {
-    model_->getPacman().move();
+    model_.getPacmanMovementManager().processMove(model_.getPacman(), model_.getPathPoints());
 
-    if(CollisionManager::checkAndProcessCollisionWithFoodball(model_->getPacman().getCoordinates(), model_->getBallItemsManager().getFoodballs()))
+    if(CollisionManager::checkAndProcessCollisionWithFoodball(model_.getPacman().getRect(), model_.getBallItemsManager().getFoodballs()))
     {
-        model_->getScoreManager().rewardPlayerForEatingFoodball();
+        model_.getScoreManager().increaseScoreForEatingFoodball();
     }
 
-    if(CollisionManager::checkAndProcessCollisionWithPowerball(model_->getPacman().getCoordinates(), model_->getBallItemsManager().getPowerballs()))
+    if(CollisionManager::checkAndProcessCollisionWithPowerball(model_.getPacman().getRect(), model_.getBallItemsManager().getPowerballs()))
     {
-        model_->getScoreManager().rewardPlayerForEatingPowerball();
+        model_.getScoreManager().increaseScoreForEatingPowerball();
 
-        for(AbstractGhost* ghost : model_->getGhosts())
+        for(AbstractGhost* ghost : model_.getGhosts())
         {
-            ghost->scare();
+            ghost->setScaredBlueState();
+        }
+
+        for(GhostTimingManager* ghostTimingManager : model_.getGhostsTimingManagersContainer())
+        {
+            ghostTimingManager->startScaredBlueTimer();
+            ghostTimingManager->reduceSpeed();
         }
     }
 
-    if(model_->getGameState() == GameState::RUNNING && model_->getBallItemsManager().getRemainingFoodballsCount() == 0)
+    if(model_.getGameStateManager().isRunning() && model_.getBallItemsManager().getRemainingFoodballsCount() == 0)
     {
         endGame(GameResult::WIN);
     }
 }
 
-void Controller::ghostMovementHandler(AbstractGhost* ghost)
+void Controller::ghostMovementHandler(AbstractGhost& ghost)
 {
-    if(ghost->isInsideStartingBox())
+    if(model_.getGhostMovementManager().isGhostInsideStartingBox(ghost))
     {
-        if(ghost->isItTimeToLeaveStartingBox())
+        if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
         {
-            ghost->moveOutOfStartingBox();
+            model_.getGhostMovementManager().moveOutOfStartingBox(ghost);
         }
         else
         {
-            ghost->moveInsideStartingBox();
+            model_.getGhostMovementManager().moveInsideStartingBox(ghost);
         }
     }
     else
     {
-        const Coordinates& pacmanCoordinates = model_->getPacman().getCoordinates();
+        model_.getGhostMovementManager().processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
 
-        ghost->move(Coordinates{pacmanCoordinates.x_, pacmanCoordinates.y_});
-
-        const Coordinates& ghostCoordinates = ghost->getCoordinates();
-
-        if(CollisionManager::checkCollisionWithGhost(pacmanCoordinates, ghostCoordinates))
+        if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
         {
-            if((ghost->getScaredState() == AbstractGhost::ScaredState::NO_SCARED))
+            if(!ghost.isScared())
             {
                 endGame(GameResult::LOST);
             }
             else
             {
-                model_->getScoreManager().rewardPlayerForEatingGhost();
-                ghost->reset();
+                model_.getScoreManager().increaseScoreForEatingGhost();
+                ghost.reset();
+                model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
             }
         }
+    }
+}
+
+void Controller::startAllCharacters()
+{
+    for(TimingManager* timingManager : model_.getAllTimingManagersContainer())
+    {
+        timingManager->startMovement();
+    }
+}
+
+void Controller::stopAllCharacters()
+{
+    for(TimingManager* timingManager : model_.getAllTimingManagersContainer())
+    {
+        timingManager->stopMovement();
     }
 }
