@@ -1,10 +1,10 @@
 #pragma once
 
-//#include "movable_character.h"
+#include "movable_character.h"
 #include "moving_object.h"
 #include "images_urls.h"
 
-class Pacman : public MovingObject
+class Pacman : public MovableCharacter, public MovingObject
 {
 public:
     Pacman();

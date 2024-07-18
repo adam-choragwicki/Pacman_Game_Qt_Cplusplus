@@ -12,16 +12,16 @@ public:
 
     virtual void move();
 
-    void setNextDirection(Direction direction)
-    { nextDirection_ = direction; }
+//    void setNextDirection(Direction direction)
+//    { nextDirection_ = direction; }
 
     virtual void advanceAnimation() = 0;
 
 protected:
     bool fancyGraphics_{};
 
-    int animationState_{};
+//    int animationState_{};
 
-    Direction direction_;
-    Direction nextDirection_;
+//    Direction direction_;
+//    Direction nextDirection_;
 };

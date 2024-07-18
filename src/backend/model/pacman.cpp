@@ -2,13 +2,13 @@
 #include "config.h"
 #include <QtGui/QPainter>
 
-Pacman::Pacman() : MovingObject(QRectF(0, 0, 30, 30))
+Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN), MovingObject(QRectF(0, 0, 30, 30))
 
 // : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN), MovingObject(QRectF(0, 0, 30, 30))
 {
     loadImages(PacmanImages::IMAGES_URLS);
 
-    setPos(Config::StartingCoordinates::PACMAN.x_, Config::StartingCoordinates::PACMAN.y_);
+//    setPos(Config::StartingCoordinates::PACMAN.x_, Config::StartingCoordinates::PACMAN.y_);
 
     animationState_ = 0;
     direction_ = Direction::LEFT;
@@ -22,7 +22,9 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     painter->setPen(pen_);
     painter->setBrush(Qt::red);
 
-    const QRect boundingRect = rect_.toRect();
+    //    const QRect boundingRect = MovableCharacter::rect_.toRect();
+    const QRect boundingRect = MovableCharacter::rect_;
+
     const int animationState = animationState_;
 
     switch(direction_)
