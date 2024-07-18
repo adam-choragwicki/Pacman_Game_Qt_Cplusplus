@@ -73,5 +73,5 @@ void MovementManager::processMove(MovableCharacter& movableCharacter, const Path
 void MovementManager::move(MovableCharacter& movableCharacter, Direction direction)
 {
     DirectionalOffset directionalOffset(direction);
-    movableCharacter.moveBy(directionalOffset.toStdPair());
+    movableCharacter.moveCharacterBy(directionalOffset.toStdPair());
 }

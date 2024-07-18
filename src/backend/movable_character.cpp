@@ -19,7 +19,7 @@ void MovableCharacter::reset()
     rect_.setCoords(STARTING_COORDINATES.x_ - DIAMETER / 2, STARTING_COORDINATES.y_ - DIAMETER / 2, STARTING_COORDINATES.x_ + DIAMETER / 2, STARTING_COORDINATES.y_ + DIAMETER / 2);
 }
 
-void MovableCharacter::moveBy(const std::pair<int, int>& offset)
+void MovableCharacter::moveCharacterBy(const std::pair<int, int>& offset)
 {
     rect_.translate(offset.first, offset.second);
 }

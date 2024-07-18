@@ -22,9 +22,7 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     painter->setPen(pen_);
     painter->setBrush(Qt::red);
 
-    //    const QRect boundingRect = MovableCharacter::rect_.toRect();
     const QRect boundingRect = MovableCharacter::rect_;
-
     const int animationState = animationState_;
 
     switch(direction_)

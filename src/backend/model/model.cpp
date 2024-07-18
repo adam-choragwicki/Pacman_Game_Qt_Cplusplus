@@ -77,4 +77,9 @@ void Model::initScene()
 void Model::addItemsToScene()
 {
     scene_->addItem(pacman_.get());
+
+    scene_->addItem(blueGhost_.get());
+    scene_->addItem(orangeGhost_.get());
+    scene_->addItem(purpleGhost_.get());
+    scene_->addItem(redGhost_.get());
 }

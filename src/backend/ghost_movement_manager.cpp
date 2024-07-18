@@ -85,7 +85,7 @@ void GhostMovementManager::moveInsideStartingBox(AbstractGhost& ghost)
     }
 
     VerticalDirectionalOffset verticalDirectionalOffset(ghost.getDirection());
-    ghost.moveBy(verticalDirectionalOffset.toStdPair());
+    ghost.moveCharacterBy(verticalDirectionalOffset.toStdPair());
 }
 
 void GhostMovementManager::moveOutOfStartingBox(AbstractGhost& ghost)
@@ -109,5 +109,5 @@ void GhostMovementManager::moveOutOfStartingBox(AbstractGhost& ghost)
         directionalOffset = Direction::UP;
     }
 
-    ghost.moveBy(directionalOffset.toStdPair());
+    ghost.moveCharacterBy(directionalOffset.toStdPair());
 }

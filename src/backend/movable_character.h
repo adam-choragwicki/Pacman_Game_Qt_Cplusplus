@@ -45,7 +45,7 @@ public:
     void setMoving(bool moving)
     { moving_ = moving; }
 
-    void moveBy(const std::pair<int, int>& offset);
+    void moveCharacterBy(const std::pair<int, int>& offset);
     void moveTo(const Coordinates& coordinates);
 
 protected:
