@@ -25,7 +25,10 @@ set(SOURCE_FILES
 
         model/balls/abstract_ball.cpp model/balls/abstract_ball.h
         model/balls/foodball.cpp model/balls/foodball.h
-        model/balls/powerball.cpp model/balls/powerball.h)
+        model/balls/powerball.cpp model/balls/powerball.h
+
+        custom_graphics_item.cpp custom_graphics_item.h
+        id_generator.h)
 
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})
 target_include_directories(lib${PROJECT_NAME}Backend PUBLIC .)
