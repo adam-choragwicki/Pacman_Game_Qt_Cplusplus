@@ -1,5 +1,6 @@
 #include "main_window.h"
 #include "score_display.h"
+#include "graphics_view.h"
 #include <QScreen>
 
 MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model), gameArena_(this, model)
@@ -10,6 +11,8 @@ MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model), gameA
     setPalette(QPalette(Qt::black));
 
     gameArena_.setFixedSize(614, 680);
+
+//    graphicsView_ = new GraphicsView(model_.getScene());
 
     centerOnScreen();
 }

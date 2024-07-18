@@ -1,8 +1,10 @@
 #pragma once
 
-#include "model/model.h"
 #include "game_arena.h"
 #include <QMainWindow>
+
+class Model;
+class GraphicsView;
 
 class MainWindow : public QMainWindow
 {
@@ -29,4 +31,6 @@ private:
 
     const Model& model_;
     GameArena gameArena_;
+
+    GraphicsView* graphicsView_{};
 };
