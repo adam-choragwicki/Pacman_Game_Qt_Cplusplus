@@ -14,6 +14,9 @@
 #include "timing_manager.h"
 #include "movement_manager.h"
 
+#include "balls/foodball.h"
+#include "balls/powerball.h"
+
 #include <memory>
 
 using AllCharactersContainer = std::array<MovableCharacter*, 5>;

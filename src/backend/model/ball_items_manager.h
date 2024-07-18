@@ -1,10 +1,11 @@
 #pragma once
 
-#include "ball.h"
-#include "path_points.h"
-#include "pacman.h"
+#include <cstddef>
+#include <set>
 
-#include <vector>
+class Foodball;
+class Powerball;
+class PathPoints;
 
 class BallItemsManager
 {
@@ -14,7 +15,7 @@ public:
 
     void createBalls(const PathPoints& pathPoints);
 
-    uint getRemainingFoodballsCount();
+    size_t getRemainingFoodballsCount();
 
     [[nodiscard]] std::set<Foodball>& getFoodballs()
     { return foodballs_; }

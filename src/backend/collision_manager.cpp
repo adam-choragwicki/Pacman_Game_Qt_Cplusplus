@@ -1,4 +1,6 @@
 #include "collision_manager.h"
+#include "model/balls/foodball.h"
+#include "model/balls/powerball.h"
 
 bool CollisionManager::checkAndProcessCollisionWithFoodball(const QRect& pacmanRect, std::set<Foodball>& foodballs)
 {

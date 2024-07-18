@@ -14,5 +14,12 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets REQUIRED)
 set(PROJECT_ROOT ${CMAKE_SOURCE_DIR})
 set(BACKEND_DIR ${PROJECT_ROOT}/src/backend)
 
+# Enable ccache if available
+find_program(CCACHE_PROGRAM ccache)
+if (CCACHE_PROGRAM)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ${CCACHE_PROGRAM})
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ${CCACHE_PROGRAM})
+endif ()
+
 add_subdirectory(src)
 add_subdirectory(tests)

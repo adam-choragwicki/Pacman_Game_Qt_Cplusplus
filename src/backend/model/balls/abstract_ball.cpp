@@ -1,4 +1,4 @@
-#include "ball.h"
+#include "abstract_ball.h"
 #include "config.h"
 
 AbstractBall::AbstractBall(const Coordinates& coordinates) : coordinates_(coordinates)
@@ -31,9 +31,3 @@ bool AbstractBall::operator<(const AbstractBall& other) const
         }
     }
 }
-
-Foodball::Foodball(const Coordinates& coordinates) : AbstractBall(coordinates)
-{}
-
-Powerball::Powerball(const Coordinates& coordinates) : AbstractBall(coordinates)
-{}

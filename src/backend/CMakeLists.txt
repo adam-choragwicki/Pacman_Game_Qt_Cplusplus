@@ -11,11 +11,9 @@ set(SOURCE_FILES
         model/timing_manager.h model/pacman_timing_manager.cpp model/ghost_timing_manager.cpp
         common.h
         movable_character.h movable_character.cpp
-        ball.h ball.cpp
         path_points.h path_points.cpp
         log_manager.h
         coordinates.h coordinates.cpp
-        ball.cpp ball.h
         score_manager.h
         screen_text_manager.cpp screen_text_manager.h
         collision_manager.cpp collision_manager.h
@@ -23,7 +21,11 @@ set(SOURCE_FILES
         movement_manager.cpp movement_manager.h
         pacman_movement_manager.cpp
         ghost_movement_manager.cpp
-        directional_offset.h)
+        directional_offset.h
+
+        model/balls/abstract_ball.cpp model/balls/abstract_ball.h
+        model/balls/foodball.cpp model/balls/foodball.h
+        model/balls/powerball.cpp model/balls/powerball.h)
 
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})
 target_include_directories(lib${PROJECT_NAME}Backend PUBLIC .)

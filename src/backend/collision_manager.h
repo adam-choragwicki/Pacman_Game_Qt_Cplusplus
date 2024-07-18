@@ -1,6 +1,9 @@
 #pragma once
 
-#include "ball.h"
+class Foodball;
+class Powerball;
+class QRect;
+
 #include <set>
 
 class CollisionManager

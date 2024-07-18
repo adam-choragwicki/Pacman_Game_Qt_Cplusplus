@@ -1,4 +1,6 @@
-#include "model/model.h"
+#include "model.h"
+#include "model/balls/foodball.h"
+#include "model/balls/powerball.h"
 
 Model::Model()
 {

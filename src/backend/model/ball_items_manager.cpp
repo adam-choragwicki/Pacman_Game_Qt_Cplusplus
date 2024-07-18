@@ -1,4 +1,9 @@
-#include "model/ball_items_manager.h"
+#include "ball_items_manager.h"
+#include "model/balls/foodball.h"
+#include "model/balls/powerball.h"
+
+#include "path_points.h"
+
 
 BallItemsManager::BallItemsManager(const PathPoints& pathPoints)
 {
@@ -7,18 +12,18 @@ BallItemsManager::BallItemsManager(const PathPoints& pathPoints)
 
 void BallItemsManager::createBalls(const PathPoints& pathPoints)
 {
-    for(auto& foodballPosition : pathPoints.getFoodballPositions())
+    for(const Coordinates& foodballPosition : pathPoints.getFoodballPositions())
     {
         foodballs_.emplace(foodballPosition);
     }
 
-    for(auto& powerballPosition : pathPoints.getPowerballPositions())
+    for(const Coordinates& powerballPosition : pathPoints.getPowerballPositions())
     {
         powerballs_.emplace(powerballPosition);
     }
 }
 
-uint BallItemsManager::getRemainingFoodballsCount()
+size_t BallItemsManager::getRemainingFoodballsCount()
 {
     return foodballs_.size();
 }

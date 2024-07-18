@@ -1,6 +1,8 @@
 #include "game_arena.h"
 #include "gui_config.h"
 #include "config.h"
+#include "model/balls/foodball.h"
+#include "model/balls/powerball.h"
 
 GameArena::GameArena(QWidget* parent, const Model& model) : QWidget(parent), model_(model)
 {
