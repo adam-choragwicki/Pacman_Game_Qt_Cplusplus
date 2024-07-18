@@ -9,12 +9,13 @@ Q_OBJECT
 
 public slots:
     void processKeyPressedEvent(QKeyEvent* keyEvent);
-    void frontendUpdateHandler();
+    void viewportUpdateHandler();
 
 public:
     Controller(Model& model, MainWindow& view);
 
     void subscribeToKeyEvents();
+    void initializeFrontendEvents();
 
     void startGame();
     void endGame(GameResult gameResult);

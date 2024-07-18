@@ -9,7 +9,7 @@ namespace Config
     namespace Timing
     {
         using namespace std::chrono_literals;
-        const auto FRONTEND_UPDATE_FREQUENCY = 16ms;
+        static constexpr auto VIEWPORT_UPDATE_INTERVAL = 16ms;
 
         namespace MovableCharacter
         {

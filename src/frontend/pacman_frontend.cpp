@@ -43,85 +43,85 @@ void PacmanFrontend::loadImages(const std::array<std::string, 16>& imagesUrls)
 
 void PacmanFrontend::draw(QPainter& painter) const
 {
-    QRect boundingRect = pacman_.getRect();
-    int animationState = pacman_.getAnimationState();
-
-    switch(pacman_.getDirection())
-    {
-        case Direction::LEFT:
-            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, left1Pixmap_);
-            }
-            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, left2Pixmap_);
-            }
-            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, left3Pixmap_);
-            }
-            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, left4Pixmap_);
-            }
-            break;
-
-        case Direction::RIGHT:
-            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, right1Pixmap_);
-            }
-            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, right2Pixmap_);
-            }
-            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, right3Pixmap_);
-            }
-            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, right4Pixmap_);
-            }
-            break;
-
-        case Direction::UP:
-            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, up1Pixmap_);
-            }
-            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, up2Pixmap_);
-            }
-            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, up3Pixmap_);
-            }
-            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, up4Pixmap_);
-            }
-            break;
-
-        case Direction::DOWN:
-            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, down1Pixmap_);
-            }
-            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, down2Pixmap_);
-            }
-            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, down3Pixmap_);
-            }
-            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                painter.drawPixmap(boundingRect, down4Pixmap_);
-            }
-            break;
-    }
+//    QRect boundingRect = pacman_.getRect();
+//    int animationState = pacman_.getAnimationState();
+//
+//    switch(pacman_.getDirection())
+//    {
+//        case Direction::LEFT:
+//            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, left1Pixmap_);
+//            }
+//            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, left2Pixmap_);
+//            }
+//            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, left3Pixmap_);
+//            }
+//            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, left4Pixmap_);
+//            }
+//            break;
+//
+//        case Direction::RIGHT:
+//            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, right1Pixmap_);
+//            }
+//            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, right2Pixmap_);
+//            }
+//            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, right3Pixmap_);
+//            }
+//            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, right4Pixmap_);
+//            }
+//            break;
+//
+//        case Direction::UP:
+//            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, up1Pixmap_);
+//            }
+//            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, up2Pixmap_);
+//            }
+//            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, up3Pixmap_);
+//            }
+//            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, up4Pixmap_);
+//            }
+//            break;
+//
+//        case Direction::DOWN:
+//            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, down1Pixmap_);
+//            }
+//            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, down2Pixmap_);
+//            }
+//            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, down3Pixmap_);
+//            }
+//            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+//            {
+//                painter.drawPixmap(boundingRect, down4Pixmap_);
+//            }
+//            break;
+//    }
 }

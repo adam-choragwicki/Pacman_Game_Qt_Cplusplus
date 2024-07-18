@@ -93,7 +93,12 @@ public:
     [[nodiscard]] const AllTimingManagersContainer& getAllTimingManagersContainer() const
     { return allTimingManagersContainer; }
 
+    [[nodiscard]] QGraphicsScene* getScene() const
+    { return scene_; }
+
 private:
+    void addItemsToScene();
+
     std::unique_ptr<PathPoints> pathPoints_;
     std::unique_ptr<BallItemsManager> ballItemsManager_;
 
@@ -126,4 +131,6 @@ private:
     AllTimingManagersContainer allTimingManagersContainer{};
 
     void groupObjectsIntoContainers();
+
+    QGraphicsScene* scene_{};
 };

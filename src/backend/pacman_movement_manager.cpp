@@ -2,5 +2,5 @@
 
 void PacmanMovementManager::processMove(Pacman& pacman, const PathPoints& pathPoints)
 {
-    MovementManager::processMove(pacman, pathPoints);
+//    MovementManager::processMove(pacman, pathPoints);
 }

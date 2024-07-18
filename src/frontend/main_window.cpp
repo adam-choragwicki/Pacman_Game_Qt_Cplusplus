@@ -2,26 +2,39 @@
 #include "score_display.h"
 #include "graphics_view.h"
 #include <QScreen>
+#include <QGuiApplication>
 
-MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model), gameArena_(this, model)
+MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)//, gameArena_(this, model)
 {
     setWindowTitle("Pacman");
     setFocus(Qt::ActiveWindowFocusReason);
     setFixedSize(614, 730);
     setPalette(QPalette(Qt::black));
 
-    gameArena_.setFixedSize(614, 680);
+    //    gameArena_.setFixedSize(614, 680);
 
-//    graphicsView_ = new GraphicsView(model_.getScene());
+    graphicsView_ = new GraphicsView(model_.getScene());
 
-    centerOnScreen();
+    setCentralWidget(graphicsView_);
+
+    centerOnPrimaryScreen();
 }
 
-void MainWindow::centerOnScreen()
+void MainWindow::centerOnPrimaryScreen()
 {
-    const QRect screenRect = QWidget::screen()->availableGeometry();
-    const QRect widgetRect({}, frameSize().boundedTo(screenRect.size()));
+    QScreen* primaryScreen = QGuiApplication::primaryScreen();
+    centerOnScreen(primaryScreen);
+}
 
+void MainWindow::centerOnScreen(QScreen* screen)
+{
+    //spdlog::debug("Screen name: " + screen->name().toStdString());
+    //spdlog::debug("Screen manufacturer: " + screen->manufacturer().toStdString());
+    //spdlog::debug("Screen model: " + screen->model().toStdString());
+
+    setScreen(screen);
+    const QRect screenRect = screen->availableGeometry();
+    const QRect widgetRect({}, frameSize().boundedTo(screenRect.size()));
     move(screenRect.center() - widgetRect.center());
 }
 
@@ -50,4 +63,9 @@ void MainWindow::drawScoreDisplay(QPainter& painter)
 
     QRect scoreDisplayBoundingRect(ScoreDisplay::X, ScoreDisplay::Y, ScoreDisplay::WIDTH, ScoreDisplay::HEIGHT);
     painter.drawText(scoreDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "Score: " + QString::number(model_.getScoreManager().getScore()));
+}
+
+void MainWindow::updateViewport()
+{
+    graphicsView_->updateViewport();
 }

@@ -27,6 +27,8 @@ set(SOURCE_FILES
         model/balls/foodball.cpp model/balls/foodball.h
         model/balls/powerball.cpp model/balls/powerball.h
 
+        moving_object.cpp moving_object.h
+
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h)
 

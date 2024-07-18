@@ -7,11 +7,7 @@
 Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(view)
 {
     subscribeToKeyEvents();
-
-    view_.getFrontendUpdateTimer().setInterval(Config::Timing::FRONTEND_UPDATE_FREQUENCY);
-    view_.getFrontendUpdateTimer().start();
-
-    connect(&view_.getFrontendUpdateTimer(), &QTimer::timeout, this, &Controller::frontendUpdateHandler);
+    initializeFrontendEvents();
 
     connect(&model_.getPacmanTimingManager().getMovementTimer(), &QTimer::timeout, this, &Controller::pacmanMovementHandler);
 
@@ -115,73 +111,73 @@ void Controller::togglePause()
     }
 }
 
-void Controller::frontendUpdateHandler()
+void Controller::viewportUpdateHandler()
 {
-    view_.update();
+    view_.updateViewport();
 }
 
 void Controller::pacmanMovementHandler()
 {
-    model_.getPacmanMovementManager().processMove(model_.getPacman(), model_.getPathPoints());
-
-    if(CollisionManager::checkAndProcessCollisionWithFoodball(model_.getPacman().getRect(), model_.getBallItemsManager().getFoodballs()))
-    {
-        model_.getScoreManager().increaseScoreForEatingFoodball();
-    }
-
-    if(CollisionManager::checkAndProcessCollisionWithPowerball(model_.getPacman().getRect(), model_.getBallItemsManager().getPowerballs()))
-    {
-        model_.getScoreManager().increaseScoreForEatingPowerball();
-
-        for(AbstractGhost* ghost : model_.getGhosts())
-        {
-            ghost->setScaredBlueState();
-        }
-
-        for(GhostTimingManager* ghostTimingManager : model_.getGhostsTimingManagersContainer())
-        {
-            ghostTimingManager->startScaredBlueTimer();
-            ghostTimingManager->reduceSpeed();
-        }
-    }
-
-    if(model_.getGameStateManager().isRunning() && model_.getBallItemsManager().getRemainingFoodballsCount() == 0)
-    {
-        endGame(GameResult::WIN);
-    }
+    //    model_.getPacmanMovementManager().processMove(model_.getPacman(), model_.getPathPoints());
+    //
+    //    if(CollisionManager::checkAndProcessCollisionWithFoodball(model_.getPacman().getRect(), model_.getBallItemsManager().getFoodballs()))
+    //    {
+    //        model_.getScoreManager().increaseScoreForEatingFoodball();
+    //    }
+    //
+    //    if(CollisionManager::checkAndProcessCollisionWithPowerball(model_.getPacman().getRect(), model_.getBallItemsManager().getPowerballs()))
+    //    {
+    //        model_.getScoreManager().increaseScoreForEatingPowerball();
+    //
+    //        for(AbstractGhost* ghost : model_.getGhosts())
+    //        {
+    //            ghost->setScaredBlueState();
+    //        }
+    //
+    //        for(GhostTimingManager* ghostTimingManager : model_.getGhostsTimingManagersContainer())
+    //        {
+    //            ghostTimingManager->startScaredBlueTimer();
+    //            ghostTimingManager->reduceSpeed();
+    //        }
+    //    }
+    //
+    //    if(model_.getGameStateManager().isRunning() && model_.getBallItemsManager().getRemainingFoodballsCount() == 0)
+    //    {
+    //        endGame(GameResult::WIN);
+    //    }
 }
 
 void Controller::ghostMovementHandler(AbstractGhost& ghost)
 {
-    if(model_.getGhostMovementManager().isGhostInsideStartingBox(ghost))
-    {
-        if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
-        {
-            model_.getGhostMovementManager().moveOutOfStartingBox(ghost);
-        }
-        else
-        {
-            model_.getGhostMovementManager().moveInsideStartingBox(ghost);
-        }
-    }
-    else
-    {
-        model_.getGhostMovementManager().processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
-
-        if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
-        {
-            if(!ghost.isScared())
-            {
-                endGame(GameResult::LOST);
-            }
-            else
-            {
-                model_.getScoreManager().increaseScoreForEatingGhost();
-                ghost.reset();
-                model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
-            }
-        }
-    }
+    //    if(model_.getGhostMovementManager().isGhostInsideStartingBox(ghost))
+    //    {
+    //        if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
+    //        {
+    //            model_.getGhostMovementManager().moveOutOfStartingBox(ghost);
+    //        }
+    //        else
+    //        {
+    //            model_.getGhostMovementManager().moveInsideStartingBox(ghost);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        model_.getGhostMovementManager().processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
+    //
+    //        if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
+    //        {
+    //            if(!ghost.isScared())
+    //            {
+    //                endGame(GameResult::LOST);
+    //            }
+    //            else
+    //            {
+    //                model_.getScoreManager().increaseScoreForEatingGhost();
+    //                ghost.reset();
+    //                model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
+    //            }
+    //        }
+    //    }
 }
 
 void Controller::startAllCharacters()
@@ -198,4 +194,11 @@ void Controller::stopAllCharacters()
     {
         timingManager->stopMovement();
     }
+}
+
+void Controller::initializeFrontendEvents()
+{
+    auto* viewportUpdateTimer = new QTimer(this);
+    connect(viewportUpdateTimer, &QTimer::timeout, this, &Controller::viewportUpdateHandler);
+    viewportUpdateTimer->start(Config::Timing::VIEWPORT_UPDATE_INTERVAL);
 }

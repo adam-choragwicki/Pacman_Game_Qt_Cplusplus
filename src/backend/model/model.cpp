@@ -1,7 +1,10 @@
 #include "model.h"
+#include <QtWidgets/QGraphicsScene>
 
 Model::Model()
 {
+    scene_ = new QGraphicsScene();
+
     pathPoints_ = std::make_unique<PathPoints>();
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
@@ -28,11 +31,16 @@ Model::Model()
     ghostMovementManager_ = std::make_unique<GhostMovementManager>();
 
     groupObjectsIntoContainers();
+
+    addItemsToScene();
 }
 
 void Model::groupObjectsIntoContainers()
 {
-    movableCharacters = {pacman_.get(), blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
+    //    movableCharacters = {pacman_.get(), blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
+
+    movableCharacters = {blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
+
     ghosts_ = {blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
 
     ghostTimingManagersContainer = {blueGhostTimingManager_.get(), orangeGhostTimingManager_.get(), purpleGhostTimingManager_.get(), redGhostTimingManager_.get()};
@@ -53,4 +61,9 @@ void Model::reset()
     {
         ghostTimingManager->reset();
     }
+}
+
+void Model::addItemsToScene()
+{
+    scene_->addItem(pacman_.get());
 }

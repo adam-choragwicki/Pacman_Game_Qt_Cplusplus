@@ -20,17 +20,16 @@ public:
     void paintEvent([[maybe_unused]] QPaintEvent* event) override;
     void drawScoreDisplay(QPainter& painter);
 
-    [[nodiscard]] QTimer& getFrontendUpdateTimer()
-    { return frontendUpdateTimer_; }
+    void updateViewport();
 
 private:
     void keyPressEvent(QKeyEvent* event) override;
-    void centerOnScreen();
 
-    QTimer frontendUpdateTimer_;
+    void centerOnScreen(QScreen* screen);
+    void centerOnPrimaryScreen();
 
     const Model& model_;
-    GameArena gameArena_;
+//    GameArena gameArena_;
 
     GraphicsView* graphicsView_{};
 };

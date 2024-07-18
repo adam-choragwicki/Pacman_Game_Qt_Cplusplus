@@ -13,7 +13,7 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override = 0;
 
     // every derived type has to define its custom QGraphicsItem type
-    [[nodiscard]] int type() const override = 0;
+//    [[nodiscard]] int type() const override = 0;
 
     [[nodiscard]] uint getId() const
     { return id_; }
