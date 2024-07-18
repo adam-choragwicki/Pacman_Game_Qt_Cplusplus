@@ -15,6 +15,8 @@ public:
     void setNextDirection(Direction direction)
     { nextDirection_ = direction; }
 
+    virtual void advanceAnimation() = 0;
+
 protected:
     bool fancyGraphics_{};
 

@@ -8,7 +8,7 @@ class Pacman : public MovingObject
 {
 public:
     Pacman();
-//    void advanceAnimation() override;
+    void advanceAnimation() override;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
