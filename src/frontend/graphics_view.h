@@ -17,6 +17,7 @@ signals:
 public:
     explicit GraphicsView(QGraphicsScene* scene, QWidget* parent = nullptr);
 
+    void drawBackground(QPainter* painter, const QRectF& rect) override;
     void drawForeground(QPainter* painter, const QRectF& rect) override;
     bool eventFilter(QObject* obj, QEvent* event) override;
 
@@ -35,4 +36,6 @@ private:
 
     QFont fpsCounterFont_;
     QPen fpsCounterPen_;
+
+    std::unique_ptr<QPixmap> arenaPixmap_;
 };

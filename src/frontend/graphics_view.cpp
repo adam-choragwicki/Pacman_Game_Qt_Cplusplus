@@ -5,6 +5,8 @@
 
 GraphicsView::GraphicsView(QGraphicsScene* scene, QWidget* parent) : QGraphicsView(scene, parent)
 {
+    arenaPixmap_ = std::make_unique<QPixmap>(":/images/map.png");
+
     setRenderHint(QPainter::Antialiasing, true);
     setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -17,6 +19,12 @@ GraphicsView::GraphicsView(QGraphicsScene* scene, QWidget* parent) : QGraphicsVi
     initializePainterData();
 
     viewport()->installEventFilter(this);
+}
+
+void GraphicsView::drawBackground(QPainter* painter, const QRectF& rect)
+{
+    QGraphicsView::drawBackground(painter, rect);
+    painter->drawPixmap(0, 0, 614, 740, *arenaPixmap_);
 }
 
 void GraphicsView::drawForeground(QPainter* painter, const QRectF& rect)

@@ -30,6 +30,8 @@ public:
     Model();
     void reset();
 
+    void initScene();
+
     [[nodiscard]] const Pacman& getPacman() const
     { return *pacman_; }
 

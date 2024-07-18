@@ -3,7 +3,7 @@
 
 Model::Model()
 {
-    scene_ = new QGraphicsScene();
+    initScene();
 
     pathPoints_ = std::make_unique<PathPoints>();
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
@@ -61,6 +61,17 @@ void Model::reset()
     {
         ghostTimingManager->reset();
     }
+}
+
+void Model::initScene()
+{
+    scene_ = new QGraphicsScene();
+
+    const int ARENA_WIDTH_PX = 614;
+    const int ARENA_HEIGHT_PX = 680;
+
+    //Set the scene rect to encompass the entire world map
+    scene_->setSceneRect(0, 0, ARENA_WIDTH_PX, ARENA_HEIGHT_PX);
 }
 
 void Model::addItemsToScene()
