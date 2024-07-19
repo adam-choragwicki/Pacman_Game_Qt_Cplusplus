@@ -11,7 +11,6 @@
 #include "score_manager.h"
 #include "screen_text_manager.h"
 #include "game_state_manager.h"
-#include "abstract_movement_manager.h"
 
 #include "pacman_movement_manager.h"
 #include "ghost_movement_manager.h"
@@ -20,7 +19,6 @@
 #include "balls/powerball.h"
 #include "screen_text_display.h"
 
-#include "path_points.h"
 #include "score_display.h"
 
 #include <QtWidgets/QGraphicsScene>
@@ -57,16 +55,7 @@ Model::Model()
 
     screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *screenTextManager_, *scoreManager_);
 
-    groupObjectsIntoContainers();
-
     addItemsToScene();
-}
-
-void Model::groupObjectsIntoContainers()
-{
-    movableCharacters = {pacman_.get(), blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
-
-    ghosts_ = {blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
 }
 
 void Model::reset()
@@ -74,10 +63,11 @@ void Model::reset()
     gameStateManager_ = std::make_unique<GameStateManager>();
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
-    for(auto& movableCharacter : movableCharacters)
-    {
-        movableCharacter->reset();
-    }
+    pacman_->reset();
+    blueGhost_->reset();
+    orangeGhost_->reset();
+    purpleGhost_->reset();
+    redGhost_->reset();
 
     addItemsToScene();
 }
@@ -140,7 +130,7 @@ void Model::startGame()
 
     getGameStateManager().startGame();
 
-//    startAllCharacters();
+    //    startAllCharacters();
 
     getScoreManager().resetScore();
 }
@@ -149,7 +139,7 @@ void Model::endGame(GameResult gameResult)
 {
     getGameStateManager().endGame();
 
-//    stopAllCharacters();
+    //    stopAllCharacters();
 
     getScreenTextManager().setGameResult(gameResult);
 }

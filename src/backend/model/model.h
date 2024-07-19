@@ -88,9 +88,6 @@ public:
     [[nodiscard]] BallItemsManager& getBallItemsManager() const
     { return *ballItemsManager_; }
 
-    [[nodiscard]] GhostsContainer& getGhosts()
-    { return ghosts_; }
-
     [[nodiscard]] const GameStateManager& getGameStateManager() const
     { return *gameStateManager_; }
 
@@ -147,11 +144,6 @@ private:
 
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;
-
-    AllCharactersContainer movableCharacters{};
-    GhostsContainer ghosts_{};
-
-    void groupObjectsIntoContainers();
 
     QGraphicsScene* scene_{};
 };
