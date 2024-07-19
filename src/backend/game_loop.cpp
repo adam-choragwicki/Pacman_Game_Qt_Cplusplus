@@ -187,33 +187,44 @@ void GameLoop::pacmanMovementHandler()
 
 void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
 {
-    if(ghostMovementManager_.isGhostInsideStartingBox(ghost))
+    const int TARGET_SKIPPED_MOVES = 0;
+
+    if(ghost.getSkippedMoves() == TARGET_SKIPPED_MOVES)
     {
-        if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
+        ghost.resetSkippedMoves();
+
+        if(ghostMovementManager_.isGhostInsideStartingBox(ghost))
         {
-            ghostMovementManager_.moveOutOfStartingBox(ghost);
+            if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
+            {
+                ghostMovementManager_.moveOutOfStartingBox(ghost);
+            }
+            else
+            {
+                ghostMovementManager_.moveInsideStartingBox(ghost);
+            }
         }
         else
         {
-            ghostMovementManager_.moveInsideStartingBox(ghost);
+            ghostMovementManager_.processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
+
+            if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
+            {
+                if(!ghost.isScared())
+                {
+                    model_.endGame(GameResult::LOST);
+                }
+                else
+                {
+                    model_.getScoreManager().increaseScoreForEatingGhost();
+                    ghost.reset();
+                    model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
+                }
+            }
         }
     }
     else
     {
-        ghostMovementManager_.processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
-
-        if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
-        {
-            if(!ghost.isScared())
-            {
-                model_.endGame(GameResult::LOST);
-            }
-            else
-            {
-                model_.getScoreManager().increaseScoreForEatingGhost();
-                ghost.reset();
-                model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
-            }
-        }
+        ghost.incrementSkippedMoves();
     }
 }

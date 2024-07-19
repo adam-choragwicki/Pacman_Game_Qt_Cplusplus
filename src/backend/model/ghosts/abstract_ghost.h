@@ -5,6 +5,8 @@
 
 class AbstractGhost : public MovableCharacter, public MovingObject
 {
+Q_OBJECT
+
 public:
     AbstractGhost(const Coordinates& coordinates, Direction initialDirection);
     ~AbstractGhost() override = 0;
@@ -27,8 +29,22 @@ public:
     [[nodiscard]] bool isScaredWhite() const;
     [[nodiscard]] bool isScaredBlue() const;
 
+    [[nodiscard]] bool canMoveAgain() const
+    { return canMoveAgain_; }
+
+    [[nodiscard]] int getSkippedMoves() const
+    {return skippedMoves_;}
+
+    void incrementSkippedMoves();
+    void resetSkippedMoves();
+
 protected:
     void loadImages(const std::array<std::string, 12>& imagesUrls);
+
+    bool canMoveAgain_{};
+
+private slots:
+    void resetCanMoveAgain();
 
 private:
     enum class ScaredState
@@ -39,4 +55,6 @@ private:
     QPixmap left1Pixmap_, left2Pixmap_, up1Pixmap_, up2Pixmap_, down1Pixmap_, down2Pixmap_, right1Pixmap_, right2Pixmap_;
     QPixmap scaredBlue1Pixmap_, scaredBlue2Pixmap_;
     QPixmap scaredWhite1Pixmap_, scaredWhite2Pixmap_;
+
+    int skippedMoves_{};
 };

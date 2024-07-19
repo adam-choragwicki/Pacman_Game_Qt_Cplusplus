@@ -4,9 +4,13 @@
 #include "coordinates.h"
 #include "config.h"
 #include <QRect>
+#include <QObject>
+#include <QTimer>
 
-class MovableCharacter
+class MovableCharacter : public QObject
 {
+Q_OBJECT
+
 public:
     MovableCharacter(const Coordinates& startingCoordinates, Direction initialDirection);
     virtual ~MovableCharacter() = 0;
@@ -57,6 +61,8 @@ protected:
     const Coordinates STARTING_COORDINATES;
     const Direction STARTING_DIRECTION;
     QRect rect_;
+
+    QTimer movementTimer_;
 
 private:
     static const int DIAMETER = 30;

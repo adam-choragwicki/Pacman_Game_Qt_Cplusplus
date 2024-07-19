@@ -1,10 +1,17 @@
 #include "model/ghosts/abstract_ghost.h"
 #include <QtGui/QPainter>
+#include "config.h"
 
 AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection) : MovableCharacter(coordinates, initialDirection), MovingObject(QRectF(0, 0, 30, 30))
 {
+    canMoveAgain_ = true;
+
     MovableCharacter::reset();
     scaredState_ = ScaredState::NO_SCARED;
+
+    movementTimer_.setInterval(Config::Timing::MovableCharacter::NORMAL_SPEED);
+    movementTimer_.setSingleShot(true);
+    connect(&movementTimer_, &QTimer::timeout, this, &AbstractGhost::resetCanMoveAgain);
 }
 
 AbstractGhost::~AbstractGhost() = default;
@@ -152,4 +159,17 @@ void AbstractGhost::loadImages(const std::array<std::string, 12>& imagesUrls)
     {
         throw std::runtime_error("Error, cannot load ghost images");
     }
+}
+
+void AbstractGhost::resetCanMoveAgain()
+{
+    canMoveAgain_ = true;
+}
+
+void AbstractGhost::incrementSkippedMoves()
+{ ++skippedMoves_; }
+
+void AbstractGhost::resetSkippedMoves()
+{
+    skippedMoves_ = 0;
 }
