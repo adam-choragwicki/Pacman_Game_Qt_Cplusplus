@@ -13,10 +13,4 @@ class AbstractTimingManager
 public:
     virtual void startMovement() = 0;
     virtual void stopMovement() = 0;
-
-    [[nodiscard]] const QTimer& getMovementTimer() const
-    { return movementTimer_; }
-
-protected:
-    QTimer movementTimer_;
 };

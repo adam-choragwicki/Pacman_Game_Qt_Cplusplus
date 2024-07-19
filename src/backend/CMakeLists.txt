@@ -12,7 +12,12 @@ set(SOURCE_FILES
         model/ghosts/purple_ghost.h model/ghosts/purple_ghost.cpp
         model/ghosts/red_ghost.h model/ghosts/red_ghost.cpp
         model/ball_items_manager.h model/ball_items_manager.cpp
-        model/abstract_timing_manager.h model/pacman_timing_manager.cpp model/ghost_timing_manager.cpp
+
+        model/abstract_timing_manager.h
+        model/ghost_timing_manager.cpp model/ghost_timing_manager.h
+
+        ghost_movement_manager.h pacman_movement_manager.h
+
         common.h
         movable_character.h movable_character.cpp
         path_points.h path_points.cpp
@@ -38,9 +43,7 @@ set(SOURCE_FILES
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h
 
-        score_display.h score_display.cpp
-
-        model/pacman_timing_manager.h model/ghost_timing_manager.h ghost_movement_manager.h pacman_movement_manager.h)
+        score_display.h score_display.cpp)
 
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})
 target_include_directories(lib${PROJECT_NAME}Backend PUBLIC .)

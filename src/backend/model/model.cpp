@@ -48,7 +48,6 @@ Model::Model()
 
     gameStateManager_ = std::make_unique<GameStateManager>();
 
-    pacmanTimingManager_ = std::make_unique<PacmanTimingManager>();
     blueGhostTimingManager_ = std::make_unique<GhostTimingManager>(*blueGhost_, Config::StartTimeout::BLUE_GHOST);
     orangeGhostTimingManager_ = std::make_unique<GhostTimingManager>(*orangeGhost_, Config::StartTimeout::ORANGE_GHOST);
     purpleGhostTimingManager_ = std::make_unique<GhostTimingManager>(*purpleGhost_, Config::StartTimeout::PURPLE_GHOST);
@@ -76,7 +75,6 @@ void Model::groupObjectsIntoContainers()
     ghosts_ = {blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
 
     ghostTimingManagersContainer = {blueGhostTimingManager_.get(), orangeGhostTimingManager_.get(), purpleGhostTimingManager_.get(), redGhostTimingManager_.get()};
-    allTimingManagersContainer = {pacmanTimingManager_.get(), blueGhostTimingManager_.get(), orangeGhostTimingManager_.get(), purpleGhostTimingManager_.get(), redGhostTimingManager_.get()};
 }
 
 void Model::reset()
@@ -155,7 +153,7 @@ void Model::startGame()
 
     getGameStateManager().startGame();
 
-    startAllCharacters();
+//    startAllCharacters();
 
     getScoreManager().resetScore();
 }
@@ -164,7 +162,7 @@ void Model::endGame(GameResult gameResult)
 {
     getGameStateManager().endGame();
 
-    stopAllCharacters();
+//    stopAllCharacters();
 
     getScreenTextManager().setGameResult(gameResult);
 }
@@ -185,21 +183,6 @@ void Model::endGame(GameResult gameResult)
 //    }
 //}
 
-void Model::startAllCharacters()
-{
-    for(AbstractTimingManager* timingManager : getAllTimingManagersContainer())
-    {
-        timingManager->startMovement();
-    }
-}
-
-void Model::stopAllCharacters()
-{
-    for(AbstractTimingManager* timingManager : getAllTimingManagersContainer())
-    {
-        timingManager->stopMovement();
-    }
-}
 //
 //void Controller::togglePause()
 //{
@@ -219,12 +202,12 @@ void Model::togglePause()
 {
     if(getGameStateManager().isRunning())
     {
-        stopAllCharacters();
+//        stopAllCharacters();
         getGameStateManager().togglePause();
     }
     else if(getGameStateManager().isPaused())
     {
-        startAllCharacters();
+//        startAllCharacters();
         getGameStateManager().togglePause();
     }
 }

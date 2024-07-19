@@ -4,7 +4,7 @@
 
 class GhostTimingManager : public QObject, public AbstractTimingManager
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     GhostTimingManager(AbstractGhost& abstractGhost, std::chrono::seconds startTimeout);
@@ -32,7 +32,7 @@ private:
     void resetSpeed();
 
 private slots:
-            void changeToScaredWhite();
+    void changeToScaredWhite();
     void changeToNoScared();
     void setLeaveStartingBox();
 };

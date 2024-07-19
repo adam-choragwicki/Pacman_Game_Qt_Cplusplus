@@ -2,7 +2,6 @@
 
 class MovableCharacter;
 class AbstractGhost;
-class PacmanTimingManager;
 class GhostTimingManager;
 class AbstractTimingManager;
 class BlueGhost;
@@ -35,7 +34,6 @@ class ScoreDisplay;
 
 #include "screen_text_display.h"
 #include "game_state_manager.h"
-#include "pacman_timing_manager.h"
 #include "ghost_timing_manager.h"
 
 #include "pacman_movement_manager.h"
@@ -100,9 +98,6 @@ public:
     GameStateManager& getGameStateManager()
     { return *gameStateManager_; }
 
-    [[nodiscard]] PacmanTimingManager& getPacmanTimingManager()
-    { return *pacmanTimingManager_; }
-
     [[nodiscard]] std::map<AbstractGhost*, GhostTimingManager*>& getGhostToGhostTimingManagerMapping()
     { return ghostToGhostTimingManagerMapping_; }
 
@@ -118,9 +113,6 @@ public:
     [[nodiscard]] const GhostTimingManagersContainer& getGhostsTimingManagersContainer() const
     { return ghostTimingManagersContainer; }
 
-    [[nodiscard]] const AllTimingManagersContainer& getAllTimingManagersContainer() const
-    { return allTimingManagersContainer; }
-
     [[nodiscard]] QGraphicsScene* getScene() const
     { return scene_; }
 
@@ -129,9 +121,6 @@ public:
     //TODO this should not be here
     void startGame();
     void endGame(GameResult gameResult);
-
-    void startAllCharacters();
-    void stopAllCharacters();
 
     void togglePause();
 
@@ -155,7 +144,6 @@ private:
 
     std::unique_ptr<GameStateManager> gameStateManager_;
 
-    std::unique_ptr<PacmanTimingManager> pacmanTimingManager_;
     std::unique_ptr<GhostTimingManager> blueGhostTimingManager_;
     std::unique_ptr<GhostTimingManager> orangeGhostTimingManager_;
     std::unique_ptr<GhostTimingManager> purpleGhostTimingManager_;
@@ -170,7 +158,6 @@ private:
     GhostsContainer ghosts_{};
 
     GhostTimingManagersContainer ghostTimingManagersContainer{};
-    AllTimingManagersContainer allTimingManagersContainer{};
 
     void groupObjectsIntoContainers();
 
