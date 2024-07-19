@@ -28,7 +28,7 @@ namespace Config
             const auto SCARED_WHITE_TIME = 2s;
         }
 
-        static const auto TICK_INTERVAL = MovableCharacter::NORMAL_SPEED;
+        static const auto GAME_LOOP_INTERVAL = MovableCharacter::NORMAL_SPEED;
     }
 
     namespace InitialDirection

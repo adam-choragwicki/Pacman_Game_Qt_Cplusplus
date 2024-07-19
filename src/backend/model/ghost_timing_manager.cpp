@@ -76,5 +76,6 @@ void GhostTimingManager::changeToScaredWhite()
 void GhostTimingManager::changeToNoScared()
 {
     ghost_.resetScaredState();
+    ghost_.setSlowedDown(false);
     resetSpeed();
 }

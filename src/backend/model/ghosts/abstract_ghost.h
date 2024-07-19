@@ -33,15 +33,23 @@ public:
     { return canMoveAgain_; }
 
     [[nodiscard]] int getSkippedMoves() const
-    {return skippedMoves_;}
+    { return skippedMoves_; }
 
     void incrementSkippedMoves();
     void resetSkippedMoves();
+
+    [[nodiscard]] bool isSlowedDown() const
+    { return isSlowedDown_; }
+
+    void setSlowedDown(bool slowedDown)
+    { isSlowedDown_ = slowedDown; }
 
 protected:
     void loadImages(const std::array<std::string, 12>& imagesUrls);
 
     bool canMoveAgain_{};
+
+    bool isSlowedDown_{};
 
 private slots:
     void resetCanMoveAgain();

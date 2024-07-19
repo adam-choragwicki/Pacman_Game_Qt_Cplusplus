@@ -9,8 +9,8 @@ class QRect;
 class CollisionManager
 {
 public:
-    static bool checkAndProcessCollisionWithFoodball(const QRect& pacmanRect, std::set<Foodball>& foodballs);
-    static bool checkAndProcessCollisionWithPowerball(const QRect& pacmanRect, std::set<Powerball>& powerballs);
+    static bool checkAndProcessPacmanCollisionWithFoodball(const QRect& pacmanRect, std::set<Foodball>& foodballs);
+    static bool checkAndProcessPacmanCollisionWithPowerball(const QRect& pacmanRect, std::set<Powerball>& powerballs);
 
     static bool checkPacmanCollisionWithAnyGhost(const QRect& pacmanRect, const QRect& ghostRect);
 

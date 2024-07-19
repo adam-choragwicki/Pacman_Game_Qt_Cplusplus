@@ -40,15 +40,6 @@ private:
     Model& model_;
     //    QGraphicsScene& scene_;
     //
-    //    const std::vector<MovingObject*>& movingObjects_;
-    //    Character& character_;
-    //    const std::vector<AbstractCreature*>& creatures_;
-    //
-    //    ProjectileManager& projectileManager_;
-    //
-    //    const WorldMap& worldMap_;
-    //    const std::vector<WorldBoundary*>& worldBoundaries_;
-    //
     //    AbstractGhost* ghost1_{};
     //    AbstractGhost* ghost2_{};
     //    AbstractGhost* ghost3_{};

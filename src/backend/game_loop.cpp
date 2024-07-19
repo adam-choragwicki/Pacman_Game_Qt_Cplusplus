@@ -16,13 +16,6 @@ GameLoop::GameLoop(Model& model) :
         redGhost_(model_.getRedGhost()),
         gameStateManager_(model_.getGameStateManager()),
         ghostMovementManager_(model_.getGhostMovementManager())
-//        scene_(*model_.getScene())
-//        movingObjects_(model_.getMovingObjects()),
-//        character_(*model_.getCharacter()),
-//        creatures_(model_.getCreatures()),
-//        projectileManager_(*model_.getProjectileManager()),
-//        worldMap_(model_.getWorldMap()),
-//        worldBoundaries_(model_.getWorldBoundaries())
 {
     gameLoopTimer_ = new QTimer;
     connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
@@ -45,7 +38,7 @@ GameLoop::GameLoop(Model& model) :
 
 void GameLoop::start()
 {
-    gameLoopTimer_->start(Config::Timing::TICK_INTERVAL);
+    gameLoopTimer_->start(Config::Timing::GAME_LOOP_INTERVAL);
 }
 
 void GameLoop::execute()
@@ -57,18 +50,19 @@ void GameLoop::execute()
     ghostMovementHandler(purpleGhost_);
     ghostMovementHandler(redGhost_);
 
-    if(CollisionManager::checkAndProcessCollisionWithFoodball(pacman_.getRect(), model_.getBallItemsManager().getFoodballs()))
+    if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_.getRect(), model_.getBallItemsManager().getFoodballs()))
     {
         model_.getScoreManager().increaseScoreForEatingFoodball();
     }
 
-    if(CollisionManager::checkAndProcessCollisionWithPowerball(pacman_.getRect(), model_.getBallItemsManager().getPowerballs()))
+    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_.getRect(), model_.getBallItemsManager().getPowerballs()))
     {
         model_.getScoreManager().increaseScoreForEatingPowerball();
 
-        for(AbstractGhost* ghost : model_.getGhosts())
+        for(AbstractGhost* ghost : ghosts_)
         {
             ghost->setScaredBlueState();
+            ghost->setSlowedDown(true);
         }
 
         for(GhostTimingManager* ghostTimingManager : model_.getGhostsTimingManagersContainer())
@@ -77,7 +71,6 @@ void GameLoop::execute()
             ghostTimingManager->reduceSpeed();
         }
     }
-
 
     for(AbstractGhost* ghost : ghosts_)
     {
@@ -96,39 +89,6 @@ void GameLoop::execute()
         }
     }
 
-//    if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), blueGhost_.getRect()))
-//    {
-//        if(!blueGhost_.isScared())
-//        {
-//            model_.endGame(GameResult::LOST);
-//        }
-//        else
-//        {
-//            model_.getScoreManager().increaseScoreForEatingGhost();
-//            blueGhost_.reset();
-//            model_.getGhostToGhostTimingManagerMapping().at(&blueGhost_)->reset();
-//        }
-//    }
-
-
-
-
-//
-//    if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), ghost.getRect()))
-//    {
-//        if(!ghost.isScared())
-//        {
-//            model_.endGame(GameResult::LOST);
-//        }
-//        else
-//        {
-//            model_.getScoreManager().increaseScoreForEatingGhost();
-//            ghost.reset();
-//            model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
-//        }
-//    }
-
-
     if(gameStateManager_.isRunning() && model_.getBallItemsManager().getRemainingFoodballsCount() == 0)
     {
         model_.endGame(GameResult::WIN);
@@ -142,13 +102,26 @@ void GameLoop::pacmanMovementHandler()
 
 void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
 {
+    static int turnsCounter = 0;
+
+    static const int SKIP_TURNS = 5;
+    bool canMoveThisTurn{};
+
     //artificial slowdown of ghost
-    const int TARGET_SKIPPED_MOVES = 0;
-
-    if(ghost.getSkippedMoves() == TARGET_SKIPPED_MOVES)
+    if(ghost.isSlowedDown())
     {
-        ghost.resetSkippedMoves();
+        if(turnsCounter % SKIP_TURNS == 0)
+        {
+            canMoveThisTurn = true;
+        }
+    }
+    else
+    {
+        canMoveThisTurn = true;
+    }
 
+    if(canMoveThisTurn)
+    {
         if(ghostMovementManager_.isGhostInsideStartingBox(ghost))
         {
             if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
@@ -163,24 +136,8 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
         else
         {
             ghostMovementManager_.processMove(ghost, pacman_.getCoordinates(), model_.getPathPoints());
-
-//            if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), ghost.getRect()))
-//            {
-//                if(!ghost.isScared())
-//                {
-//                    model_.endGame(GameResult::LOST);
-//                }
-//                else
-//                {
-//                    model_.getScoreManager().increaseScoreForEatingGhost();
-//                    ghost.reset();
-//                    model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
-//                }
-//            }
         }
     }
-    else
-    {
-        ghost.incrementSkippedMoves();
-    }
+
+    ++turnsCounter;
 }

@@ -2,7 +2,7 @@
 #include "model/balls/foodball.h"
 #include "model/balls/powerball.h"
 
-bool CollisionManager::checkAndProcessCollisionWithFoodball(const QRect& pacmanRect, std::set<Foodball>& foodballs)
+bool CollisionManager::checkAndProcessPacmanCollisionWithFoodball(const QRect& pacmanRect, std::set<Foodball>& foodballs)
 {
     for(const Foodball& foodball : foodballs)
     {
@@ -16,7 +16,7 @@ bool CollisionManager::checkAndProcessCollisionWithFoodball(const QRect& pacmanR
     return false;
 }
 
-bool CollisionManager::checkAndProcessCollisionWithPowerball(const QRect& pacmanRect, std::set<Powerball>& powerballs)
+bool CollisionManager::checkAndProcessPacmanCollisionWithPowerball(const QRect& pacmanRect, std::set<Powerball>& powerballs)
 {
     for(const Powerball& powerball : powerballs)
     {
