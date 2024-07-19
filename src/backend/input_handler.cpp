@@ -2,8 +2,6 @@
 #include "input_handler.h"
 #include "model/model.h"
 #include "config.h"
-#include "model/game_state_manager.h"
-#include "model/pacman.h"
 
 InputHandler::InputHandler(Model& model) : model_(model)
 {}
@@ -45,15 +43,11 @@ void InputHandler::processKeyPressedEvent(QKeyEvent* keyEvent)
             break;
 
         case Qt::Key_P:
-//            model_.togglePause();
             emit togglePauseRequested();
             break;
 
         case Qt::Key_Space:
-            if(model_.getGameStateManager().isBeforeFirstRun() || model_.getGameStateManager().isStopped())
-            {
-                emit startGameRequested();
-            }
+            emit startGameRequested();
             break;
     }
 }
