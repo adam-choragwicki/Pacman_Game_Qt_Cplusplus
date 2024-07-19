@@ -73,7 +73,6 @@ void GameLoop::execute()
             for(AbstractGhost* ghost : ghosts_)
             {
                 ghost->setScared();
-//                ghost->setSlowedDown(true);
             }
         }
 
@@ -89,7 +88,6 @@ void GameLoop::execute()
                 {
                     model_.getScoreManager().increaseScoreForEatingGhost();
                     ghost->reset();
-                    model_.getGhostToGhostTimingManagerMapping().at(ghost)->reset();
                 }
             }
         }

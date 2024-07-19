@@ -28,14 +28,10 @@ Model::Model()
     initScene();
 
     scoreManager_ = new ScoreManager;
-
     scoreDisplay_ = new ScoreDisplay(*scoreManager_);
-
     screenTextManager_ = new ScreenTextManager;
 
     pathPoints_ = std::make_unique<PathPoints>();
-
-    ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
     pacman_ = std::make_unique<Pacman>();
     blueGhost_ = std::make_unique<BlueGhost>();
@@ -43,15 +39,11 @@ Model::Model()
     purpleGhost_ = std::make_unique<PurpleGhost>();
     redGhost_ = std::make_unique<RedGhost>();
 
-    gameStateManager_ = std::make_unique<GameStateManager>();
-
-    ghostToGhostTimingManagerMapping_.insert_or_assign(blueGhost_.get(), blueGhostTimingManager_.get());
-    ghostToGhostTimingManagerMapping_.insert_or_assign(orangeGhost_.get(), orangeGhostTimingManager_.get());
-    ghostToGhostTimingManagerMapping_.insert_or_assign(purpleGhost_.get(), purpleGhostTimingManager_.get());
-    ghostToGhostTimingManagerMapping_.insert_or_assign(redGhost_.get(), redGhostTimingManager_.get());
-
     pacmanMovementManager_ = std::make_unique<PacmanMovementManager>();
     ghostMovementManager_ = std::make_unique<GhostMovementManager>();
+
+    gameStateManager_ = std::make_unique<GameStateManager>();
+    ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
     screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *screenTextManager_, *scoreManager_);
 
@@ -62,6 +54,8 @@ void Model::reset()
 {
     gameStateManager_ = std::make_unique<GameStateManager>();
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
+
+    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *screenTextManager_, *scoreManager_);
 
     pacman_->reset();
     blueGhost_->reset();

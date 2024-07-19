@@ -3,7 +3,6 @@
 class MovableCharacter;
 class AbstractGhost;
 class GhostTimingManager;
-class AbstractTimingManager;
 class BlueGhost;
 class OrangeGhost;
 class PurpleGhost;
@@ -42,10 +41,6 @@ class ScoreDisplay;
 #include "balls/foodball.h"
 #include "balls/powerball.h"
 #include "score_display.h"
-
-using AllCharactersContainer = std::array<MovableCharacter*, 5>;
-using GhostsContainer = std::array<AbstractGhost*, 4>;
-using AllTimingManagersContainer = std::array<AbstractTimingManager*, 5>;
 
 class Model
 {
@@ -94,9 +89,6 @@ public:
     GameStateManager& getGameStateManager()
     { return *gameStateManager_; }
 
-    [[nodiscard]] std::map<AbstractGhost*, GhostTimingManager*>& getGhostToGhostTimingManagerMapping()
-    { return ghostToGhostTimingManagerMapping_; }
-
     [[nodiscard]] const PathPoints& getPathPoints() const
     { return *pathPoints_; }
 
@@ -139,8 +131,6 @@ private:
     std::unique_ptr<GhostTimingManager> orangeGhostTimingManager_;
     std::unique_ptr<GhostTimingManager> purpleGhostTimingManager_;
     std::unique_ptr<GhostTimingManager> redGhostTimingManager_;
-
-    std::map<AbstractGhost*, GhostTimingManager*> ghostToGhostTimingManagerMapping_;
 
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;
