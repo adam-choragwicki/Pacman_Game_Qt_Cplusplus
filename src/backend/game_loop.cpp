@@ -8,7 +8,13 @@
 #include <QTimer>
 
 GameLoop::GameLoop(Model& model) :
-        model_(model), blueGhost_(model_.getBlueGhost()), orangeGhost_(model_.getOrangeGhost()), purpleGhost_(model_.getPurpleGhost()), redGhost_(model_.getRedGhost()), ghostMovementManager_(model_.getGhostMovementManager())
+        model_(model),
+        pacman_(model_.getPacman()),
+        blueGhost_(model_.getBlueGhost()),
+        orangeGhost_(model_.getOrangeGhost()),
+        purpleGhost_(model_.getPurpleGhost()),
+        redGhost_(model_.getRedGhost()),
+        ghostMovementManager_(model_.getGhostMovementManager())
 //        scene_(*model_.getScene())
 //        movingObjects_(model_.getMovingObjects()),
 //        character_(*model_.getCharacter()),
@@ -156,14 +162,14 @@ void GameLoop::execute()
 
 void GameLoop::pacmanMovementHandler()
 {
-    model_.getPacmanMovementManager().processMove(model_.getPacman(), model_.getPathPoints());
+    model_.getPacmanMovementManager().processMove(pacman_, model_.getPathPoints());
 
-    if(CollisionManager::checkAndProcessCollisionWithFoodball(model_.getPacman().getRect(), model_.getBallItemsManager().getFoodballs()))
+    if(CollisionManager::checkAndProcessCollisionWithFoodball(pacman_.getRect(), model_.getBallItemsManager().getFoodballs()))
     {
         model_.getScoreManager().increaseScoreForEatingFoodball();
     }
 
-    if(CollisionManager::checkAndProcessCollisionWithPowerball(model_.getPacman().getRect(), model_.getBallItemsManager().getPowerballs()))
+    if(CollisionManager::checkAndProcessCollisionWithPowerball(pacman_.getRect(), model_.getBallItemsManager().getPowerballs()))
     {
         model_.getScoreManager().increaseScoreForEatingPowerball();
 
@@ -206,9 +212,9 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
         }
         else
         {
-            ghostMovementManager_.processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
+            ghostMovementManager_.processMove(ghost, pacman_.getCoordinates(), model_.getPathPoints());
 
-            if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
+            if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), ghost.getRect()))
             {
                 if(!ghost.isScared())
                 {

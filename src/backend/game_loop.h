@@ -12,6 +12,8 @@ class WorldBoundary;
 
 class AbstractGhost;
 
+class Pacman;
+
 class BlueGhost;
 class OrangeGhost;
 class PurpleGhost;
@@ -50,6 +52,8 @@ private:
     //    AbstractGhost* ghost2_{};
     //    AbstractGhost* ghost3_{};
     //    AbstractGhost* ghost4_{};
+
+    Pacman& pacman_;
 
     BlueGhost& blueGhost_;
     OrangeGhost& orangeGhost_;
