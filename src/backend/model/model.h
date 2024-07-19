@@ -132,6 +132,7 @@ public:
 
 private:
     void addItemsToScene();
+    void addBallsToScene();
 
     std::unique_ptr<PathPoints> pathPoints_;
     std::unique_ptr<BallItemsManager> ballItemsManager_;
