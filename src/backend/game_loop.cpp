@@ -27,6 +27,11 @@ GameLoop::GameLoop(Model& model) :
     gameLoopTimer_ = new QTimer;
     connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
 
+    ghosts_.at(0) = &blueGhost_;
+    ghosts_.at(1) = &orangeGhost_;
+    ghosts_.at(2) = &purpleGhost_;
+    ghosts_.at(3) = &redGhost_;
+
     //    connect(&model_.getPacmanTimingManager().getMovementTimer(), &QTimer::timeout, this, &GameLoop::pacmanMovementHandler);
     //
     //    for(const auto& ghostAndTimingManagerPair : model_.getGhostToGhostTimingManagerMapping())
@@ -74,6 +79,56 @@ void GameLoop::execute()
     }
 
 
+    for(AbstractGhost* ghost : ghosts_)
+    {
+        if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), ghost->getRect()))
+        {
+            if(!ghost->isScared())
+            {
+                model_.endGame(GameResult::LOST);
+            }
+            else
+            {
+                model_.getScoreManager().increaseScoreForEatingGhost();
+                ghost->reset();
+                model_.getGhostToGhostTimingManagerMapping().at(ghost)->reset();
+            }
+        }
+    }
+
+//    if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), blueGhost_.getRect()))
+//    {
+//        if(!blueGhost_.isScared())
+//        {
+//            model_.endGame(GameResult::LOST);
+//        }
+//        else
+//        {
+//            model_.getScoreManager().increaseScoreForEatingGhost();
+//            blueGhost_.reset();
+//            model_.getGhostToGhostTimingManagerMapping().at(&blueGhost_)->reset();
+//        }
+//    }
+
+
+
+
+//
+//    if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), ghost.getRect()))
+//    {
+//        if(!ghost.isScared())
+//        {
+//            model_.endGame(GameResult::LOST);
+//        }
+//        else
+//        {
+//            model_.getScoreManager().increaseScoreForEatingGhost();
+//            ghost.reset();
+//            model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
+//        }
+//    }
+
+
     if(gameStateManager_.isRunning() && model_.getBallItemsManager().getRemainingFoodballsCount() == 0)
     {
         model_.endGame(GameResult::WIN);
@@ -87,6 +142,7 @@ void GameLoop::pacmanMovementHandler()
 
 void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
 {
+    //artificial slowdown of ghost
     const int TARGET_SKIPPED_MOVES = 0;
 
     if(ghost.getSkippedMoves() == TARGET_SKIPPED_MOVES)
@@ -108,19 +164,19 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
         {
             ghostMovementManager_.processMove(ghost, pacman_.getCoordinates(), model_.getPathPoints());
 
-            if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), ghost.getRect()))
-            {
-                if(!ghost.isScared())
-                {
-                    model_.endGame(GameResult::LOST);
-                }
-                else
-                {
-                    model_.getScoreManager().increaseScoreForEatingGhost();
-                    ghost.reset();
-                    model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
-                }
-            }
+//            if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), ghost.getRect()))
+//            {
+//                if(!ghost.isScared())
+//                {
+//                    model_.endGame(GameResult::LOST);
+//                }
+//                else
+//                {
+//                    model_.getScoreManager().increaseScoreForEatingGhost();
+//                    ghost.reset();
+//                    model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
+//                }
+//            }
         }
     }
     else

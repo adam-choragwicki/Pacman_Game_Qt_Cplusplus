@@ -61,6 +61,8 @@ private:
     PurpleGhost& purpleGhost_;
     RedGhost& redGhost_;
 
+    std::array<AbstractGhost*, 4> ghosts_;
+
     GameStateManager& gameStateManager_;
 
     GhostMovementManager& ghostMovementManager_;
