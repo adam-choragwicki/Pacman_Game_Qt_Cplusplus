@@ -62,7 +62,6 @@ void AbstractMovementManager::processMove(MovableCharacter& movableCharacter, co
         move(movableCharacter, movableCharacter.getDirection());
         movableCharacter.setMoving(true);
         checkAndProcessGameAreaBoundaryReach(movableCharacter);
-        movableCharacter.advanceAnimation();
     }
     else
     {

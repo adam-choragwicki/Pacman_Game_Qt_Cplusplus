@@ -107,6 +107,8 @@ void Model::initScene()
 
 void Model::addItemsToScene()
 {
+    addBallsToScene();
+
     scene_->addItem(pacman_.get());
 
     scene_->addItem(blueGhost_.get());
@@ -115,8 +117,6 @@ void Model::addItemsToScene()
     scene_->addItem(redGhost_.get());
 
     scene_->addItem(screenTextDisplay_.get());
-
-    addBallsToScene();
 
     scene_->addItem(scoreDisplay_);
 }
@@ -197,20 +197,6 @@ void Model::endGame(GameResult gameResult)
 //        model_.getGameStateManager().togglePause();
 //    }
 //}
-
-void Model::togglePause()
-{
-    if(getGameStateManager().isRunning())
-    {
-//        stopAllCharacters();
-        getGameStateManager().togglePause();
-    }
-    else if(getGameStateManager().isPaused())
-    {
-//        startAllCharacters();
-        getGameStateManager().togglePause();
-    }
-}
 
 void Model::addBallsToScene()
 {

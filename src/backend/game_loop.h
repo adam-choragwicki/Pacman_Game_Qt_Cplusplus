@@ -26,6 +26,9 @@ class GameLoop : public QObject
 {
 Q_OBJECT
 
+public slots:
+    void togglePause();
+
 public:
     explicit GameLoop(Model& model);
     void start();

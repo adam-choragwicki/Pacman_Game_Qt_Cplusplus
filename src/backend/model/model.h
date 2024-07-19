@@ -122,8 +122,6 @@ public:
     void startGame();
     void endGame(GameResult gameResult);
 
-    void togglePause();
-
 private:
     void addItemsToScene();
     void addBallsToScene();

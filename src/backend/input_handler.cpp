@@ -45,8 +45,8 @@ void InputHandler::processKeyPressedEvent(QKeyEvent* keyEvent)
             break;
 
         case Qt::Key_P:
-            model_.togglePause();
-//            emit togglePauseRequested();
+//            model_.togglePause();
+            emit togglePauseRequested();
             break;
 
         case Qt::Key_Space:

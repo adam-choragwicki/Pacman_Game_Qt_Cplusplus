@@ -106,8 +106,6 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
         default:
             throw std::runtime_error("Cannot draw Pacman, wrong direction");
     }
-
-    advanceAnimation();
 }
 
 void Pacman::loadImages(const std::array<std::string, 16>& imagesUrls)
