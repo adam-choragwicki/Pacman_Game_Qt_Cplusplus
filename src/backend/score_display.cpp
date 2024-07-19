@@ -1,8 +1,11 @@
 #include "score_display.h"
+#include "score_manager.h"
 #include <QtGui/QPainter>
 
-ScoreDisplay::ScoreDisplay(int x, int y)
-{}
+ScoreDisplay::ScoreDisplay(const ScoreManager& scoreManager) : scoreManager_(scoreManager)
+{
+    initializePainterData();
+}
 
 void ScoreDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
@@ -10,14 +13,18 @@ void ScoreDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem* opti
 
     QRect scoreDisplayBoundingRect(X, Y, WIDTH, HEIGHT);
 
+    painter->setPen(painterPen_);
+    painter->setFont(painterFont_);
 
-    QFont font = painter->font();
+    painter->drawText(scoreDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "Score: " + QString::number(scoreManager_.getScore()));
+}
+
+void ScoreDisplay::initializePainterData()
+{
+    painterPen_ = QPen(Qt::white);
+
+    QFont font;
     font.setPointSize(ScoreDisplay::FONT_POINT_SIZE);
 
-    painter->setPen(QPen(Qt::white));
-    painter->setFont(font);
-
-//    painter->drawText(scoreDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "Score: " + QString::number(model_.getScoreManager().getScore()));
-
-    painter->drawText(scoreDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "Score: " + QString::number(0));
+    painterFont_ = font;
 }

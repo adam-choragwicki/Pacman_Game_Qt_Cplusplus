@@ -2,6 +2,7 @@
 #include "score_display.h"
 #include "graphics_view.h"
 #include "model/model.h"
+
 #include <QScreen>
 #include <QGuiApplication>
 
@@ -48,28 +49,6 @@ void MainWindow::centerOnScreen(QScreen* screen)
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     emit keyPressedEvent(event);
-}
-
-void MainWindow::paintEvent(QPaintEvent* event)
-{
-    QPainter painter(this);
-
-    if(!model_.getGameStateManager().isStopped())
-    {
-        drawScoreDisplay(painter);
-    }
-}
-
-void MainWindow::drawScoreDisplay(QPainter& painter)
-{
-    QFont font = painter.font();
-    font.setPointSize(ScoreDisplay::FONT_POINT_SIZE);
-
-    painter.setPen(QPen(Qt::white));
-    painter.setFont(font);
-
-    QRect scoreDisplayBoundingRect(ScoreDisplay::X, ScoreDisplay::Y, ScoreDisplay::WIDTH, ScoreDisplay::HEIGHT);
-    painter.drawText(scoreDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "Score: " + QString::number(model_.getScoreManager().getScore()));
 }
 
 void MainWindow::updateViewport()

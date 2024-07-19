@@ -1,12 +1,15 @@
 #pragma once
 
-#include "score_manager.h"
+class ScoreManager;
+
 #include <QtWidgets/QGraphicsTextItem>
+#include <QtGui/QPen>
+#include <QtGui/QFont>
 
 class ScoreDisplay : public QGraphicsTextItem
 {
 public:
-    ScoreDisplay(int x, int y);
+    explicit ScoreDisplay(const ScoreManager& scoreManager);
     ~ScoreDisplay() override = default;
 
     static const int X = 0;
@@ -16,4 +19,12 @@ public:
     static const int FONT_POINT_SIZE = 30;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+
+private:
+    void initializePainterData();
+
+    const ScoreManager& scoreManager_;
+
+    QFont painterFont_;
+    QPen painterPen_;
 };

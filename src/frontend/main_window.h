@@ -17,9 +17,6 @@ public:
     explicit MainWindow(const Model& model);
     ~MainWindow() override = default;
 
-    void paintEvent([[maybe_unused]] QPaintEvent* event) override;
-    void drawScoreDisplay(QPainter& painter);
-
     void updateViewport();
 
 private:

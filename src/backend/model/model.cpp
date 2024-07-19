@@ -30,9 +30,10 @@ Model::Model()
 {
     initScene();
 
-    scoreDisplay_ = new ScoreDisplay(ScoreDisplay::X, ScoreDisplay::Y);
-
     scoreManager_ = new ScoreManager;
+
+    scoreDisplay_ = new ScoreDisplay(*scoreManager_);
+
     screenTextManager_ = new ScreenTextManager;
 
     pathPoints_ = std::make_unique<PathPoints>();
