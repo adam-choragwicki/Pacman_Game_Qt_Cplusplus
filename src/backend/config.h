@@ -27,6 +27,8 @@ namespace Config
             const auto SCARED_BLUE_TIME = 4s;
             const auto SCARED_WHITE_TIME = 2s;
         }
+
+        static const auto TICK_INTERVAL = MovableCharacter::NORMAL_SPEED;
     }
 
     namespace InitialDirection

@@ -20,6 +20,3 @@ public:
 protected:
     QTimer movementTimer_;
 };
-
-
-

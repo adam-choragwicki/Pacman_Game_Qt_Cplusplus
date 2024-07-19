@@ -2,16 +2,13 @@
 #include "model/model.h"
 
 #include "collision_manager.h"
-//#include "moving_objects_collision_resolver.h"
-//#include "model/physics_manager.h"
-//#include "model/items/abstract_projectile.h"
 
 #include "score_manager.h"
-
-
+#include "config.h"
 #include <QTimer>
 
-GameLoop::GameLoop(Model& model) : model_(model)
+GameLoop::GameLoop(Model& model) :
+        model_(model), blueGhost_(model_.getBlueGhost()), orangeGhost_(model_.getOrangeGhost()), purpleGhost_(model_.getPurpleGhost()), redGhost_(model_.getRedGhost()), ghostMovementManager_(model_.getGhostMovementManager())
 //        scene_(*model_.getScene())
 //        movingObjects_(model_.getMovingObjects()),
 //        character_(*model_.getCharacter()),
@@ -20,29 +17,34 @@ GameLoop::GameLoop(Model& model) : model_(model)
 //        worldMap_(model_.getWorldMap()),
 //        worldBoundaries_(model_.getWorldBoundaries())
 {
+    gameLoopTimer_ = new QTimer;
+    connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
 
-
-    //    gameLoopTimer_ = new QTimer;
-    //    connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
-
-    connect(&model_.getPacmanTimingManager().getMovementTimer(), &QTimer::timeout, this, &GameLoop::pacmanMovementHandler);
-
-    for(const auto& ghostAndTimingManagerPair : model_.getGhostToGhostTimingManagerMapping())
-    {
-        connect(&ghostAndTimingManagerPair.second->getMovementTimer(), &QTimer::timeout, this, [&]()
-        {
-            ghostMovementHandler(*ghostAndTimingManagerPair.first);
-        });
-    }
+    //    connect(&model_.getPacmanTimingManager().getMovementTimer(), &QTimer::timeout, this, &GameLoop::pacmanMovementHandler);
+    //
+    //    for(const auto& ghostAndTimingManagerPair : model_.getGhostToGhostTimingManagerMapping())
+    //    {
+    //        connect(&ghostAndTimingManagerPair.second->getMovementTimer(), &QTimer::timeout, this, [&]()
+    //        {
+    //            ghostMovementHandler(*ghostAndTimingManagerPair.first);
+    //        });
+    //    }
 }
 
 void GameLoop::start()
 {
-    //    gameLoopTimer_->start(Config::Timing::TICK_INTERVAL);
+    gameLoopTimer_->start(Config::Timing::TICK_INTERVAL);
 }
 
 void GameLoop::execute()
 {
+    pacmanMovementHandler();
+
+    ghostMovementHandler(blueGhost_);
+    ghostMovementHandler(orangeGhost_);
+    ghostMovementHandler(purpleGhost_);
+    ghostMovementHandler(redGhost_);
+
     //    //resolve movable objects collisions start
     //    for(MovingObject* movingObject : movingObjects_)
     //    {
@@ -185,20 +187,20 @@ void GameLoop::pacmanMovementHandler()
 
 void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
 {
-    if(model_.getGhostMovementManager().isGhostInsideStartingBox(ghost))
+    if(ghostMovementManager_.isGhostInsideStartingBox(ghost))
     {
         if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
         {
-            model_.getGhostMovementManager().moveOutOfStartingBox(ghost);
+            ghostMovementManager_.moveOutOfStartingBox(ghost);
         }
         else
         {
-            model_.getGhostMovementManager().moveInsideStartingBox(ghost);
+            ghostMovementManager_.moveInsideStartingBox(ghost);
         }
     }
     else
     {
-        model_.getGhostMovementManager().processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
+        ghostMovementManager_.processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
 
         if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
         {

@@ -52,6 +52,8 @@ void Controller::startGame()
 {
     model_.startGame();
 
+    gameLoop_->start();
+
     //    if(!model_.getGameStateManager().isBeforeFirstRun())
     //    {
     //        model_.reset();
