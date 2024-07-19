@@ -121,6 +121,15 @@ public:
     [[nodiscard]] QGraphicsScene* getScene() const
     { return scene_; }
 
+    //TODO this should not be here
+    void startGame();
+    void endGame(GameResult gameResult);
+
+    void startAllCharacters();
+    void stopAllCharacters();
+
+    void togglePause();
+
 private:
     void addItemsToScene();
 

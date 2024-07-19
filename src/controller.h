@@ -15,7 +15,7 @@ public slots:
     void viewportUpdateHandler();
 
     void startGame();
-    void togglePause();
+//    void togglePause();
 
 public:
     Controller(Model& model, MainWindow& view);
@@ -25,17 +25,10 @@ public:
 
     void endGame(GameResult gameResult);
 
-private slots:
-    void pacmanMovementHandler();
-    void ghostMovementHandler(AbstractGhost& ghost);
-
 private:
     Model& model_;
     MainWindow& view_;
 
     InputHandler* inputHandler_{};
     GameLoop* gameLoop_{};
-
-    void startAllCharacters();
-    void stopAllCharacters();
 };

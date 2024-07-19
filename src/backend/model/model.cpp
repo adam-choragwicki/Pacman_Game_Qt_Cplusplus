@@ -125,3 +125,109 @@ void Model::addItemsToScene()
         scene_->addItem(&const_cast<Powerball&>(powerball));
     }
 }
+
+//void Model::startGame()
+//{
+//    if(!model_.getGameStateManager().isBeforeFirstRun())
+//    {
+//        model_.reset();
+//    }
+//
+//    model_.getGameStateManager().startGame();
+//
+//    startAllCharacters();
+//
+//    model_.getScoreManager().resetScore();
+//}
+//
+//void Model::endGame(GameResult gameResult)
+//{
+//    model_.getGameStateManager().endGame();
+//
+//    stopAllCharacters();
+//
+//    model_.getScreenTextManager().setGameResult(gameResult);
+//}
+
+void Model::startGame()
+{
+    if(!getGameStateManager().isBeforeFirstRun())
+    {
+        reset();
+    }
+
+    getGameStateManager().startGame();
+
+    startAllCharacters();
+
+    getScoreManager().resetScore();
+}
+
+void Model::endGame(GameResult gameResult)
+{
+    getGameStateManager().endGame();
+
+    stopAllCharacters();
+
+    getScreenTextManager().setGameResult(gameResult);
+}
+
+//void Model::startAllCharacters()
+//{
+//    for(AbstractTimingManager* timingManager : model_.getAllTimingManagersContainer())
+//    {
+//        timingManager->startMovement();
+//    }
+//}
+//
+//void Model::stopAllCharacters()
+//{
+//    for(AbstractTimingManager* timingManager : model_.getAllTimingManagersContainer())
+//    {
+//        timingManager->stopMovement();
+//    }
+//}
+
+void Model::startAllCharacters()
+{
+    for(AbstractTimingManager* timingManager : getAllTimingManagersContainer())
+    {
+        timingManager->startMovement();
+    }
+}
+
+void Model::stopAllCharacters()
+{
+    for(AbstractTimingManager* timingManager : getAllTimingManagersContainer())
+    {
+        timingManager->stopMovement();
+    }
+}
+//
+//void Controller::togglePause()
+//{
+//    if(model_.getGameStateManager().isRunning())
+//    {
+//        stopAllCharacters();
+//        model_.getGameStateManager().togglePause();
+//    }
+//    else if(model_.getGameStateManager().isPaused())
+//    {
+//        startAllCharacters();
+//        model_.getGameStateManager().togglePause();
+//    }
+//}
+
+void Model::togglePause()
+{
+    if(getGameStateManager().isRunning())
+    {
+        stopAllCharacters();
+        getGameStateManager().togglePause();
+    }
+    else if(getGameStateManager().isPaused())
+    {
+        startAllCharacters();
+        getGameStateManager().togglePause();
+    }
+}

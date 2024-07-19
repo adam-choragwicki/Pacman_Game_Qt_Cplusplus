@@ -7,10 +7,10 @@ class QTimer;
 class QGraphicsScene;
 class MovingObject;
 class Character;
-class AbstractCreature;
-class ProjectileManager;
 class WorldMap;
 class WorldBoundary;
+
+class AbstractGhost;
 
 class GameLoop : public QObject
 {
@@ -22,6 +22,9 @@ public:
 
 private slots:
     void execute();
+
+    void pacmanMovementHandler();
+    void ghostMovementHandler(AbstractGhost& ghost);
 
 private:
     Model& model_;

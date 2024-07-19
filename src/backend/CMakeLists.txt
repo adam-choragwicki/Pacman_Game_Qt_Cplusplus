@@ -1,5 +1,9 @@
 set(SOURCE_FILES
         model/model.h model/model.cpp
+
+        game_loop.cpp game_loop.h
+        input_handler.cpp input_handler.h
+
         model/game_state_manager.cpp model/game_state_manager.h
         model/pacman.h model/pacman.cpp
         model/ghosts/abstract_ghost.h model/ghosts/abstract_ghost.cpp
@@ -34,7 +38,7 @@ set(SOURCE_FILES
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h
 
-        input_handler.cpp input_handler.h model/pacman_timing_manager.h model/ghost_timing_manager.h ghost_movement_manager.h pacman_movement_manager.h)
+        model/pacman_timing_manager.h model/ghost_timing_manager.h ghost_movement_manager.h pacman_movement_manager.h)
 
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})
 target_include_directories(lib${PROJECT_NAME}Backend PUBLIC .)
