@@ -27,9 +27,9 @@ Model::Model()
 {
     initScene();
 
-    scoreManager_ = new ScoreManager;
-    scoreDisplay_ = new ScoreDisplay(*scoreManager_);
-    screenTextManager_ = new ScreenTextManager;
+    scoreManager_ = std::make_unique<ScoreManager>();
+    scoreDisplay_ = std::make_unique<ScoreDisplay>(*scoreManager_);
+    screenTextManager_ = std::make_unique<ScreenTextManager>();
 
     pathPoints_ = std::make_unique<PathPoints>();
 
@@ -68,12 +68,10 @@ void Model::reset()
 
 void Model::initScene()
 {
-    scene_ = new QGraphicsScene();
-
     const int ARENA_WIDTH_PX = 614;
     const int ARENA_HEIGHT_PX = 730;
 
-    scene_->setSceneRect(0, 0, ARENA_WIDTH_PX, ARENA_HEIGHT_PX);
+    scene_ = std::make_unique<QGraphicsScene>(0, 0, ARENA_WIDTH_PX, ARENA_HEIGHT_PX);
 }
 
 void Model::addItemsToScene()
@@ -89,7 +87,7 @@ void Model::addItemsToScene()
 
     scene_->addItem(screenTextDisplay_.get());
 
-    scene_->addItem(scoreDisplay_);
+    scene_->addItem(scoreDisplay_.get());
 }
 
 //void Model::startGame()
@@ -122,20 +120,14 @@ void Model::startGame()
         reset();
     }
 
-    getGameStateManager().startGame();
-
-    //    startAllCharacters();
-
-    getScoreManager().resetScore();
+    gameStateManager_->startGame();
+    scoreManager_->resetScore();
 }
 
 void Model::endGame(GameResult gameResult)
 {
-    getGameStateManager().endGame();
-
-    //    stopAllCharacters();
-
-    getScreenTextManager().setGameResult(gameResult);
+    gameStateManager_->endGame();
+    screenTextManager_->setGameResult(gameResult);
 }
 
 //

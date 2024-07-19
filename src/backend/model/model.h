@@ -2,7 +2,6 @@
 
 class MovableCharacter;
 class AbstractGhost;
-class GhostTimingManager;
 class BlueGhost;
 class OrangeGhost;
 class PurpleGhost;
@@ -13,15 +12,12 @@ class GameStateManager;
 class PacmanMovementManager;
 class GhostMovementManager;
 
-class QGraphicsScene;
 
 class ScreenTextManager;
 class ScreenTextDisplay;
 
 class ScoreDisplay;
 
-#include <map>
-#include <memory>
 #include "path_points.h"
 #include "ball_items_manager.h"
 #include "pacman.h"
@@ -33,14 +29,17 @@ class ScoreDisplay;
 
 #include "screen_text_display.h"
 #include "game_state_manager.h"
-#include "ghost_timing_manager.h"
 
 #include "pacman_movement_manager.h"
 #include "ghost_movement_manager.h"
 
 #include "balls/foodball.h"
 #include "balls/powerball.h"
+#include "score_manager.h"
 #include "score_display.h"
+#include <map>
+#include <memory>
+#include <QtWidgets/QGraphicsScene>
 
 class Model
 {
@@ -49,9 +48,6 @@ public:
     void reset();
 
     void initScene();
-
-    [[nodiscard]] const Pacman& getPacman() const
-    { return *pacman_; }
 
     [[nodiscard]] Pacman& getPacman()
     { return *pacman_; }
@@ -68,23 +64,11 @@ public:
     [[nodiscard]] RedGhost& getRedGhost() const
     { return *redGhost_; }
 
-    [[nodiscard]] const ScoreManager& getScoreManager() const
-    { return *scoreManager_; }
-
     [[nodiscard]] ScoreManager& getScoreManager()
     { return *scoreManager_; }
 
-    [[nodiscard]] const ScreenTextManager& getScreenTextManager() const
-    { return *screenTextManager_; }
-
-    [[nodiscard]] ScreenTextManager& getScreenTextManager()
-    { return *screenTextManager_; }
-
     [[nodiscard]] BallItemsManager& getBallItemsManager() const
     { return *ballItemsManager_; }
-
-    [[nodiscard]] const GameStateManager& getGameStateManager() const
-    { return *gameStateManager_; }
 
     GameStateManager& getGameStateManager()
     { return *gameStateManager_; }
@@ -99,9 +83,7 @@ public:
     { return *ghostMovementManager_; }
 
     [[nodiscard]] QGraphicsScene* getScene() const
-    { return scene_; }
-
-    ScoreDisplay* scoreDisplay_{};
+    { return scene_.get(); }
 
     //TODO this should not be here
     void startGame();
@@ -122,18 +104,15 @@ private:
 
     std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
 
-    ScoreManager* scoreManager_{};
-    ScreenTextManager* screenTextManager_{};
+    std::unique_ptr<ScoreDisplay> scoreDisplay_;
+
+    std::unique_ptr<ScoreManager> scoreManager_;
+    std::unique_ptr<ScreenTextManager> screenTextManager_;
 
     std::unique_ptr<GameStateManager> gameStateManager_;
-
-    std::unique_ptr<GhostTimingManager> blueGhostTimingManager_;
-    std::unique_ptr<GhostTimingManager> orangeGhostTimingManager_;
-    std::unique_ptr<GhostTimingManager> purpleGhostTimingManager_;
-    std::unique_ptr<GhostTimingManager> redGhostTimingManager_;
 
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;
 
-    QGraphicsScene* scene_{};
+    std::unique_ptr<QGraphicsScene> scene_;
 };

@@ -5,6 +5,7 @@
 
 #include "score_manager.h"
 #include "config.h"
+#include "model/ghost_timing_manager.h"
 #include <QTimer>
 
 GameLoop::GameLoop(Model& model) :
