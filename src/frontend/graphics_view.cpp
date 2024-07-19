@@ -29,16 +29,16 @@ void GraphicsView::drawBackground(QPainter* painter, const QRectF& rect)
 
 void GraphicsView::drawForeground(QPainter* painter, const QRectF& rect)
 {
-    /* Ensure FPS counter is drawn on top of scene and always visible */
-    QGraphicsView::drawForeground(painter, rect);
-    ++frameCount_;
-
-    painter->setPen(fpsCounterPen_);
-    painter->setFont(fpsCounterFont_);
-
-    // Get the viewport's top-left coordinates
-    const QPointF topLeft = mapToScene(viewport()->rect().topLeft());
-    painter->drawText(topLeft + QPointF(10, 20), QString("FPS: %1").arg(currentFPS_));
+//    /* Ensure FPS counter is drawn on top of scene and always visible */
+//    QGraphicsView::drawForeground(painter, rect);
+//    ++frameCount_;
+//
+//    painter->setPen(fpsCounterPen_);
+//    painter->setFont(fpsCounterFont_);
+//
+//    // Get the viewport's top-left coordinates
+//    const QPointF topLeft = mapToScene(viewport()->rect().topLeft());
+//    painter->drawText(topLeft + QPointF(10, 20), QString("FPS: %1").arg(currentFPS_));
 }
 
 void GraphicsView::updateFPS()

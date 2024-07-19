@@ -11,9 +11,7 @@ class ScreenTextDisplay : public QGraphicsTextItem
 public:
     explicit ScreenTextDisplay(const GameStateManager& gameStateManager, const ScreenTextManager& screenTextManager, const ScoreManager& scoreManager);
     ~ScreenTextDisplay() override = default;
-private:
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
-public:
+
     static const int WIDTH = 600;
     static const int HEIGHT = 200;
     static const int X = 614 / 2 - WIDTH / 2;
@@ -22,6 +20,9 @@ public:
 
     [[nodiscard]] const ScreenTextManager& getScreenTextManager() const
     { return screenTextManager_; }
+
+private:
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 private:
     const GameStateManager& gameStateManager_;

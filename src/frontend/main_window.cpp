@@ -2,7 +2,6 @@
 #include "score_display.h"
 #include "graphics_view.h"
 #include "model/model.h"
-#include "model/game_state_manager.h"
 #include <QScreen>
 #include <QGuiApplication>
 

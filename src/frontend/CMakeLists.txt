@@ -1,7 +1,6 @@
 set(SOURCE_FILES
         main_window.h main_window.cpp
         graphics_view.h graphics_view.cpp
-        score_display.h
         game_arena.cpp game_arena.h
         pacman_frontend.cpp pacman_frontend.h
         ghosts_frontends/abstract_ghost_frontend.cpp ghosts_frontends/abstract_ghost_frontend.h

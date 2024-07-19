@@ -38,6 +38,8 @@ set(SOURCE_FILES
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h
 
+        score_display.h score_display.cpp
+
         model/pacman_timing_manager.h model/ghost_timing_manager.h ghost_movement_manager.h pacman_movement_manager.h)
 
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})

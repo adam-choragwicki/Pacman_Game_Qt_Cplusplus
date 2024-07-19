@@ -11,7 +11,7 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
 {
     QGraphicsTextItem::paint(painter, option, widget);
 
-    QRect screenTextDisplayBoundingRect(ScreenTextDisplay::X, ScreenTextDisplay::Y, ScreenTextDisplay::WIDTH, ScreenTextDisplay::HEIGHT);
+    QRect screenTextDisplayBoundingRect(X, Y, WIDTH, HEIGHT);
 
     QPen penRed(Qt::red);
     QPen penYellow(Qt::yellow);

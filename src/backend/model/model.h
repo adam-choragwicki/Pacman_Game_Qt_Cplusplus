@@ -20,6 +20,8 @@ class QGraphicsScene;
 class ScreenTextManager;
 class ScreenTextDisplay;
 
+class ScoreDisplay;
+
 #include <map>
 #include <memory>
 #include "path_points.h"
@@ -41,6 +43,7 @@ class ScreenTextDisplay;
 
 #include "balls/foodball.h"
 #include "balls/powerball.h"
+#include "score_display.h"
 
 using AllCharactersContainer = std::array<MovableCharacter*, 5>;
 using GhostsContainer = std::array<AbstractGhost*, 4>;
@@ -120,6 +123,8 @@ public:
 
     [[nodiscard]] QGraphicsScene* getScene() const
     { return scene_; }
+
+    ScoreDisplay* scoreDisplay_{};
 
     //TODO this should not be here
     void startGame();

@@ -22,12 +22,15 @@
 #include "screen_text_display.h"
 
 #include "path_points.h"
+#include "score_display.h"
 
 #include <QtWidgets/QGraphicsScene>
 
 Model::Model()
 {
     initScene();
+
+    scoreDisplay_ = new ScoreDisplay(ScoreDisplay::X, ScoreDisplay::Y);
 
     scoreManager_ = new ScoreManager;
     screenTextManager_ = new ScreenTextManager;
@@ -98,9 +101,8 @@ void Model::initScene()
     scene_ = new QGraphicsScene();
 
     const int ARENA_WIDTH_PX = 614;
-    const int ARENA_HEIGHT_PX = 680;
+    const int ARENA_HEIGHT_PX = 730;
 
-    //Set the scene rect to encompass the entire world map
     scene_->setSceneRect(0, 0, ARENA_WIDTH_PX, ARENA_HEIGHT_PX);
 }
 
@@ -116,6 +118,8 @@ void Model::addItemsToScene()
     scene_->addItem(screenTextDisplay_.get());
 
     addBallsToScene();
+
+    scene_->addItem(scoreDisplay_);
 }
 
 //void Model::startGame()
