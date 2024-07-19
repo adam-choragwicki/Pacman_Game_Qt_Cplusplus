@@ -4,12 +4,8 @@
 
 AbstractBall::AbstractBall(const Coordinates& coordinates) : coordinates_(coordinates)
 {
-    rect_.setSize(QSize(Config::Foodball::DIAMETER, Config::Foodball::DIAMETER));
     rect_.translate(coordinates.x_, coordinates.y_);
-
     setBrush(Qt::white);
-
-    setRect(rect_);
 }
 
 AbstractBall::~AbstractBall() = default;

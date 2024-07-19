@@ -12,4 +12,9 @@ public:
     {
         return AbstractBall::operator<(other);
     }
+
+    static const int DIAMETER = 7;
+
+    static const int OFFSET_X = -3;
+    static const int OFFSET_Y = -3;
 };
