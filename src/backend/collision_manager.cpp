@@ -30,7 +30,7 @@ bool CollisionManager::checkAndProcessPacmanCollisionWithPowerball(const QRect& 
     return false;
 }
 
-bool CollisionManager::checkCollisionWithGhost(const QRect& pacmanRect, const QRect& ghostRect)
+bool CollisionManager::checkAndProcessPacmanCollisionWithGhost(const QRect& pacmanRect, const QRect& ghostRect)
 {
     return pacmanRect.intersects(ghostRect);
 }

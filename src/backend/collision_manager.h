@@ -15,5 +15,5 @@ public:
     static bool checkPacmanCollisionWithAnyGhost(const QRect& pacmanRect, const QRect& ghostRect);
 
 
-    static bool checkCollisionWithGhost(const QRect& pacmanRect, const QRect& ghostRect);
+    static bool checkAndProcessPacmanCollisionWithGhost(const QRect& pacmanRect, const QRect& ghostRect);
 };

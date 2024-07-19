@@ -19,6 +19,10 @@ class RedGhost;
 class GameStateManager;
 class GhostMovementManager;
 
+class ScoreManager;
+
+class BallItemsManager;
+
 class GameLoop : public QObject
 {
 Q_OBJECT
@@ -57,6 +61,10 @@ private:
     GameStateManager& gameStateManager_;
 
     GhostMovementManager& ghostMovementManager_;
+
+    ScoreManager& scoreManager_;
+
+    BallItemsManager& ballItemsManager_;
 
     QTimer* gameLoopTimer_{};
 };

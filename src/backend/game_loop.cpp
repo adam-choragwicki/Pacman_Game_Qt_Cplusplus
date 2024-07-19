@@ -1,9 +1,6 @@
 #include "game_loop.h"
 #include "model/model.h"
-
 #include "collision_manager.h"
-
-#include "score_manager.h"
 #include "config.h"
 #include "model/ghost_timing_manager.h"
 #include <QTimer>
@@ -16,7 +13,9 @@ GameLoop::GameLoop(Model& model) :
         purpleGhost_(model_.getPurpleGhost()),
         redGhost_(model_.getRedGhost()),
         gameStateManager_(model_.getGameStateManager()),
-        ghostMovementManager_(model_.getGhostMovementManager())
+        ghostMovementManager_(model_.getGhostMovementManager()),
+        scoreManager_(model_.getScoreManager()),
+        ballItemsManager_(model_.getBallItemsManager())
 {
     gameLoopTimer_ = new QTimer;
     connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
@@ -62,14 +61,14 @@ void GameLoop::execute()
         ghostMovementHandler(purpleGhost_);
         ghostMovementHandler(redGhost_);
 
-        if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_.getRect(), model_.getBallItemsManager().getFoodballs()))
+        if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_.getRect(), ballItemsManager_.getFoodballs()))
         {
-            model_.getScoreManager().increaseScoreForEatingFoodball();
+            scoreManager_.increaseScoreForEatingFoodball();
         }
 
-        if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_.getRect(), model_.getBallItemsManager().getPowerballs()))
+        if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_.getRect(), ballItemsManager_.getPowerballs()))
         {
-            model_.getScoreManager().increaseScoreForEatingPowerball();
+            scoreManager_.increaseScoreForEatingPowerball();
 
             for(AbstractGhost* ghost : ghosts_)
             {
@@ -79,7 +78,7 @@ void GameLoop::execute()
 
         for(AbstractGhost* ghost : ghosts_)
         {
-            if(CollisionManager::checkCollisionWithGhost(pacman_.getRect(), ghost->getRect()))
+            if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_.getRect(), ghost->getRect()))
             {
                 if(!ghost->isScared())
                 {
@@ -87,13 +86,13 @@ void GameLoop::execute()
                 }
                 else
                 {
-                    model_.getScoreManager().increaseScoreForEatingGhost();
+                    scoreManager_.increaseScoreForEatingGhost();
                     ghost->reset();
                 }
             }
         }
 
-        if(gameStateManager_.isRunning() && model_.getBallItemsManager().getRemainingFoodballsCount() == 0)
+        if(gameStateManager_.isRunning() && ballItemsManager_.getRemainingFoodballsCount() == 0)
         {
             model_.endGame(GameResult::WIN);
         }
