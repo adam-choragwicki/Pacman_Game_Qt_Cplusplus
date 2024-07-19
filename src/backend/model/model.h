@@ -16,6 +16,7 @@
 
 #include "balls/foodball.h"
 #include "balls/powerball.h"
+#include "screen_text_display.h"
 
 #include <memory>
 
@@ -109,6 +110,8 @@ private:
     std::unique_ptr<OrangeGhost> orangeGhost_;
     std::unique_ptr<PurpleGhost> purpleGhost_;
     std::unique_ptr<RedGhost> redGhost_;
+
+    std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
 
     ScoreManager scoreManager_;
     ScreenTextManager screenTextManager_;

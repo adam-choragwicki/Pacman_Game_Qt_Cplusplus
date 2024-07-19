@@ -30,6 +30,8 @@ Model::Model()
     pacmanMovementManager_ = std::make_unique<PacmanMovementManager>();
     ghostMovementManager_ = std::make_unique<GhostMovementManager>();
 
+    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, screenTextManager_, scoreManager_);
+
     groupObjectsIntoContainers();
 
     addItemsToScene();
@@ -37,9 +39,7 @@ Model::Model()
 
 void Model::groupObjectsIntoContainers()
 {
-    //    movableCharacters = {pacman_.get(), blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
-
-    movableCharacters = {blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
+    movableCharacters = {pacman_.get(), blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
 
     ghosts_ = {blueGhost_.get(), orangeGhost_.get(), purpleGhost_.get(), redGhost_.get()};
 
@@ -82,4 +82,6 @@ void Model::addItemsToScene()
     scene_->addItem(orangeGhost_.get());
     scene_->addItem(purpleGhost_.get());
     scene_->addItem(redGhost_.get());
+
+    scene_->addItem(screenTextDisplay_.get());
 }

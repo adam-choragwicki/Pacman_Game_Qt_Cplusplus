@@ -118,66 +118,66 @@ void Controller::viewportUpdateHandler()
 
 void Controller::pacmanMovementHandler()
 {
-    //    model_.getPacmanMovementManager().processMove(model_.getPacman(), model_.getPathPoints());
-    //
-    //    if(CollisionManager::checkAndProcessCollisionWithFoodball(model_.getPacman().getRect(), model_.getBallItemsManager().getFoodballs()))
-    //    {
-    //        model_.getScoreManager().increaseScoreForEatingFoodball();
-    //    }
-    //
-    //    if(CollisionManager::checkAndProcessCollisionWithPowerball(model_.getPacman().getRect(), model_.getBallItemsManager().getPowerballs()))
-    //    {
-    //        model_.getScoreManager().increaseScoreForEatingPowerball();
-    //
-    //        for(AbstractGhost* ghost : model_.getGhosts())
-    //        {
-    //            ghost->setScaredBlueState();
-    //        }
-    //
-    //        for(GhostTimingManager* ghostTimingManager : model_.getGhostsTimingManagersContainer())
-    //        {
-    //            ghostTimingManager->startScaredBlueTimer();
-    //            ghostTimingManager->reduceSpeed();
-    //        }
-    //    }
-    //
-    //    if(model_.getGameStateManager().isRunning() && model_.getBallItemsManager().getRemainingFoodballsCount() == 0)
-    //    {
-    //        endGame(GameResult::WIN);
-    //    }
+    model_.getPacmanMovementManager().processMove(model_.getPacman(), model_.getPathPoints());
+
+    if(CollisionManager::checkAndProcessCollisionWithFoodball(model_.getPacman().getRect(), model_.getBallItemsManager().getFoodballs()))
+    {
+        model_.getScoreManager().increaseScoreForEatingFoodball();
+    }
+
+    if(CollisionManager::checkAndProcessCollisionWithPowerball(model_.getPacman().getRect(), model_.getBallItemsManager().getPowerballs()))
+    {
+        model_.getScoreManager().increaseScoreForEatingPowerball();
+
+        for(AbstractGhost* ghost : model_.getGhosts())
+        {
+            ghost->setScaredBlueState();
+        }
+
+        for(GhostTimingManager* ghostTimingManager : model_.getGhostsTimingManagersContainer())
+        {
+            ghostTimingManager->startScaredBlueTimer();
+            ghostTimingManager->reduceSpeed();
+        }
+    }
+
+    if(model_.getGameStateManager().isRunning() && model_.getBallItemsManager().getRemainingFoodballsCount() == 0)
+    {
+        endGame(GameResult::WIN);
+    }
 }
 
 void Controller::ghostMovementHandler(AbstractGhost& ghost)
 {
-    //    if(model_.getGhostMovementManager().isGhostInsideStartingBox(ghost))
-    //    {
-    //        if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
-    //        {
-    //            model_.getGhostMovementManager().moveOutOfStartingBox(ghost);
-    //        }
-    //        else
-    //        {
-    //            model_.getGhostMovementManager().moveInsideStartingBox(ghost);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        model_.getGhostMovementManager().processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
-    //
-    //        if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
-    //        {
-    //            if(!ghost.isScared())
-    //            {
-    //                endGame(GameResult::LOST);
-    //            }
-    //            else
-    //            {
-    //                model_.getScoreManager().increaseScoreForEatingGhost();
-    //                ghost.reset();
-    //                model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
-    //            }
-    //        }
-    //    }
+    if(model_.getGhostMovementManager().isGhostInsideStartingBox(ghost))
+    {
+        if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
+        {
+            model_.getGhostMovementManager().moveOutOfStartingBox(ghost);
+        }
+        else
+        {
+            model_.getGhostMovementManager().moveInsideStartingBox(ghost);
+        }
+    }
+    else
+    {
+        model_.getGhostMovementManager().processMove(ghost, model_.getPacman().getCoordinates(), model_.getPathPoints());
+
+        if(CollisionManager::checkCollisionWithGhost(model_.getPacman().getRect(), ghost.getRect()))
+        {
+            if(!ghost.isScared())
+            {
+                endGame(GameResult::LOST);
+            }
+            else
+            {
+                model_.getScoreManager().increaseScoreForEatingGhost();
+                ghost.reset();
+                model_.getGhostToGhostTimingManagerMapping().at(&ghost)->reset();
+            }
+        }
+    }
 }
 
 void Controller::startAllCharacters()

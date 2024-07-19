@@ -14,7 +14,7 @@ GameArena::GameArena(QWidget* parent, const Model& model) : QWidget(parent), mod
     purpleGhostFrontend_ = std::make_unique<PurpleGhostFrontend>(model_.getPurpleGhost());
     redGhostFrontend_ = std::make_unique<RedGhostFrontend>(model_.getRedGhost());
 
-    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(model.getScreenTextManager());
+//    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(model.getScreenTextManager());
 }
 
 void GameArena::paintEvent([[maybe_unused]] QPaintEvent* event)
