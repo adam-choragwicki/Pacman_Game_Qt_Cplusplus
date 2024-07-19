@@ -8,6 +8,6 @@ public:
     void processMove(AbstractGhost& ghost, const Coordinates& pacmanCoordinates, const PathPoints& pathPoints);
     bool isGhostInsideStartingBox(const AbstractGhost& ghost);
     void basicMovementAI(AbstractGhost& ghost, const Coordinates& pacmanCoordinates);
-    void moveInsideStartingBox(AbstractGhost& ghost);
+    void moveUpAndDownInsideStartingBox(AbstractGhost& ghost);
     void moveOutOfStartingBox(AbstractGhost& ghost);
 };

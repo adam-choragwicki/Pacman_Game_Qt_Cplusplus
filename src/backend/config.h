@@ -24,8 +24,8 @@ namespace Config
         namespace Ghost
         {
             const auto REDUCED_SPEED = 50ms;
-            const auto SCARED_BLUE_TIME = 4s;
-            const auto SCARED_WHITE_TIME = 2s;
+            const auto SCARED_BLUE_TIME = 1s;
+            const auto SCARED_WHITE_TIME = 1s;
         }
 
         static const auto GAME_LOOP_INTERVAL = MovableCharacter::NORMAL_SPEED;
@@ -40,16 +40,6 @@ namespace Config
         const Direction RED_GHOST = Direction::LEFT;
     }
 
-    namespace Foodball
-    {
-        const int DIAMETER = 7;
-    }
-
-    namespace Powerball
-    {
-        const int DIAMETER = 15;
-    }
-
     namespace StartingCoordinates
     {
         const Coordinates PACMAN{320, 514};
@@ -59,7 +49,7 @@ namespace Config
         const Coordinates RED_GHOST{307, 252};
     }
 
-    namespace StartTimeout
+    namespace MoveOutOfTheStartingBoxTimeout
     {
         using namespace std::chrono_literals;
 

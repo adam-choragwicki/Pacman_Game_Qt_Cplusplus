@@ -61,7 +61,7 @@ void GhostMovementManager::basicMovementAI(AbstractGhost& ghost, const Coordinat
     }
 }
 
-void GhostMovementManager::moveInsideStartingBox(AbstractGhost& ghost)
+void GhostMovementManager::moveUpAndDownInsideStartingBox(AbstractGhost& ghost)
 {
     //TODO make it part of standard movement process
     const int CENTER_Y = 318;

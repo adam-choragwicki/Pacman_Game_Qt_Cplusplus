@@ -13,7 +13,6 @@ set(SOURCE_FILES
         model/ghosts/red_ghost.h model/ghosts/red_ghost.cpp
         model/ball_items_manager.h model/ball_items_manager.cpp
 
-        model/abstract_timing_manager.h
         model/ghost_timing_manager.cpp model/ghost_timing_manager.h
 
         ghost_movement_manager.h pacman_movement_manager.h

@@ -28,6 +28,11 @@ GameLoop::GameLoop(Model& model) :
 
 void GameLoop::start()
 {
+    for(AbstractGhost* ghost : ghosts_)
+    {
+        ghost->getGhostTimingManager()->startLeaveStartingBoxTimer();
+    }
+
     gameLoopTimer_->start(Config::Timing::GAME_LOOP_INTERVAL);
 }
 
@@ -67,14 +72,8 @@ void GameLoop::execute()
 
             for(AbstractGhost* ghost : ghosts_)
             {
-                ghost->setScaredBlueState();
-                ghost->setSlowedDown(true);
-            }
-
-            for(GhostTimingManager* ghostTimingManager : model_.getGhostsTimingManagersContainer())
-            {
-                ghostTimingManager->startScaredBlueTimer();
-                ghostTimingManager->reduceSpeed();
+                ghost->setScared();
+//                ghost->setSlowedDown(true);
             }
         }
 
@@ -132,13 +131,13 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
     {
         if(ghostMovementManager_.isGhostInsideStartingBox(ghost))
         {
-            if(model_.getGhostToGhostTimingManagerMapping().at(&ghost)->isItTimeToLeaveStartingBox())
+            if(ghost.getGhostTimingManager()->isItTimeToLeaveStartingBox())
             {
                 ghostMovementManager_.moveOutOfStartingBox(ghost);
             }
             else
             {
-                ghostMovementManager_.moveInsideStartingBox(ghost);
+                ghostMovementManager_.moveUpAndDownInsideStartingBox(ghost);
             }
         }
         else

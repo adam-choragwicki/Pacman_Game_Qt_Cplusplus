@@ -45,7 +45,6 @@ class ScoreDisplay;
 
 using AllCharactersContainer = std::array<MovableCharacter*, 5>;
 using GhostsContainer = std::array<AbstractGhost*, 4>;
-using GhostTimingManagersContainer = std::array<GhostTimingManager*, 4>;
 using AllTimingManagersContainer = std::array<AbstractTimingManager*, 5>;
 
 class Model
@@ -110,9 +109,6 @@ public:
     [[nodiscard]] GhostMovementManager& getGhostMovementManager()
     { return *ghostMovementManager_; }
 
-    [[nodiscard]] const GhostTimingManagersContainer& getGhostsTimingManagersContainer() const
-    { return ghostTimingManagersContainer; }
-
     [[nodiscard]] QGraphicsScene* getScene() const
     { return scene_; }
 
@@ -154,8 +150,6 @@ private:
 
     AllCharactersContainer movableCharacters{};
     GhostsContainer ghosts_{};
-
-    GhostTimingManagersContainer ghostTimingManagersContainer{};
 
     void groupObjectsIntoContainers();
 

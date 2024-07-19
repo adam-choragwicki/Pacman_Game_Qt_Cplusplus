@@ -1,38 +1,40 @@
 #pragma once
 
-#include "abstract_timing_manager.h"
+#include <QObject>
+#include <QTimer>
 
-class GhostTimingManager : public QObject, public AbstractTimingManager
+class GhostTimingManager : public QObject
 {
 Q_OBJECT
 
 public:
-    GhostTimingManager(AbstractGhost& abstractGhost, std::chrono::seconds startTimeout);
+    explicit GhostTimingManager(const std::chrono::seconds& moveOutOfTheStartingBoxTimeout);
     void reset();
 
-    void reduceSpeed();
-    void startMovement() override;
-    void stopMovement() override;
+    void startLeaveStartingBoxTimer();
 
     void startScaredBlueTimer();
+    void startScaredWhiteTimer();
 
     [[nodiscard]] bool isItTimeToLeaveStartingBox() const
     { return timeToLeaveStartingBox_; }
 
+    [[nodiscard]] const QTimer& getScaredBlueStateTimer() const
+    { return scaredBlueStateTimer_; }
+
+    [[nodiscard]] const QTimer& getScaredWhiteStateTimer() const
+    { return scaredWhiteStateTimer_; }
+
+public slots:
+    void changeToScaredWhite();
+    void changeToNoScared();
+
 private:
     QTimer scaredBlueStateTimer_;
     QTimer scaredWhiteStateTimer_;
-    QTimer leaveStartingBoxTimer;
-
-    AbstractGhost& ghost_;
+    QTimer timeToLeaveStartingBoxTimer;
 
     bool timeToLeaveStartingBox_{};
 
-    void startScaredWhiteTimer();
-    void resetSpeed();
-
-private slots:
-    void changeToScaredWhite();
-    void changeToNoScared();
-    void setLeaveStartingBox();
+    void initializeTimers(const std::chrono::seconds& moveOutOfTheStartingBoxTimeout);
 };

@@ -3,12 +3,14 @@
 #include "moving_object.h"
 #include "movable_character.h"
 
+class GhostTimingManager;
+
 class AbstractGhost : public MovableCharacter, public MovingObject
 {
 Q_OBJECT
 
 public:
-    AbstractGhost(const Coordinates& coordinates, Direction initialDirection);
+    AbstractGhost(const Coordinates& coordinates, Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout);
     ~AbstractGhost() override = 0;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
@@ -16,11 +18,7 @@ public:
     void advanceAnimation() override;
     void reset() override;
 
-    void resetScaredState()
-    { scaredState_ = ScaredState::NO_SCARED; }
-
-    void setScaredBlueState()
-    { scaredState_ = ScaredState::SCARED_BLUE; }
+    void setScared();
 
     void setScaredWhiteState()
     { scaredState_ = ScaredState::SCARED_WHITE; }
@@ -44,6 +42,9 @@ public:
     void setSlowedDown(bool slowedDown)
     { isSlowedDown_ = slowedDown; }
 
+    [[nodiscard]] GhostTimingManager* getGhostTimingManager() const
+    { return ghostTimingManager_; }
+
 protected:
     void loadImages(const std::array<std::string, 12>& imagesUrls);
 
@@ -53,6 +54,8 @@ protected:
 
 private slots:
     void resetCanMoveAgain();
+    void setScaredWhite();
+    void resetScaredState();
 
 private:
     enum class ScaredState
@@ -65,4 +68,11 @@ private:
     QPixmap scaredWhite1Pixmap_, scaredWhite2Pixmap_;
 
     int skippedMoves_{};
+
+    //    QTimer currentStateTimer_;
+
+//    QTimer scaredBlueStateTimer_;
+//    QTimer scaredWhiteStateTimer_;
+
+    GhostTimingManager* ghostTimingManager_{};
 };

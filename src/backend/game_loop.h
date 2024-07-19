@@ -6,9 +6,6 @@ class Model;
 class QTimer;
 class QGraphicsScene;
 class MovingObject;
-class Character;
-class WorldMap;
-class WorldBoundary;
 
 class AbstractGhost;
 

@@ -1,9 +1,12 @@
 #include "model/ghosts/abstract_ghost.h"
 #include <QtGui/QPainter>
 #include "config.h"
+#include "model/ghost_timing_manager.h"
 
-AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection) : MovableCharacter(coordinates, initialDirection), MovingObject(QRectF(0, 0, 30, 30))
+AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout) : MovableCharacter(coordinates, initialDirection), MovingObject(QRectF(0, 0, 30, 30))
 {
+    ghostTimingManager_ = new GhostTimingManager(moveOutOfTheStartingBoxTimeout);
+
     canMoveAgain_ = true;
 
     MovableCharacter::reset();
@@ -12,6 +15,12 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
     movementTimer_.setInterval(Config::Timing::MovableCharacter::NORMAL_SPEED);
     movementTimer_.setSingleShot(true);
     connect(&movementTimer_, &QTimer::timeout, this, &AbstractGhost::resetCanMoveAgain);
+
+    //    connect(ghostTimingManager_, &GhostTimingManager::changeToScaredWhite, this, &AbstractGhost::setScaredWhite);
+    //    connect(ghostTimingManager_, &GhostTimingManager::changeToNoScared, this, &AbstractGhost::resetScaredState);
+
+    //    connect(ghostTimingManager_, &GhostTimingManager::changeToScaredWhite, this, &AbstractGhost::setScaredWhite);
+    //    connect(ghostTimingManager_, &GhostTimingManager::changeToNoScared, this, &AbstractGhost::resetScaredState);
 }
 
 AbstractGhost::~AbstractGhost() = default;
@@ -172,4 +181,45 @@ void AbstractGhost::incrementSkippedMoves()
 void AbstractGhost::resetSkippedMoves()
 {
     skippedMoves_ = 0;
+}
+
+void AbstractGhost::setScared()
+{
+    scaredState_ = ScaredState::SCARED_BLUE;
+    isSlowedDown_ = true;
+
+    connect(&ghostTimingManager_->getScaredBlueStateTimer(), &QTimer::timeout, [this]()
+    {
+        qDebug() << "Scared blue state timeout";
+
+        scaredState_ = ScaredState::SCARED_WHITE;
+
+        connect(&ghostTimingManager_->getScaredWhiteStateTimer(), &QTimer::timeout, [this]()
+        {
+            qDebug() << "Scared white state timeout";
+
+            scaredState_ = ScaredState::NO_SCARED;
+            isSlowedDown_ = false;
+        });
+
+        ghostTimingManager_->startScaredWhiteTimer();
+    });
+
+
+    ghostTimingManager_->startScaredBlueTimer();
+
+    //    connect(ghostTimingManager_, &GhostTimingManager::changeToScaredWhite, this, &AbstractGhost::setScaredWhite);
+    //
+    //
+    //    ghostTimingManager_->startScaredBlueTimer();
+}
+
+void AbstractGhost::setScaredWhite()
+{
+    scaredState_ = ScaredState::SCARED_WHITE;
+}
+
+void AbstractGhost::resetScaredState()
+{
+    scaredState_ = ScaredState::NO_SCARED;
 }

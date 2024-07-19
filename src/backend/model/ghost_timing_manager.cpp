@@ -1,46 +1,23 @@
 #include "ghost_timing_manager.h"
+#include "config.h"
 
-GhostTimingManager::GhostTimingManager(AbstractGhost& abstractGhost, std::chrono::seconds startTimeout) : ghost_(abstractGhost)
+GhostTimingManager::GhostTimingManager(const std::chrono::seconds& moveOutOfTheStartingBoxTimeout)
 {
-    leaveStartingBoxTimer.setSingleShot(true);
-    leaveStartingBoxTimer.setInterval(startTimeout);
-
-    scaredBlueStateTimer_.setSingleShot(true);
-    scaredBlueStateTimer_.setInterval(Config::Timing::Ghost::SCARED_BLUE_TIME);
-
-    scaredWhiteStateTimer_.setSingleShot(true);
-    scaredWhiteStateTimer_.setInterval(Config::Timing::Ghost::SCARED_WHITE_TIME);
-
-    leaveStartingBoxTimer.callOnTimeout(this, &GhostTimingManager::setLeaveStartingBox);
-
-    connect(&scaredBlueStateTimer_, &QTimer::timeout, this, &GhostTimingManager::changeToScaredWhite);
-    connect(&scaredWhiteStateTimer_, &QTimer::timeout, this, &GhostTimingManager::changeToNoScared);
+    initializeTimers(moveOutOfTheStartingBoxTimeout);
 }
 
 void GhostTimingManager::reset()
 {
     timeToLeaveStartingBox_ = false;
-    leaveStartingBoxTimer.start();
+    timeToLeaveStartingBoxTimer.start();
 
     scaredBlueStateTimer_.stop();
     scaredWhiteStateTimer_.stop();
 }
 
-void GhostTimingManager::startMovement()
+void GhostTimingManager::startLeaveStartingBoxTimer()
 {
-    leaveStartingBoxTimer.start();
-}
-
-void GhostTimingManager::stopMovement()
-{
-}
-
-void GhostTimingManager::reduceSpeed()
-{
-}
-
-void GhostTimingManager::resetSpeed()
-{
+    timeToLeaveStartingBoxTimer.start();
 }
 
 void GhostTimingManager::startScaredBlueTimer()
@@ -55,20 +32,35 @@ void GhostTimingManager::startScaredWhiteTimer()
     scaredWhiteStateTimer_.start();
 }
 
-void GhostTimingManager::setLeaveStartingBox()
-{
-    timeToLeaveStartingBox_ = true;
-}
-
 void GhostTimingManager::changeToScaredWhite()
 {
-    ghost_.setScaredWhiteState();
+    //    ghost_.setScaredWhiteState();
     startScaredWhiteTimer();
 }
 
 void GhostTimingManager::changeToNoScared()
 {
-    ghost_.resetScaredState();
-    ghost_.setSlowedDown(false);
-    resetSpeed();
+    //    ghost_.resetScaredState();
+    //    ghost_.setSlowedDown(false);
+    //    resetSpeed();
+}
+
+void GhostTimingManager::initializeTimers(const std::chrono::seconds& moveOutOfTheStartingBoxTimeout)
+{
+    scaredBlueStateTimer_.setSingleShot(true);
+    scaredBlueStateTimer_.setInterval(Config::Timing::Ghost::SCARED_BLUE_TIME);
+
+    scaredWhiteStateTimer_.setSingleShot(true);
+    scaredWhiteStateTimer_.setInterval(Config::Timing::Ghost::SCARED_WHITE_TIME);
+
+    timeToLeaveStartingBoxTimer.setSingleShot(true);
+    timeToLeaveStartingBoxTimer.setInterval(moveOutOfTheStartingBoxTimeout);
+
+    timeToLeaveStartingBoxTimer.callOnTimeout([this]()
+                                              {
+                                                  timeToLeaveStartingBox_ = true;
+                                              });
+
+    connect(&scaredBlueStateTimer_, &QTimer::timeout, this, &GhostTimingManager::changeToScaredWhite);
+    connect(&scaredWhiteStateTimer_, &QTimer::timeout, this, &GhostTimingManager::changeToNoScared);
 }

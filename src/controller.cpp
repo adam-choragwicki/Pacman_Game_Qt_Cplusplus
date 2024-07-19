@@ -52,11 +52,9 @@ void Controller::startGame()
 {
     if(model_.getGameStateManager().isBeforeFirstRun() || model_.getGameStateManager().isStopped())
     {
-
+        model_.startGame();
+        gameLoop_->start();
     }
-    model_.startGame();
-
-    gameLoop_->start();
 
     //    if(!model_.getGameStateManager().isBeforeFirstRun())
     //    {
