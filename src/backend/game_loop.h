@@ -19,6 +19,7 @@ class OrangeGhost;
 class PurpleGhost;
 class RedGhost;
 
+class GameStateManager;
 class GhostMovementManager;
 
 class GameLoop : public QObject
@@ -59,6 +60,8 @@ private:
     OrangeGhost& orangeGhost_;
     PurpleGhost& purpleGhost_;
     RedGhost& redGhost_;
+
+    GameStateManager& gameStateManager_;
 
     GhostMovementManager& ghostMovementManager_;
 
