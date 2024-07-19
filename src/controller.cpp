@@ -2,10 +2,13 @@
 #include "collision_manager.h"
 #include "config.h"
 #include "movement_manager.h"
+#include "input_handler.h"
 #include <QKeyEvent>
 
 Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(view)
 {
+    inputHandler_ = new InputHandler(model_);
+
     subscribeToKeyEvents();
     initializeFrontendEvents();
 
@@ -22,56 +25,10 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
 
 void Controller::subscribeToKeyEvents()
 {
-    connect(&view_, &MainWindow::keyPressedEvent, this, &Controller::processKeyPressedEvent);
-}
+    connect(&view_, &MainWindow::keyPressedEvent, inputHandler_, &InputHandler::processKeyPressedEvent);
 
-void Controller::processKeyPressedEvent(QKeyEvent* keyEvent)
-{
-    switch(keyEvent->key())
-    {
-        case Qt::Key_Left:
-        case Qt::Key_A:
-            if(model_.getGameStateManager().isRunning())
-            {
-                model_.getPacman().setNextDirection(Direction::LEFT);
-            }
-            break;
-
-        case Qt::Key_Right:
-        case Qt::Key_D:
-            if(model_.getGameStateManager().isRunning())
-            {
-                model_.getPacman().setNextDirection(Direction::RIGHT);
-            }
-            break;
-
-        case Qt::Key_Up:
-        case Qt::Key_W:
-            if(model_.getGameStateManager().isRunning())
-            {
-                model_.getPacman().setNextDirection(Direction::UP);
-            }
-            break;
-
-        case Qt::Key_Down:
-        case Qt::Key_S:
-            if(model_.getGameStateManager().isRunning())
-            {
-                model_.getPacman().setNextDirection(Direction::DOWN);
-            }
-            break;
-
-        case Qt::Key_P:
-            togglePause();
-            break;
-
-        case Qt::Key_Space:
-            if(model_.getGameStateManager().isBeforeFirstRun() || model_.getGameStateManager().isStopped())
-            {
-                startGame();
-            }
-            break;
-    }
+    connect(inputHandler_, &InputHandler::startGameRequested, this, &Controller::startGame);
+    connect(inputHandler_, &InputHandler::togglePauseRequested, this, &Controller::togglePause);
 }
 
 void Controller::startGame()

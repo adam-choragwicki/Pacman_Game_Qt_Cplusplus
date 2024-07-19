@@ -3,13 +3,17 @@
 #include "model/model.h"
 #include "main_window.h"
 
+class InputHandler;
+
 class Controller : public QObject
 {
 Q_OBJECT
 
 public slots:
-    void processKeyPressedEvent(QKeyEvent* keyEvent);
     void viewportUpdateHandler();
+
+    void startGame();
+    void togglePause();
 
 public:
     Controller(Model& model, MainWindow& view);
@@ -17,9 +21,7 @@ public:
     void subscribeToKeyEvents();
     void initializeFrontendEvents();
 
-    void startGame();
     void endGame(GameResult gameResult);
-    void togglePause();
 
 private slots:
     void pacmanMovementHandler();
@@ -28,6 +30,8 @@ private slots:
 private:
     Model& model_;
     MainWindow& view_;
+
+    InputHandler* inputHandler_{};
 
     void startAllCharacters();
     void stopAllCharacters();

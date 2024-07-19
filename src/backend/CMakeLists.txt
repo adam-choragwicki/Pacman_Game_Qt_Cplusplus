@@ -32,7 +32,9 @@ set(SOURCE_FILES
         moving_object.cpp moving_object.h
 
         custom_graphics_item.cpp custom_graphics_item.h
-        id_generator.h)
+        id_generator.h
+
+        input_handler.cpp input_handler.h)
 
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})
 target_include_directories(lib${PROJECT_NAME}Backend PUBLIC .)
