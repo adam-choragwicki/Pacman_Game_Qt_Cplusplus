@@ -84,4 +84,17 @@ void Model::addItemsToScene()
     scene_->addItem(redGhost_.get());
 
     scene_->addItem(screenTextDisplay_.get());
+
+    std::set<Foodball>& foodballs = ballItemsManager_->getFoodballs();
+    std::set<Powerball>& powerballs = ballItemsManager_->getPowerballs();
+
+    for(const Foodball& foodball : foodballs)
+    {
+        scene_->addItem(&const_cast<Foodball&>(foodball));
+    }
+
+    for(const Powerball& powerball : powerballs)
+    {
+        scene_->addItem(&const_cast<Powerball&>(powerball));
+    }
 }

@@ -2,12 +2,13 @@
 
 #include "coordinates.h"
 #include <QRect>
+#include <QtWidgets/QGraphicsEllipseItem>
 
-class AbstractBall
+class AbstractBall : public QGraphicsEllipseItem
 {
 public:
     explicit AbstractBall(const Coordinates& coordinates);
-    virtual ~AbstractBall() = 0;
+    ~AbstractBall() override = 0;
 
     [[nodiscard]] const Coordinates& getCoordinates() const
     { return coordinates_; }
