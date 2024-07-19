@@ -6,7 +6,7 @@
 
 #include <QRandomGenerator>
 
-class MovementManager
+class AbstractMovementManager
 {
 public:
     void processMove(MovableCharacter& movableCharacter, const PathPoints& pathPoints);
@@ -15,20 +15,4 @@ public:
     [[nodiscard]] bool validateMove(const MovableCharacter& movableCharacter, const PathPoints& pathPoints) const;
     void checkAndProcessGameAreaBoundaryReach(MovableCharacter& movableCharacter);
     void move(MovableCharacter& movableCharacter, Direction direction);
-};
-
-class PacmanMovementManager : public MovementManager
-{
-public:
-    void processMove(Pacman& pacman, const PathPoints& pathPoints);
-};
-
-class GhostMovementManager : public MovementManager
-{
-public:
-    void processMove(AbstractGhost& ghost, const Coordinates& pacmanCoordinates, const PathPoints& pathPoints);
-    bool isGhostInsideStartingBox(const AbstractGhost& ghost);
-    void basicMovementAI(AbstractGhost& ghost, const Coordinates& pacmanCoordinates);
-    void moveInsideStartingBox(AbstractGhost& ghost);
-    void moveOutOfStartingBox(AbstractGhost& ghost);
 };

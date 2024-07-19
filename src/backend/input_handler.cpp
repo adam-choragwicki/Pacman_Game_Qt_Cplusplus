@@ -2,6 +2,8 @@
 #include "input_handler.h"
 #include "model/model.h"
 #include "config.h"
+#include "model/game_state_manager.h"
+#include "model/pacman.h"
 
 InputHandler::InputHandler(Model& model) : model_(model)
 {}

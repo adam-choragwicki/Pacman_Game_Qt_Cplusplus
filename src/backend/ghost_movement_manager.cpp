@@ -1,5 +1,5 @@
-#include "movement_manager.h"
 #include "directional_offset.h"
+#include "ghost_movement_manager.h"
 
 bool GhostMovementManager::isGhostInsideStartingBox(const AbstractGhost& ghost)
 {
@@ -16,7 +16,7 @@ bool GhostMovementManager::isGhostInsideStartingBox(const AbstractGhost& ghost)
 void GhostMovementManager::processMove(AbstractGhost& ghost, const Coordinates& pacmanCoordinates, const PathPoints& pathPoints)
 {
     basicMovementAI(ghost, pacmanCoordinates);
-    MovementManager::processMove(ghost, pathPoints);
+    AbstractMovementManager::processMove(ghost, pathPoints);
 }
 
 void GhostMovementManager::basicMovementAI(AbstractGhost& ghost, const Coordinates& pacmanCoordinates)

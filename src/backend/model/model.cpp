@@ -1,9 +1,36 @@
 #include "model.h"
+
+#include "path_points.h"
+#include "pacman.h"
+#include "ball_items_manager.h"
+#include "ghosts/red_ghost.h"
+#include "ghosts/purple_ghost.h"
+#include "ghosts/blue_ghost.h"
+#include "ghosts/orange_ghost.h"
+
+#include "score_manager.h"
+#include "screen_text_manager.h"
+#include "game_state_manager.h"
+#include "abstract_timing_manager.h"
+#include "abstract_movement_manager.h"
+
+#include "pacman_movement_manager.h"
+#include "ghost_movement_manager.h"
+
+#include "balls/foodball.h"
+#include "balls/powerball.h"
+#include "screen_text_display.h"
+
+#include "path_points.h"
+
 #include <QtWidgets/QGraphicsScene>
 
 Model::Model()
 {
     initScene();
+
+    scoreManager_ = new ScoreManager;
+    screenTextManager_ = new ScreenTextManager;
 
     pathPoints_ = std::make_unique<PathPoints>();
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
@@ -30,7 +57,7 @@ Model::Model()
     pacmanMovementManager_ = std::make_unique<PacmanMovementManager>();
     ghostMovementManager_ = std::make_unique<GhostMovementManager>();
 
-    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, screenTextManager_, scoreManager_);
+    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *screenTextManager_, *scoreManager_);
 
     groupObjectsIntoContainers();
 

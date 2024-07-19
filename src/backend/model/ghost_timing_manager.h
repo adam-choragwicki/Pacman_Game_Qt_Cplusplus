@@ -1,38 +1,10 @@
 #pragma once
 
-#include "model/pacman.h"
-#include "model/ghosts/abstract_ghost.h"
-#include "timing_manager.h"
-#include <QTimer>
-#include <QObject>
+#include "abstract_timing_manager.h"
 
-class AbstractGhost;
-
-class TimingManager
+class GhostTimingManager : public QObject, public AbstractTimingManager
 {
-public:
-    virtual void startMovement() = 0;
-    virtual void stopMovement() = 0;
-
-    [[nodiscard]] const QTimer& getMovementTimer() const
-    { return movementTimer_; }
-
-protected:
-    QTimer movementTimer_;
-};
-
-class PacmanTimingManager : public TimingManager
-{
-public:
-    PacmanTimingManager();
-
-    void startMovement() override;
-    void stopMovement() override;
-};
-
-class GhostTimingManager : public QObject, public TimingManager
-{
-Q_OBJECT
+    Q_OBJECT
 
 public:
     GhostTimingManager(AbstractGhost& abstractGhost, std::chrono::seconds startTimeout);
@@ -60,7 +32,7 @@ private:
     void resetSpeed();
 
 private slots:
-    void changeToScaredWhite();
+            void changeToScaredWhite();
     void changeToNoScared();
     void setLeaveStartingBox();
 };

@@ -1,4 +1,4 @@
-#include "model/timing_manager.h"
+#include "pacman_timing_manager.h"
 
 PacmanTimingManager::PacmanTimingManager()
 {

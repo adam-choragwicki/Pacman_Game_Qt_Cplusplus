@@ -1,13 +1,16 @@
 #include "controller.h"
 #include "collision_manager.h"
 #include "config.h"
-#include "movement_manager.h"
+#include "abstract_movement_manager.h"
 #include "input_handler.h"
+#include "game_loop.h"
+#include "score_manager.h"
 #include <QKeyEvent>
 
 Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(view)
 {
     inputHandler_ = new InputHandler(model_);
+    //    gameLoop_ = new GameLoop(model_);
 
     subscribeToKeyEvents();
     initializeFrontendEvents();
@@ -21,6 +24,8 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
             ghostMovementHandler(*ghostAndTimingManagerPair.first);
         });
     }
+
+    //    gameLoop_->start();
 }
 
 void Controller::subscribeToKeyEvents()
@@ -29,6 +34,18 @@ void Controller::subscribeToKeyEvents()
 
     connect(inputHandler_, &InputHandler::startGameRequested, this, &Controller::startGame);
     connect(inputHandler_, &InputHandler::togglePauseRequested, this, &Controller::togglePause);
+}
+
+void Controller::initializeFrontendEvents()
+{
+    auto* viewportUpdateTimer = new QTimer(this);
+    connect(viewportUpdateTimer, &QTimer::timeout, this, &Controller::viewportUpdateHandler);
+    viewportUpdateTimer->start(Config::Timing::VIEWPORT_UPDATE_INTERVAL);
+}
+
+void Controller::viewportUpdateHandler()
+{
+    view_.updateViewport();
 }
 
 void Controller::startGame()
@@ -66,11 +83,6 @@ void Controller::togglePause()
         startAllCharacters();
         model_.getGameStateManager().togglePause();
     }
-}
-
-void Controller::viewportUpdateHandler()
-{
-    view_.updateViewport();
 }
 
 void Controller::pacmanMovementHandler()
@@ -139,7 +151,7 @@ void Controller::ghostMovementHandler(AbstractGhost& ghost)
 
 void Controller::startAllCharacters()
 {
-    for(TimingManager* timingManager : model_.getAllTimingManagersContainer())
+    for(AbstractTimingManager* timingManager : model_.getAllTimingManagersContainer())
     {
         timingManager->startMovement();
     }
@@ -147,15 +159,8 @@ void Controller::startAllCharacters()
 
 void Controller::stopAllCharacters()
 {
-    for(TimingManager* timingManager : model_.getAllTimingManagersContainer())
+    for(AbstractTimingManager* timingManager : model_.getAllTimingManagersContainer())
     {
         timingManager->stopMovement();
     }
-}
-
-void Controller::initializeFrontendEvents()
-{
-    auto* viewportUpdateTimer = new QTimer(this);
-    connect(viewportUpdateTimer, &QTimer::timeout, this, &Controller::viewportUpdateHandler);
-    viewportUpdateTimer->start(Config::Timing::VIEWPORT_UPDATE_INTERVAL);
 }

@@ -1,12 +1,12 @@
-#include "movement_manager.h"
+#include "abstract_movement_manager.h"
 #include "directional_offset.h"
 
-bool MovementManager::isPathPointValid(const Coordinates& coordinates, const PathPoints& pathPoints)
+bool AbstractMovementManager::isPathPointValid(const Coordinates& coordinates, const PathPoints& pathPoints)
 {
     return pathPoints.isPathPointValid(coordinates);
 }
 
-void MovementManager::processNewDirectionRequest(MovableCharacter& movableCharacter, const PathPoints& pathPoints)
+void AbstractMovementManager::processNewDirectionRequest(MovableCharacter& movableCharacter, const PathPoints& pathPoints)
 {
     const Direction direction = movableCharacter.getDirection();
     const Direction nextDirection = movableCharacter.getNextDirection();
@@ -25,7 +25,7 @@ void MovementManager::processNewDirectionRequest(MovableCharacter& movableCharac
     }
 }
 
-bool MovementManager::validateMove(const MovableCharacter& movableCharacter, const PathPoints& pathPoints) const
+bool AbstractMovementManager::validateMove(const MovableCharacter& movableCharacter, const PathPoints& pathPoints) const
 {
     const Direction direction = movableCharacter.getDirection();
     const Coordinates coordinates = movableCharacter.getCoordinates();
@@ -34,7 +34,7 @@ bool MovementManager::validateMove(const MovableCharacter& movableCharacter, con
     return pathPoints.isPathPointValid(coordinates + directionalOffset.toStdPair());
 }
 
-void MovementManager::checkAndProcessGameAreaBoundaryReach(MovableCharacter& movableCharacter)
+void AbstractMovementManager::checkAndProcessGameAreaBoundaryReach(MovableCharacter& movableCharacter)
 {
     const Coordinates coordinates = movableCharacter.getCoordinates();
 
@@ -53,7 +53,7 @@ void MovementManager::checkAndProcessGameAreaBoundaryReach(MovableCharacter& mov
     }
 }
 
-void MovementManager::processMove(MovableCharacter& movableCharacter, const PathPoints& pathPoints)
+void AbstractMovementManager::processMove(MovableCharacter& movableCharacter, const PathPoints& pathPoints)
 {
     processNewDirectionRequest(movableCharacter, pathPoints);
 
@@ -70,7 +70,7 @@ void MovementManager::processMove(MovableCharacter& movableCharacter, const Path
     }
 }
 
-void MovementManager::move(MovableCharacter& movableCharacter, Direction direction)
+void AbstractMovementManager::move(MovableCharacter& movableCharacter, Direction direction)
 {
     DirectionalOffset directionalOffset(direction);
     movableCharacter.moveCharacterBy(directionalOffset.toStdPair());

@@ -1,29 +1,51 @@
 #pragma once
 
-#include "path_points.h"
-#include "pacman.h"
-#include "ball_items_manager.h"
-#include "ghosts/red_ghost.h"
-#include "ghosts/purple_ghost.h"
-#include "ghosts/blue_ghost.h"
-#include "ghosts/orange_ghost.h"
+class MovableCharacter;
+class AbstractGhost;
+class PacmanTimingManager;
+class GhostTimingManager;
+class AbstractTimingManager;
+class BlueGhost;
+class OrangeGhost;
+class PurpleGhost;
+class RedGhost;
+class ScoreManager;
+class GameStateManager;
 
-#include "score_manager.h"
-#include "screen_text_manager.h"
+class PacmanMovementManager;
+class GhostMovementManager;
+
+class QGraphicsScene;
+
+class ScreenTextManager;
+class ScreenTextDisplay;
+
+#include <map>
+#include <memory>
+#include "path_points.h"
+#include "ball_items_manager.h"
+#include "pacman.h"
+
+#include "model/ghosts/blue_ghost.h"
+#include "model/ghosts/orange_ghost.h"
+#include "model/ghosts/purple_ghost.h"
+#include "model/ghosts/red_ghost.h"
+
+#include "screen_text_display.h"
 #include "game_state_manager.h"
-#include "timing_manager.h"
-#include "movement_manager.h"
+#include "pacman_timing_manager.h"
+#include "ghost_timing_manager.h"
+
+#include "pacman_movement_manager.h"
+#include "ghost_movement_manager.h"
 
 #include "balls/foodball.h"
 #include "balls/powerball.h"
-#include "screen_text_display.h"
-
-#include <memory>
 
 using AllCharactersContainer = std::array<MovableCharacter*, 5>;
 using GhostsContainer = std::array<AbstractGhost*, 4>;
 using GhostTimingManagersContainer = std::array<GhostTimingManager*, 4>;
-using AllTimingManagersContainer = std::array<TimingManager*, 5>;
+using AllTimingManagersContainer = std::array<AbstractTimingManager*, 5>;
 
 class Model
 {
@@ -52,16 +74,16 @@ public:
     { return *redGhost_; }
 
     [[nodiscard]] const ScoreManager& getScoreManager() const
-    { return scoreManager_; }
+    { return *scoreManager_; }
 
     [[nodiscard]] ScoreManager& getScoreManager()
-    { return scoreManager_; }
+    { return *scoreManager_; }
 
     [[nodiscard]] const ScreenTextManager& getScreenTextManager() const
-    { return screenTextManager_; }
+    { return *screenTextManager_; }
 
     [[nodiscard]] ScreenTextManager& getScreenTextManager()
-    { return screenTextManager_; }
+    { return *screenTextManager_; }
 
     [[nodiscard]] BallItemsManager& getBallItemsManager() const
     { return *ballItemsManager_; }
@@ -113,8 +135,8 @@ private:
 
     std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
 
-    ScoreManager scoreManager_;
-    ScreenTextManager screenTextManager_;
+    ScoreManager* scoreManager_{};
+    ScreenTextManager* screenTextManager_{};
 
     std::unique_ptr<GameStateManager> gameStateManager_;
 

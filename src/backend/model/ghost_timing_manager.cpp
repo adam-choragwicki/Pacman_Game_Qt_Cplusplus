@@ -1,4 +1,4 @@
-#include "model/timing_manager.h"
+#include "ghost_timing_manager.h"
 
 GhostTimingManager::GhostTimingManager(AbstractGhost& abstractGhost, std::chrono::seconds startTimeout) : ghost_(abstractGhost)
 {

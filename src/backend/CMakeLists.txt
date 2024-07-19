@@ -8,7 +8,7 @@ set(SOURCE_FILES
         model/ghosts/purple_ghost.h model/ghosts/purple_ghost.cpp
         model/ghosts/red_ghost.h model/ghosts/red_ghost.cpp
         model/ball_items_manager.h model/ball_items_manager.cpp
-        model/timing_manager.h model/pacman_timing_manager.cpp model/ghost_timing_manager.cpp
+        model/abstract_timing_manager.h model/pacman_timing_manager.cpp model/ghost_timing_manager.cpp
         common.h
         movable_character.h movable_character.cpp
         path_points.h path_points.cpp
@@ -18,7 +18,7 @@ set(SOURCE_FILES
         screen_text_manager.cpp screen_text_manager.h
         collision_manager.cpp collision_manager.h
         config.h
-        movement_manager.cpp movement_manager.h
+        abstract_movement_manager.cpp abstract_movement_manager.h
         pacman_movement_manager.cpp
         ghost_movement_manager.cpp
         directional_offset.h
@@ -34,7 +34,7 @@ set(SOURCE_FILES
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h
 
-        input_handler.cpp input_handler.h)
+        input_handler.cpp input_handler.h model/pacman_timing_manager.h model/ghost_timing_manager.h ghost_movement_manager.h pacman_movement_manager.h)
 
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})
 target_include_directories(lib${PROJECT_NAME}Backend PUBLIC .)

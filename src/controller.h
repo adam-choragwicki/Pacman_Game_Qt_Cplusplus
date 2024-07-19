@@ -4,6 +4,8 @@
 #include "main_window.h"
 
 class InputHandler;
+class GameLoop;
+enum class GameResult;
 
 class Controller : public QObject
 {
@@ -32,6 +34,7 @@ private:
     MainWindow& view_;
 
     InputHandler* inputHandler_{};
+    GameLoop* gameLoop_{};
 
     void startAllCharacters();
     void stopAllCharacters();
