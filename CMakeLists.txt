@@ -15,6 +15,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets REQUIRED)
 set(PROJECT_ROOT ${CMAKE_SOURCE_DIR})
 set(BACKEND_DIR ${PROJECT_ROOT}/src/backend)
 
+add_subdirectory(libs/spdlog)
+
 # Enable ccache if available
 find_program(CCACHE_PROGRAM ccache)
 if (CCACHE_PROGRAM)

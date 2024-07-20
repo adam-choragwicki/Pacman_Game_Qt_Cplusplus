@@ -44,6 +44,11 @@ set(SOURCE_FILES
 
         score_display.h score_display.cpp)
 
+# Create the backend library
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})
+
+# Include current directory for backend library
 target_include_directories(lib${PROJECT_NAME}Backend PUBLIC .)
+
+# Link Qt Core library to backend
 target_link_libraries(lib${PROJECT_NAME}Backend PUBLIC Qt${QT_VERSION_MAJOR}::Core)
