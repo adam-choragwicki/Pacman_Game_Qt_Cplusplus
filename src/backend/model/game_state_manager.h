@@ -16,4 +16,9 @@ public:
     [[nodiscard]] bool isBeforeFirstRun() const;
     [[nodiscard]] bool isStopped() const;
     void togglePause();
+
+    [[nodiscard]] const bool& getShouldDrawBackground() const;
+
+private:
+    bool shouldDrawBackground_{};
 };

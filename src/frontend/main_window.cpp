@@ -11,14 +11,16 @@ MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)//, gam
     setWindowTitle("Pacman");
     setFocus(Qt::ActiveWindowFocusReason);
 
-    graphicsView_ = new GraphicsView(model_.getScene());
+    const bool& drawBackground = model_.getGameStateManager().getShouldDrawBackground();
+
+    graphicsView_ = new GraphicsView(model_.getScene(), drawBackground, this);
 
     const int WINDOW_WIDTH = 614;
     const int WINDOW_HEIGHT = 730;
 
     setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-//    setPalette(QPalette(Qt::black));
+    setPalette(QPalette(Qt::black));
 
     //    gameArena_.setFixedSize(614, 680);
 

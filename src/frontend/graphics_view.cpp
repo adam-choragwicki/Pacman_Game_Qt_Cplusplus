@@ -3,7 +3,7 @@
 #include <QMouseEvent>
 #include <QTimer>
 
-GraphicsView::GraphicsView(QGraphicsScene* scene, QWidget* parent) : QGraphicsView(scene, parent)
+GraphicsView::GraphicsView(QGraphicsScene* scene, const bool& drawBackground, QWidget* parent) : QGraphicsView(scene, parent), drawBackground_(drawBackground)
 {
     arenaPixmap_ = std::make_unique<QPixmap>(":/images/map.png");
 
@@ -24,21 +24,25 @@ GraphicsView::GraphicsView(QGraphicsScene* scene, QWidget* parent) : QGraphicsVi
 void GraphicsView::drawBackground(QPainter* painter, const QRectF& rect)
 {
     QGraphicsView::drawBackground(painter, rect);
-    painter->drawPixmap(0, 0, 614, 740, *arenaPixmap_);
+
+    if(drawBackground_)
+    {
+        painter->drawPixmap(0, 0, 614, 740, *arenaPixmap_);
+    }
 }
 
 void GraphicsView::drawForeground(QPainter* painter, const QRectF& rect)
 {
-//    /* Ensure FPS counter is drawn on top of scene and always visible */
-//    QGraphicsView::drawForeground(painter, rect);
-//    ++frameCount_;
-//
-//    painter->setPen(fpsCounterPen_);
-//    painter->setFont(fpsCounterFont_);
-//
-//    // Get the viewport's top-left coordinates
-//    const QPointF topLeft = mapToScene(viewport()->rect().topLeft());
-//    painter->drawText(topLeft + QPointF(10, 20), QString("FPS: %1").arg(currentFPS_));
+    /* Ensure FPS counter is drawn on top of scene and always visible */
+    QGraphicsView::drawForeground(painter, rect);
+    ++frameCount_;
+
+    painter->setPen(fpsCounterPen_);
+    painter->setFont(fpsCounterFont_);
+
+    // Get the viewport's top-left coordinates
+    const QPointF topLeft = mapToScene(viewport()->rect().topLeft());
+    painter->drawText(topLeft + QPointF(10, 20), QString("FPS: %1").arg(currentFPS_));
 }
 
 void GraphicsView::updateFPS()

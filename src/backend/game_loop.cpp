@@ -15,7 +15,8 @@ GameLoop::GameLoop(Model& model) :
         gameStateManager_(model_.getGameStateManager()),
         ghostMovementManager_(model_.getGhostMovementManager()),
         scoreManager_(model_.getScoreManager()),
-        ballItemsManager_(model_.getBallItemsManager())
+        ballItemsManager_(model_.getBallItemsManager()),
+        screenTextManager_(model_.getScreenTextManager())
 {
     gameLoopTimer_ = new QTimer;
     connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
@@ -82,7 +83,8 @@ void GameLoop::execute()
             {
                 if(!ghost->isScared())
                 {
-                    model_.endGame(GameResult::LOST);
+                    gameStateManager_.endGame();
+                    screenTextManager_.setGameResult(GameResult::LOST);
                 }
                 else
                 {
@@ -94,7 +96,8 @@ void GameLoop::execute()
 
         if(gameStateManager_.isRunning() && ballItemsManager_.getRemainingFoodballsCount() == 0)
         {
-            model_.endGame(GameResult::WIN);
+            gameStateManager_.endGame();
+            screenTextManager_.setGameResult(GameResult::WIN);
         }
     }
 }

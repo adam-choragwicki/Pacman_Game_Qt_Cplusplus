@@ -15,7 +15,7 @@ signals:
     void mouseLeftButtonClicked(const QPointF& mousePosition);
 
 public:
-    explicit GraphicsView(QGraphicsScene* scene, QWidget* parent = nullptr);
+    explicit GraphicsView(QGraphicsScene* scene, const bool& drawBackground, QWidget* parent = nullptr);
 
     void drawBackground(QPainter* painter, const QRectF& rect) override;
     void drawForeground(QPainter* painter, const QRectF& rect) override;
@@ -38,4 +38,6 @@ private:
     QPen fpsCounterPen_;
 
     std::unique_ptr<QPixmap> arenaPixmap_;
+
+    const bool& drawBackground_;
 };

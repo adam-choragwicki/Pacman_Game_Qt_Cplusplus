@@ -79,7 +79,6 @@ void Model::addItemsToScene()
     addBallsToScene();
 
     scene_->addItem(pacman_.get());
-
     scene_->addItem(blueGhost_.get());
     scene_->addItem(orangeGhost_.get());
     scene_->addItem(purpleGhost_.get());
@@ -89,29 +88,6 @@ void Model::addItemsToScene()
 
     scene_->addItem(scoreDisplay_.get());
 }
-
-//void Model::startGame()
-//{
-//    if(!model_.getGameStateManager().isBeforeFirstRun())
-//    {
-//        model_.reset();
-//    }
-//
-//    model_.getGameStateManager().startGame();
-//
-//    startAllCharacters();
-//
-//    model_.getScoreManager().resetScore();
-//}
-//
-//void Model::endGame(GameResult gameResult)
-//{
-//    model_.getGameStateManager().endGame();
-//
-//    stopAllCharacters();
-//
-//    model_.getScreenTextManager().setGameResult(gameResult);
-//}
 
 void Model::startGame()
 {
@@ -123,27 +99,6 @@ void Model::startGame()
     gameStateManager_->startGame();
     scoreManager_->resetScore();
 }
-
-void Model::endGame(GameResult gameResult)
-{
-    gameStateManager_->endGame();
-    screenTextManager_->setGameResult(gameResult);
-}
-
-//
-//void Controller::togglePause()
-//{
-//    if(model_.getGameStateManager().isRunning())
-//    {
-//        stopAllCharacters();
-//        model_.getGameStateManager().togglePause();
-//    }
-//    else if(model_.getGameStateManager().isPaused())
-//    {
-//        startAllCharacters();
-//        model_.getGameStateManager().togglePause();
-//    }
-//}
 
 void Model::addBallsToScene()
 {

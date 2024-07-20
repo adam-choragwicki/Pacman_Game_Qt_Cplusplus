@@ -23,6 +23,8 @@ class ScoreManager;
 
 class BallItemsManager;
 
+class ScreenTextManager;
+
 class GameLoop : public QObject
 {
 Q_OBJECT
@@ -65,6 +67,8 @@ private:
     ScoreManager& scoreManager_;
 
     BallItemsManager& ballItemsManager_;
+
+    ScreenTextManager& screenTextManager_;
 
     QTimer* gameLoopTimer_{};
 };

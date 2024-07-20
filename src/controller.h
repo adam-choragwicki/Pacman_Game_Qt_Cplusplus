@@ -15,15 +15,12 @@ public slots:
     void viewportUpdateHandler();
 
     void startGame();
-//    void togglePause();
 
 public:
     Controller(Model& model, MainWindow& view);
 
     void subscribeToKeyEvents();
     void initializeFrontendEvents();
-
-    void endGame(GameResult gameResult);
 
 private:
     Model& model_;

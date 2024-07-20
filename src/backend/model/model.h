@@ -1,23 +1,5 @@
 #pragma once
 
-class MovableCharacter;
-class AbstractGhost;
-class BlueGhost;
-class OrangeGhost;
-class PurpleGhost;
-class RedGhost;
-class ScoreManager;
-class GameStateManager;
-
-class PacmanMovementManager;
-class GhostMovementManager;
-
-
-class ScreenTextManager;
-class ScreenTextDisplay;
-
-class ScoreDisplay;
-
 #include "path_points.h"
 #include "ball_items_manager.h"
 #include "pacman.h"
@@ -40,6 +22,23 @@ class ScoreDisplay;
 #include <map>
 #include <memory>
 #include <QtWidgets/QGraphicsScene>
+
+class MovableCharacter;
+class AbstractGhost;
+class BlueGhost;
+class OrangeGhost;
+class PurpleGhost;
+class RedGhost;
+class ScoreManager;
+class GameStateManager;
+
+class PacmanMovementManager;
+class GhostMovementManager;
+
+class ScreenTextManager;
+class ScreenTextDisplay;
+
+class ScoreDisplay;
 
 class Model
 {
@@ -70,6 +69,9 @@ public:
     [[nodiscard]] BallItemsManager& getBallItemsManager() const
     { return *ballItemsManager_; }
 
+    [[nodiscard]] const GameStateManager& getGameStateManager() const
+    { return *gameStateManager_; }
+
     GameStateManager& getGameStateManager()
     { return *gameStateManager_; }
 
@@ -85,9 +87,11 @@ public:
     [[nodiscard]] QGraphicsScene* getScene() const
     { return scene_.get(); }
 
+    ScreenTextManager& getScreenTextManager()
+    { return *screenTextManager_; }
+
     //TODO this should not be here
     void startGame();
-    void endGame(GameResult gameResult);
 
 private:
     void addItemsToScene();

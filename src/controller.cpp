@@ -68,17 +68,6 @@ void Controller::startGame()
     //    model_.getScoreManager().resetScore();
 }
 
-void Controller::endGame(GameResult gameResult)
-{
-    model_.endGame(gameResult);
-
-    //    model_.getGameStateManager().endGame();
-    //
-    //    stopAllCharacters();
-    //
-    //    model_.getScreenTextManager().setGameResult(gameResult);
-}
-
 //void Controller::togglePause()
 //{
 //    if(model_.getGameStateManager().isRunning())
