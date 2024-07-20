@@ -4,28 +4,18 @@
 #include "abstract_movement_manager.h"
 #include "input_handler.h"
 #include "game_loop.h"
-#include "score_manager.h"
+#include "spdlog/spdlog.h"
 #include <QKeyEvent>
 
 Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(view)
 {
+    spdlog::debug("Initializing controller");
+
     inputHandler_ = new InputHandler(model_);
     gameLoop_ = new GameLoop(model_);
 
     subscribeToKeyEvents();
     initializeFrontendEvents();
-
-    //    connect(&model_.getPacmanTimingManager().getMovementTimer(), &QTimer::timeout, this, &Controller::pacmanMovementHandler);
-    //
-    //    for(const auto& ghostAndTimingManagerPair : model_.getGhostToGhostTimingManagerMapping())
-    //    {
-    //        connect(&ghostAndTimingManagerPair.second->getMovementTimer(), &QTimer::timeout, this, [&]()
-    //        {
-    //            ghostMovementHandler(*ghostAndTimingManagerPair.first);
-    //        });
-    //    }
-
-    //    gameLoop_->start();
 }
 
 void Controller::subscribeToKeyEvents()

@@ -1,13 +1,15 @@
 #include "main_window.h"
-#include "score_display.h"
 #include "graphics_view.h"
 #include "model/model.h"
+#include "spdlog/spdlog.h"
 
 #include <QScreen>
 #include <QGuiApplication>
 
-MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)//, gameArena_(this, model)
+MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)
 {
+    spdlog::debug("Initializing view");
+
     setWindowTitle("Pacman");
     setFocus(Qt::ActiveWindowFocusReason);
 

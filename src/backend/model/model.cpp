@@ -21,10 +21,14 @@
 
 #include "score_display.h"
 
+#include "spdlog/spdlog.h"
+
 #include <QtWidgets/QGraphicsScene>
 
 Model::Model()
 {
+    spdlog::debug("Initializing model");
+
     initScene();
 
     scoreManager_ = std::make_unique<ScoreManager>();

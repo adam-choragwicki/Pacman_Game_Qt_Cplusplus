@@ -51,4 +51,4 @@ add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})
 target_include_directories(lib${PROJECT_NAME}Backend PUBLIC .)
 
 # Link Qt Core library to backend
-target_link_libraries(lib${PROJECT_NAME}Backend PUBLIC Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(lib${PROJECT_NAME}Backend PRIVATE spdlog::spdlog Qt${QT_VERSION_MAJOR}::Core)
