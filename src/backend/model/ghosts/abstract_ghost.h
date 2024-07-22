@@ -5,7 +5,7 @@
 
 class GhostTimingManager;
 
-class AbstractGhost : public MovableCharacter, public QGraphicsItem
+class AbstractGhost : public MovableCharacter
 {
 Q_OBJECT
 

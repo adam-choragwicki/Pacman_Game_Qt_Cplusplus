@@ -6,8 +6,9 @@
 #include <QRect>
 #include <QObject>
 #include <QTimer>
+#include <QtWidgets/QGraphicsItem>
 
-class MovableCharacter : public QObject
+class MovableCharacter : public QObject, public QGraphicsItem
 {
 Q_OBJECT
 

@@ -4,7 +4,7 @@
 #include "moving_object.h"
 #include "images_urls.h"
 
-class Pacman : public MovableCharacter, public QGraphicsItem
+class Pacman : public MovableCharacter
 {
 public:
     Pacman();
