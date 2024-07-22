@@ -14,7 +14,7 @@ public:
     ~AbstractGhost() override = 0;
 
     [[nodiscard]] QRectF boundingRect() const override
-    { return rect_; }
+    { return {0, 0, 30, 30}; }
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 

@@ -3,11 +3,6 @@ set(SOURCE_FILES
         graphics_view.h graphics_view.cpp
         game_arena.cpp game_arena.h
         pacman_frontend.cpp pacman_frontend.h
-        ghosts_frontends/abstract_ghost_frontend.cpp ghosts_frontends/abstract_ghost_frontend.h
-        ghosts_frontends/blue_ghost_frontend.cpp ghosts_frontends/blue_ghost_frontend.h
-        ghosts_frontends/red_ghost_frontend.cpp ghosts_frontends/red_ghost_frontend.h
-        ghosts_frontends/purple_ghost_frontend.cpp ghosts_frontends/purple_ghost_frontend.h
-        ghosts_frontends/orange_ghost_frontend.cpp ghosts_frontends/orange_ghost_frontend.h
         images_urls.h
         gui_config.h)
 
