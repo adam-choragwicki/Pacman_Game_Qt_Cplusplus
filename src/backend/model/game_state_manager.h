@@ -13,7 +13,7 @@ public slots:
     void processTogglePauseRequest();
 
 public:
-    explicit GameStateManager(GameLoop& gameLoop);
+    explicit GameStateManager();
     void startGame();
     void endGame();
     [[nodiscard]] bool isRunning() const;
@@ -26,6 +26,9 @@ public:
 
     [[nodiscard]] const bool& getShouldDrawBackground() const;
 
+    void setGameLoop(GameLoop* gameLoop)
+    { gameLoop_ = gameLoop; }
+
 private:
     bool shouldDrawBackground_{};
 
@@ -34,7 +37,5 @@ private:
         BEFORE_FIRST_RUN, RUNNING, STOPPED, PAUSED,
     } state_;
 
-    //    GameLoop* gameLoop_{};
-
-    GameLoop& gameLoop_;
+    GameLoop* gameLoop_{};
 };

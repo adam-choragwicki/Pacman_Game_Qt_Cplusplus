@@ -23,4 +23,5 @@ private:
     MainWindow& view_;
 
     InputHandler* inputHandler_{};
+    GameLoop* gameLoop_{};
 };

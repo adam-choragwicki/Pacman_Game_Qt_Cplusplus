@@ -40,7 +40,7 @@
 //NO SCORE DISPLAY
 //Screen text Game over/Congratulations etc.
 
-GameStateManager::GameStateManager(GameLoop& gameLoop) : state_(State::BEFORE_FIRST_RUN), gameLoop_(gameLoop)
+GameStateManager::GameStateManager() : state_(State::BEFORE_FIRST_RUN)
 {
     shouldDrawBackground_ = true;
 }
@@ -79,7 +79,7 @@ void GameStateManager::startGame()
 
     state_ = State::RUNNING;
 
-    gameLoop_.start();
+    gameLoop_->start();
 
     shouldDrawBackground_ = true;
 }
@@ -91,12 +91,12 @@ void GameStateManager::togglePause()
     if(state_ == State::PAUSED)
     {
         state_ = State::RUNNING;
-        gameLoop_.start();
+        gameLoop_->start();
     }
     else if(state_ == State::RUNNING)
     {
         state_ = State::PAUSED;
-        gameLoop_.stop();
+        gameLoop_->stop();
     }
     else
     {

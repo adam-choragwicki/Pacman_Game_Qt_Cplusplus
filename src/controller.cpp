@@ -8,6 +8,9 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
     spdlog::debug("Initializing controller");
 
     inputHandler_ = new InputHandler(model_);
+    gameLoop_ = new GameLoop(model_);
+
+    model_.getGameStateManager().setGameLoop(gameLoop_);
 
     subscribeToKeyEvents();
     initializeFrontendEvents();
