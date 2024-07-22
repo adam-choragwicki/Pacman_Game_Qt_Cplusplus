@@ -55,7 +55,7 @@ void Model::reset()
 {
     spdlog::debug("Model reset");
 
-    ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
+    ballItemsManager_->reset();
 
     pacman_->reset();
     blueGhost_->reset();

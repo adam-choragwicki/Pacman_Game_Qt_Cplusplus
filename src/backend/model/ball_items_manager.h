@@ -13,7 +13,7 @@ public:
     explicit BallItemsManager(const PathPoints& pathPoints);
     ~BallItemsManager() = default;
 
-    void createBalls(const PathPoints& pathPoints);
+    void reset();
 
     size_t getRemainingFoodballsCount();
 
@@ -24,6 +24,12 @@ public:
     { return powerballs_; }
 
 private:
+    void createBalls();
+    void createFoodBalls();
+    void createPowerballs();
+
+    const PathPoints& pathPoints_;
+
     std::set<Foodball> foodballs_;
     std::set<Powerball> powerballs_;
 };

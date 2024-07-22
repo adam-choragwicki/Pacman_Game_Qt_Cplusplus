@@ -1,29 +1,49 @@
 #include "ball_items_manager.h"
 #include "model/balls/foodball.h"
 #include "model/balls/powerball.h"
-
 #include "path_points.h"
+#include "spdlog/spdlog.h"
 
-
-BallItemsManager::BallItemsManager(const PathPoints& pathPoints)
+BallItemsManager::BallItemsManager(const PathPoints& pathPoints) : pathPoints_(pathPoints)
 {
-    createBalls(pathPoints);
+    createBalls();
 }
 
-void BallItemsManager::createBalls(const PathPoints& pathPoints)
+void BallItemsManager::reset()
 {
-    for(const Coordinates& foodballPosition : pathPoints.getFoodballPositions())
-    {
-        foodballs_.emplace(foodballPosition);
-    }
+    spdlog::debug("Reset BallItemsManager");
 
-    for(const Coordinates& powerballPosition : pathPoints.getPowerballPositions())
-    {
-        powerballs_.emplace(powerballPosition);
-    }
+    foodballs_.clear();
+    powerballs_.clear();
+
+    createBalls();
+}
+
+void BallItemsManager::createBalls()
+{
+    spdlog::debug("Creating balls");
+
+    createFoodBalls();
+    createPowerballs();
 }
 
 size_t BallItemsManager::getRemainingFoodballsCount()
 {
     return foodballs_.size();
+}
+
+void BallItemsManager::createFoodBalls()
+{
+    for(const Coordinates& foodballPosition : pathPoints_.getFoodballPositions())
+    {
+        foodballs_.emplace(foodballPosition);
+    }
+}
+
+void BallItemsManager::createPowerballs()
+{
+    for(const Coordinates& powerballPosition : pathPoints_.getPowerballPositions())
+    {
+        powerballs_.emplace(powerballPosition);
+    }
 }
