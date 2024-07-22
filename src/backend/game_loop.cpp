@@ -12,7 +12,6 @@ GameLoop::GameLoop(Model& model) :
         orangeGhost_(model_.getOrangeGhost()),
         purpleGhost_(model_.getPurpleGhost()),
         redGhost_(model_.getRedGhost()),
-        gameStateManager_(model_.getGameStateManager()),
         ghostMovementManager_(model_.getGhostMovementManager()),
         scoreManager_(model_.getScoreManager()),
         ballItemsManager_(model_.getBallItemsManager())
@@ -50,51 +49,52 @@ void GameLoop::stop()
 
 void GameLoop::execute()
 {
-    if(gameStateManager_.isRunning())
+    //    if(gameStateManager_.isRunning())
+    //    {
+    pacmanMovementHandler();
+
+    ghostMovementHandler(blueGhost_);
+    ghostMovementHandler(orangeGhost_);
+    ghostMovementHandler(purpleGhost_);
+    ghostMovementHandler(redGhost_);
+
+    if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_.getRect(), ballItemsManager_.getFoodballs()))
     {
-        pacmanMovementHandler();
+        scoreManager_.increaseScoreForEatingFoodball();
+    }
 
-        ghostMovementHandler(blueGhost_);
-        ghostMovementHandler(orangeGhost_);
-        ghostMovementHandler(purpleGhost_);
-        ghostMovementHandler(redGhost_);
-
-        if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_.getRect(), ballItemsManager_.getFoodballs()))
-        {
-            scoreManager_.increaseScoreForEatingFoodball();
-        }
-
-        if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_.getRect(), ballItemsManager_.getPowerballs()))
-        {
-            scoreManager_.increaseScoreForEatingPowerball();
-
-            for(AbstractGhost* ghost : ghosts_)
-            {
-                ghost->setScared();
-            }
-        }
+    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_.getRect(), ballItemsManager_.getPowerballs()))
+    {
+        scoreManager_.increaseScoreForEatingPowerball();
 
         for(AbstractGhost* ghost : ghosts_)
         {
-            if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_.getRect(), ghost->getRect()))
-            {
-                if(!ghost->isScared())
-                {
-                    gameStateManager_.endGame(GameResult::LOST);
-                }
-                else
-                {
-                    scoreManager_.increaseScoreForEatingGhost();
-                    ghost->reset();
-                }
-            }
-        }
-
-        if(gameStateManager_.isRunning() && ballItemsManager_.getRemainingFoodballsCount() == 0)
-        {
-            gameStateManager_.endGame(GameResult::WIN);
+            ghost->setScared();
         }
     }
+
+    for(AbstractGhost* ghost : ghosts_)
+    {
+        if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_.getRect(), ghost->getRect()))
+        {
+            if(!ghost->isScared())
+            {
+                emit endGame(GameResult::LOST);
+            }
+            else
+            {
+                scoreManager_.increaseScoreForEatingGhost();
+                ghost->reset();
+            }
+        }
+    }
+
+    if(ballItemsManager_.getRemainingFoodballsCount() == 0)
+        //        if(gameStateManager_.isRunning() && ballItemsManager_.getRemainingFoodballsCount() == 0)
+    {
+        emit endGame(GameResult::WIN);
+    }
+    //    }
 }
 
 void GameLoop::pacmanMovementHandler()

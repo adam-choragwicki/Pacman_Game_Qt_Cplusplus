@@ -1,9 +1,25 @@
 #include "model/game_state_manager.h"
 #include "spdlog/spdlog.h"
-
+#include "model.h"
 #include "game_loop.h"
 
-//BEFORE FIRST RUN
+//STATE TRANSITIONS
+
+//FROM READY TO START ---> RUNNING
+
+
+//FROM RUNNING ---> PAUSED
+//FROM RUNNING ---> STOPPED
+
+
+//FROM PAUSED ---> RUNNING
+
+//FROM STOPPED ---> READY_TO_START
+
+
+
+
+//READY TO START
 
 //What is displayed:
 //Background
@@ -40,22 +56,27 @@
 //NO SCORE DISPLAY
 //Screen text Game over/Congratulations etc.
 
-GameStateManager::GameStateManager() : state_(State::BEFORE_FIRST_RUN)
+GameStateManager::GameStateManager(Model& model) : model_(model)
 {
+    gameState_ = GameState::READY_TO_START;
     shouldDrawBackground_ = true;
 }
 
-void GameStateManager::processStartGameRequest()
+void GameStateManager::processStartOrRestartGameRequest()
 {
-    spdlog::debug("Processing start game request");
+    spdlog::debug("Processing start or restart game request");
 
-    if(state_ == State::BEFORE_FIRST_RUN || state_ == State::STOPPED)
+    if(gameState_ == GameState::READY_TO_START)
     {
         startGame();
     }
+    else if(gameState_ == GameState::STOPPED)
+    {
+        prepareGameToStart();
+    }
     else
     {
-        spdlog::debug("Game is not in BEFORE_FIRST_RUN or STOPPED state. Start game request rejected");
+        spdlog::debug("Game is not in READY_TO_START state. Start or restart game request rejected");
     }
 }
 
@@ -63,7 +84,7 @@ void GameStateManager::processTogglePauseRequest()
 {
     spdlog::debug("Processing toggle pause request");
 
-    if(state_ == State::PAUSED || state_ == State::RUNNING)
+    if(gameState_ == GameState::PAUSED || gameState_ == GameState::RUNNING)
     {
         togglePause();
     }
@@ -77,7 +98,7 @@ void GameStateManager::startGame()
 {
     spdlog::debug("Starting game");
 
-    state_ = State::RUNNING;
+    gameState_ = GameState::RUNNING;
 
     gameLoop_->start();
 
@@ -88,14 +109,14 @@ void GameStateManager::togglePause()
 {
     spdlog::debug("Toggling pause");
 
-    if(state_ == State::PAUSED)
+    if(gameState_ == GameState::PAUSED)
     {
-        state_ = State::RUNNING;
+        gameState_ = GameState::RUNNING;
         gameLoop_->start();
     }
-    else if(state_ == State::RUNNING)
+    else if(gameState_ == GameState::RUNNING)
     {
-        state_ = State::PAUSED;
+        gameState_ = GameState::PAUSED;
         gameLoop_->stop();
     }
     else
@@ -107,7 +128,7 @@ void GameStateManager::togglePause()
 void GameStateManager::endGame(GameResult gameResult)
 {
     shouldDrawBackground_ = false;
-    state_ = State::STOPPED;
+    gameState_ = GameState::STOPPED;
 
     gameResult_ = gameResult;
 
@@ -116,22 +137,22 @@ void GameStateManager::endGame(GameResult gameResult)
 
 bool GameStateManager::isRunning() const
 {
-    return state_ == State::RUNNING;
+    return gameState_ == GameState::RUNNING;
 }
 
 bool GameStateManager::isPaused() const
 {
-    return state_ == State::PAUSED;
+    return gameState_ == GameState::PAUSED;
 }
 
-bool GameStateManager::isBeforeFirstRun() const
+bool GameStateManager::isReadyToStart() const
 {
-    return state_ == State::BEFORE_FIRST_RUN;
+    return gameState_ == GameState::READY_TO_START;
 }
 
 bool GameStateManager::isStopped() const
 {
-    return state_ == State::STOPPED;
+    return gameState_ == GameState::STOPPED;
 }
 
 const bool& GameStateManager::getShouldDrawBackground() const
@@ -150,7 +171,10 @@ const bool& GameStateManager::getShouldDrawBackground() const
     //    }
 }
 
-void GameStateManager::transitionFromBeforeFirstRunToRunning()
+void GameStateManager::prepareGameToStart()
 {
+    spdlog::debug("Prepare game to start");
+    model_.reset();
 
+    gameState_ = GameState::READY_TO_START;
 }

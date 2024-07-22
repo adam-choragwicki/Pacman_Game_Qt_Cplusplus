@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include "common.h"
+class Model;
 
 class GameLoop;
 
@@ -10,20 +11,18 @@ class GameStateManager : public QObject
 Q_OBJECT
 
 public slots:
-    void processStartGameRequest();
+    void processStartOrRestartGameRequest();
     void processTogglePauseRequest();
 
-public:
-    explicit GameStateManager();
-    void startGame();
     void endGame(GameResult gameResult);
+
+public:
+    explicit GameStateManager(Model& model);
     [[nodiscard]] bool isRunning() const;
     [[nodiscard]] bool isPaused() const;
-    [[nodiscard]] bool isBeforeFirstRun() const;
+    [[nodiscard]] bool isReadyToStart() const;
     [[nodiscard]] bool isStopped() const;
     void togglePause();
-
-    void transitionFromBeforeFirstRunToRunning();
 
     [[nodiscard]] const bool& getShouldDrawBackground() const;
 
@@ -37,14 +36,19 @@ public:
     { return gameResult_ == GameResult::LOST; }
 
 private:
+    void startGame();
+
     bool shouldDrawBackground_{};
 
-    enum class State
+    enum class GameState
     {
-        BEFORE_FIRST_RUN, RUNNING, STOPPED, PAUSED,
-    } state_;
+        READY_TO_START, RUNNING, PAUSED, STOPPED
+    } gameState_;
 
     GameLoop* gameLoop_{};
 
     GameResult gameResult_ = GameResult::NO_RESULT_YET;
+    void prepareGameToStart();
+
+    Model& model_;
 };

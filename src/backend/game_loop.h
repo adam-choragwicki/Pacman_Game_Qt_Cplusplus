@@ -23,9 +23,14 @@ class ScoreManager;
 
 class BallItemsManager;
 
+enum class GameResult;
+
 class GameLoop : public QObject
 {
 Q_OBJECT
+
+signals:
+    void endGame(GameResult gameResult);
 
 public:
     explicit GameLoop(Model& model);
@@ -49,8 +54,6 @@ private:
     RedGhost& redGhost_;
 
     std::array<AbstractGhost*, 4> ghosts_;
-
-    GameStateManager& gameStateManager_;
 
     GhostMovementManager& ghostMovementManager_;
 

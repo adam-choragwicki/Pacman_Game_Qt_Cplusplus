@@ -10,7 +10,7 @@ class InputHandler : public QObject
 Q_OBJECT
 
 signals:
-    void startGameRequested();
+    void startOrRestartGameRequested();
     void togglePauseRequested();
 
 public:

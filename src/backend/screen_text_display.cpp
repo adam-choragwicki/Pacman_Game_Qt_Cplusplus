@@ -3,7 +3,7 @@
 #include "score_manager.h"
 #include "model/game_state_manager.h"
 
-ScreenTextDisplay::ScreenTextDisplay(const GameStateManager& gameStateManager, const ScoreManager& scoreManager) : gameStateManager_(gameStateManager), scoreManager_(scoreManager)
+ScreenTextDisplay::ScreenTextDisplay(const ScoreManager& scoreManager) : scoreManager_(scoreManager)
 {}
 
 void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
@@ -21,12 +21,12 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     font.setPointSize(ScreenTextDisplay::FONT_POINT_SIZE);
     painter->setFont(font);
 
-    bool isBeforeFirstRun = gameStateManager_.isBeforeFirstRun();
-    bool isPaused = gameStateManager_.isPaused();
-    bool isRunning = gameStateManager_.isRunning();
-    bool isStopped = gameStateManager_.isStopped();
+    bool isReadyToStart = gameStateManager_->isReadyToStart();
+    bool isPaused = gameStateManager_->isPaused();
+    bool isRunning = gameStateManager_->isRunning();
+    bool isStopped = gameStateManager_->isStopped();
 
-    if(isBeforeFirstRun)
+    if(isReadyToStart)
     {
         painter->drawText(screenTextDisplayBoundingRect, Qt::AlignCenter, "PRESS SPACE TO START");
     }
@@ -42,22 +42,22 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     }
     else if(isStopped)
     {
-        if(gameStateManager_.isGameWin())
+        if(gameStateManager_->isGameWin())
         {
             painter->setPen(penYellow);
             painter->drawText(screenTextDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "CONGRATULATIONS");
             painter->drawText(screenTextDisplayBoundingRect, Qt::AlignCenter, "FINAL SCORE : " + QString::number(scoreManager_.getScore()));
             painter->setPen(penBlue);
-            painter->drawText(screenTextDisplayBoundingRect, Qt::AlignBottom | Qt::AlignHCenter, "PRESS SPACE TO RESTART");
+            painter->drawText(screenTextDisplayBoundingRect, Qt::AlignBottom | Qt::AlignHCenter, "PRESS SPACE TO CONTINUE");
         }
-        else if(gameStateManager_.isGameLost())
+        else if(gameStateManager_->isGameLost())
         {
             painter->setPen(penRed);
             painter->drawText(screenTextDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "GAME OVER");
             painter->setPen(penYellow);
             painter->drawText(screenTextDisplayBoundingRect, Qt::AlignCenter, "FINAL SCORE : " + QString::number(scoreManager_.getScore()));
             painter->setPen(penBlue);
-            painter->drawText(screenTextDisplayBoundingRect, Qt::AlignBottom | Qt::AlignHCenter, "PRESS SPACE TO RESTART");
+            painter->drawText(screenTextDisplayBoundingRect, Qt::AlignBottom | Qt::AlignHCenter, "PRESS SPACE TO CONTINUE");
         }
         else
         {

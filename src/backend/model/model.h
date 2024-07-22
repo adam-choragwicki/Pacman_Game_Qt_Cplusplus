@@ -71,11 +71,11 @@ public:
     [[nodiscard]] BallItemsManager& getBallItemsManager() const
     { return *ballItemsManager_; }
 
-    [[nodiscard]] const GameStateManager& getGameStateManager() const
-    { return *gameStateManager_; }
-
-    GameStateManager& getGameStateManager()
-    { return *gameStateManager_; }
+    //    [[nodiscard]] const GameStateManager& getGameStateManager() const
+    //    { return *gameStateManager_; }
+    //
+    //    GameStateManager& getGameStateManager()
+    //    { return *gameStateManager_; }
 
     [[nodiscard]] const PathPoints& getPathPoints() const
     { return *pathPoints_; }
@@ -88,6 +88,9 @@ public:
 
     [[nodiscard]] QGraphicsScene* getScene() const
     { return scene_.get(); }
+
+    [[nodiscard]] ScreenTextDisplay* getScreenTextDisplay() const
+    { return screenTextDisplay_.get(); }
 
 private:
     void addItemsToScene();
@@ -107,8 +110,8 @@ private:
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;
 
-    std::unique_ptr<GameLoop> gameLoop_;
-    std::unique_ptr<GameStateManager> gameStateManager_;
+    //    std::unique_ptr<GameLoop> gameLoop_;
+    //    std::unique_ptr<GameStateManager> gameStateManager_;
 
     std::unique_ptr<QGraphicsScene> scene_;
 

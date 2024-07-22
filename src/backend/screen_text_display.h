@@ -8,7 +8,7 @@ class ScoreManager;
 class ScreenTextDisplay : public QGraphicsTextItem
 {
 public:
-    explicit ScreenTextDisplay(const GameStateManager& gameStateManager, const ScoreManager& scoreManager);
+    explicit ScreenTextDisplay(const ScoreManager& scoreManager);
     ~ScreenTextDisplay() override = default;
 
     static const int WIDTH = 600;
@@ -17,10 +17,15 @@ public:
     static const int Y = 714 / 2 - HEIGHT / 2;
     static const int FONT_POINT_SIZE = 30;
 
+    void setGameStateManager(GameStateManager* gameStateManager)
+    { gameStateManager_ = gameStateManager; }
+
 private:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 private:
-    const GameStateManager& gameStateManager_;
+    //    const GameStateManager& gameStateManager_;
     const ScoreManager& scoreManager_;
+
+    GameStateManager* gameStateManager_{};
 };

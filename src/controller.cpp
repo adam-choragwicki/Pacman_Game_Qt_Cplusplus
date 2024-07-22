@@ -9,8 +9,13 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
 
     inputHandler_ = new InputHandler(model_);
     gameLoop_ = new GameLoop(model_);
+    gameStateManager_ = new GameStateManager(model_);
 
-    model_.getGameStateManager().setGameLoop(gameLoop_);
+    gameStateManager_->setGameLoop(gameLoop_);
+
+    connect(gameLoop_, &GameLoop::endGame, gameStateManager_, &GameStateManager::endGame);
+
+    model_.getScreenTextDisplay()->setGameStateManager(gameStateManager_);
 
     subscribeToKeyEvents();
     initializeFrontendEvents();
@@ -20,8 +25,8 @@ void Controller::subscribeToKeyEvents()
 {
     connect(&view_, &MainWindow::keyPressedEvent, inputHandler_, &InputHandler::processKeyPressedEvent);
 
-    connect(inputHandler_, &InputHandler::startGameRequested, &model_.getGameStateManager(), &GameStateManager::processStartGameRequest);
-    connect(inputHandler_, &InputHandler::togglePauseRequested, &model_.getGameStateManager(), &GameStateManager::processTogglePauseRequest);
+    connect(inputHandler_, &InputHandler::startOrRestartGameRequested, gameStateManager_, &GameStateManager::processStartOrRestartGameRequest);
+    connect(inputHandler_, &InputHandler::togglePauseRequested, gameStateManager_, &GameStateManager::processTogglePauseRequest);
 }
 
 void Controller::initializeFrontendEvents()
