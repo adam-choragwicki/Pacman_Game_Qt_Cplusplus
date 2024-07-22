@@ -10,9 +10,6 @@ public:
     Pacman();
     void advanceAnimation() override;
 
-    [[nodiscard]] QRectF boundingRect() const override
-    { return {0, 0, 30, 30}; }
-
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 private:

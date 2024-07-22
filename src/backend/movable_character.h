@@ -53,6 +53,9 @@ public:
     void moveCharacterBy(const std::pair<int, int>& offset);
     void moveTo(const Coordinates& coordinates);
 
+    [[nodiscard]] QRectF boundingRect() const override
+    { return {0, 0, 30, 30}; }
+
 protected:
     int animationState_{};
     bool moving_{};
