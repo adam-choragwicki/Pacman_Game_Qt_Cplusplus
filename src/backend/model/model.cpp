@@ -7,19 +7,13 @@
 #include "ghosts/purple_ghost.h"
 #include "ghosts/blue_ghost.h"
 #include "ghosts/orange_ghost.h"
-
 #include "score_manager.h"
-#include "game_state_manager.h"
-
 #include "pacman_movement_manager.h"
 #include "ghost_movement_manager.h"
-
 #include "balls/foodball.h"
 #include "balls/powerball.h"
 #include "screen_text_display.h"
-
 #include "score_display.h"
-
 #include "spdlog/spdlog.h"
 
 #include <QtWidgets/QGraphicsScene>
@@ -49,6 +43,8 @@ Model::Model()
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
     addItemsToScene();
+
+    spdlog::debug("Items on scene: {}", scene_->items().size());
 }
 
 void Model::reset()
@@ -57,13 +53,15 @@ void Model::reset()
 
     ballItemsManager_->reset();
 
+    addBallsToScene();
+
     pacman_->reset();
     blueGhost_->reset();
     orangeGhost_->reset();
     purpleGhost_->reset();
     redGhost_->reset();
 
-    addItemsToScene();
+    spdlog::debug("Items on scene after reset: {}", scene_->items().size());
 }
 
 void Model::initScene()
