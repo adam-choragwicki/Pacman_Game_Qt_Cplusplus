@@ -15,6 +15,7 @@ public:
 
     [[nodiscard]] QRectF boundingRect() const override
     { return rect_; }
+
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
     void advanceAnimation() override;
@@ -22,27 +23,12 @@ public:
 
     void setScared();
 
-    void setScaredWhiteState()
-    { scaredState_ = ScaredState::SCARED_WHITE; }
-
     [[nodiscard]] bool isScared() const;
     [[nodiscard]] bool isScaredWhite() const;
     [[nodiscard]] bool isScaredBlue() const;
 
-    [[nodiscard]] bool canMoveAgain() const
-    { return canMoveAgain_; }
-
-    [[nodiscard]] int getSkippedMoves() const
-    { return skippedMoves_; }
-
-    void incrementSkippedMoves();
-    void resetSkippedMoves();
-
     [[nodiscard]] bool isSlowedDown() const
     { return isSlowedDown_; }
-
-    void setSlowedDown(bool slowedDown)
-    { isSlowedDown_ = slowedDown; }
 
     [[nodiscard]] GhostTimingManager* getGhostTimingManager() const
     { return ghostTimingManager_; }
@@ -56,8 +42,6 @@ protected:
 
 private slots:
     void resetCanMoveAgain();
-    void setScaredWhite();
-    void resetScaredState();
 
 private:
     enum class ScaredState

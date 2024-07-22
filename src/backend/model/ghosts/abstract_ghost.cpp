@@ -173,14 +173,6 @@ void AbstractGhost::resetCanMoveAgain()
     canMoveAgain_ = true;
 }
 
-void AbstractGhost::incrementSkippedMoves()
-{ ++skippedMoves_; }
-
-void AbstractGhost::resetSkippedMoves()
-{
-    skippedMoves_ = 0;
-}
-
 void AbstractGhost::setScared()
 {
     scaredState_ = ScaredState::SCARED_BLUE;
@@ -203,21 +195,5 @@ void AbstractGhost::setScared()
         ghostTimingManager_->startScaredWhiteTimer();
     });
 
-
     ghostTimingManager_->startScaredBlueTimer();
-
-    //    connect(ghostTimingManager_, &GhostTimingManager::changeToScaredWhite, this, &AbstractGhost::setScaredWhite);
-    //
-    //
-    //    ghostTimingManager_->startScaredBlueTimer();
-}
-
-void AbstractGhost::setScaredWhite()
-{
-    scaredState_ = ScaredState::SCARED_WHITE;
-}
-
-void AbstractGhost::resetScaredState()
-{
-    scaredState_ = ScaredState::NO_SCARED;
 }

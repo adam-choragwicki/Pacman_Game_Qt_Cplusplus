@@ -13,7 +13,7 @@ Q_OBJECT
 
 public:
     MovableCharacter(const Coordinates& startingCoordinates, Direction initialDirection);
-    virtual ~MovableCharacter() = 0;
+    ~MovableCharacter() override = 0;
 
     virtual void advanceAnimation() = 0;
 
