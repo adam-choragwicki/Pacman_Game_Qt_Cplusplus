@@ -154,6 +154,8 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
 
 void GameLoop::startGame()
 {
+    model_.getGameStateManager().transitionFromBeforeFirstRunToRunning();
+
     if(model_.getGameStateManager().isBeforeFirstRun() || model_.getGameStateManager().isStopped())
     {
         model_.startGame();

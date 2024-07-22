@@ -34,7 +34,17 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     {
         painter->drawText(screenTextDisplayBoundingRect, Qt::AlignCenter, "PRESS SPACE TO START");
     }
-    else
+    else if(isPaused)
+    {
+        painter->setPen(penYellow);
+        font.setPointSize(ScreenTextDisplay::FONT_POINT_SIZE + 20);
+        painter->drawText(screenTextDisplayBoundingRect, Qt::AlignVCenter | Qt::AlignHCenter, "PAUSED");
+    }
+    else if(isRunning)
+    {
+        //draw nothing
+    }
+    else if(isStopped)
     {
         if(gameResult == GameResult::WIN)
         {
@@ -53,9 +63,14 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
             painter->setPen(penBlue);
             painter->drawText(screenTextDisplayBoundingRect, Qt::AlignBottom | Qt::AlignHCenter, "PRESS SPACE TO RESTART");
         }
-        //else if(gameResult == GameResult::NO_RESULT_YET)
-        //{
-        //      painter->drawText(screenTextDisplayBoundingRect, Qt::AlignCenter, "PRESS SPACE TO START");
-        //}
+        else
+        {
+            throw std::runtime_error("Unsupported game state, game stopped but no game result set");
+
+        }
+    }
+    else
+    {
+        throw std::runtime_error("Unsupported game state");
     }
 }

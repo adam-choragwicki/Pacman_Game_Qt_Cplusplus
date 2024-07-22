@@ -2,11 +2,6 @@
 
 class GameStateManager
 {
-    enum class State
-    {
-        BEFORE_FIRST_RUN, RUNNING, STOPPED, PAUSED,
-    } state_;
-
 public:
     explicit GameStateManager();
     void startGame();
@@ -17,8 +12,15 @@ public:
     [[nodiscard]] bool isStopped() const;
     void togglePause();
 
+    void transitionFromBeforeFirstRunToRunning();
+
     [[nodiscard]] const bool& getShouldDrawBackground() const;
 
 private:
     bool shouldDrawBackground_{};
+
+    enum class State
+    {
+        BEFORE_FIRST_RUN, RUNNING, STOPPED, PAUSED,
+    } state_;
 };
