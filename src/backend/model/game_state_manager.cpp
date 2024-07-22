@@ -102,21 +102,16 @@ void GameStateManager::togglePause()
     {
         spdlog::debug("Game is not in PAUSED or RUNNING state. Cannot toggle pause");
     }
-
-    //    if(state_ == State::PAUSED)
-    //    {
-    //        state_ = State::RUNNING;
-    //    }
-    //    else if(state_ == State::RUNNING)
-    //    {
-    //        state_ = State::PAUSED;
-    //    }
 }
 
-void GameStateManager::endGame()
+void GameStateManager::endGame(GameResult gameResult)
 {
     shouldDrawBackground_ = false;
     state_ = State::STOPPED;
+
+    gameResult_ = gameResult;
+
+    gameLoop_->stop();
 }
 
 bool GameStateManager::isRunning() const

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QtWidgets/QGraphicsTextItem>
-#include "screen_text_manager.h"
 
 class GameStateManager;
 class ScoreManager;
@@ -9,7 +8,7 @@ class ScoreManager;
 class ScreenTextDisplay : public QGraphicsTextItem
 {
 public:
-    explicit ScreenTextDisplay(const GameStateManager& gameStateManager, const ScreenTextManager& screenTextManager, const ScoreManager& scoreManager);
+    explicit ScreenTextDisplay(const GameStateManager& gameStateManager, const ScoreManager& scoreManager);
     ~ScreenTextDisplay() override = default;
 
     static const int WIDTH = 600;
@@ -18,14 +17,10 @@ public:
     static const int Y = 714 / 2 - HEIGHT / 2;
     static const int FONT_POINT_SIZE = 30;
 
-    [[nodiscard]] const ScreenTextManager& getScreenTextManager() const
-    { return screenTextManager_; }
-
 private:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 private:
     const GameStateManager& gameStateManager_;
-    const ScreenTextManager& screenTextManager_;
     const ScoreManager& scoreManager_;
 };

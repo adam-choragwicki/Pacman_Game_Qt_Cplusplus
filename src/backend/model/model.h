@@ -38,7 +38,6 @@ class GameStateManager;
 class PacmanMovementManager;
 class GhostMovementManager;
 
-class ScreenTextManager;
 class ScreenTextDisplay;
 
 class ScoreDisplay;
@@ -90,9 +89,6 @@ public:
     [[nodiscard]] QGraphicsScene* getScene() const
     { return scene_.get(); }
 
-    ScreenTextManager& getScreenTextManager()
-    { return *screenTextManager_; }
-
 private:
     void addItemsToScene();
     void addBallsToScene();
@@ -107,7 +103,6 @@ private:
 
     std::unique_ptr<ScoreManager> scoreManager_;
     std::unique_ptr<ScoreDisplay> scoreDisplay_;
-    std::unique_ptr<ScreenTextManager> screenTextManager_;
 
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;

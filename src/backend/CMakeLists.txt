@@ -23,7 +23,6 @@ set(SOURCE_FILES
         log_manager.h
         coordinates.h coordinates.cpp
         score_manager.h
-        screen_text_manager.cpp screen_text_manager.h
         collision_manager.cpp collision_manager.h
         config.h
         abstract_movement_manager.cpp abstract_movement_manager.h

@@ -3,8 +3,7 @@
 #include "score_manager.h"
 #include "model/game_state_manager.h"
 
-ScreenTextDisplay::ScreenTextDisplay(const GameStateManager& gameStateManager, const ScreenTextManager& screenTextManager, const ScoreManager& scoreManager) :
-        gameStateManager_(gameStateManager), screenTextManager_(screenTextManager), scoreManager_(scoreManager)
+ScreenTextDisplay::ScreenTextDisplay(const GameStateManager& gameStateManager, const ScoreManager& scoreManager) : gameStateManager_(gameStateManager), scoreManager_(scoreManager)
 {}
 
 void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
@@ -21,9 +20,6 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     QFont font = painter->font();
     font.setPointSize(ScreenTextDisplay::FONT_POINT_SIZE);
     painter->setFont(font);
-
-    //TODO implement src result manager?
-    GameResult gameResult = getScreenTextManager().getGameResult();
 
     bool isBeforeFirstRun = gameStateManager_.isBeforeFirstRun();
     bool isPaused = gameStateManager_.isPaused();
@@ -46,7 +42,7 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     }
     else if(isStopped)
     {
-        if(gameResult == GameResult::WIN)
+        if(gameStateManager_.isGameWin())
         {
             painter->setPen(penYellow);
             painter->drawText(screenTextDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "CONGRATULATIONS");
@@ -54,7 +50,7 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
             painter->setPen(penBlue);
             painter->drawText(screenTextDisplayBoundingRect, Qt::AlignBottom | Qt::AlignHCenter, "PRESS SPACE TO RESTART");
         }
-        else if(gameResult == GameResult::LOST)
+        else if(gameStateManager_.isGameLost())
         {
             painter->setPen(penRed);
             painter->drawText(screenTextDisplayBoundingRect, Qt::AlignTop | Qt::AlignHCenter, "GAME OVER");

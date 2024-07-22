@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include "common.h"
 
 class GameLoop;
 
@@ -15,7 +16,7 @@ public slots:
 public:
     explicit GameStateManager();
     void startGame();
-    void endGame();
+    void endGame(GameResult gameResult);
     [[nodiscard]] bool isRunning() const;
     [[nodiscard]] bool isPaused() const;
     [[nodiscard]] bool isBeforeFirstRun() const;
@@ -29,6 +30,12 @@ public:
     void setGameLoop(GameLoop* gameLoop)
     { gameLoop_ = gameLoop; }
 
+    [[nodiscard]] bool isGameWin() const
+    { return gameResult_ == GameResult::WIN; }
+
+    [[nodiscard]] bool isGameLost() const
+    { return gameResult_ == GameResult::LOST; }
+
 private:
     bool shouldDrawBackground_{};
 
@@ -38,4 +45,6 @@ private:
     } state_;
 
     GameLoop* gameLoop_{};
+
+    GameResult gameResult_ = GameResult::NO_RESULT_YET;
 };

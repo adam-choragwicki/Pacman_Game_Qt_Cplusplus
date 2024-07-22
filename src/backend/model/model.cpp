@@ -9,7 +9,6 @@
 #include "ghosts/orange_ghost.h"
 
 #include "score_manager.h"
-#include "screen_text_manager.h"
 #include "game_state_manager.h"
 
 #include "pacman_movement_manager.h"
@@ -42,8 +41,6 @@ Model::Model()
 
     scoreManager_ = std::make_unique<ScoreManager>();
     scoreDisplay_ = std::make_unique<ScoreDisplay>(*scoreManager_);
-    screenTextManager_ = std::make_unique<ScreenTextManager>();
-
 
     pacmanMovementManager_ = std::make_unique<PacmanMovementManager>();
     ghostMovementManager_ = std::make_unique<GhostMovementManager>();
@@ -53,7 +50,7 @@ Model::Model()
     gameStateManager_ = std::make_unique<GameStateManager>();
 
 
-    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *screenTextManager_, *scoreManager_);
+    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *scoreManager_);
 
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
@@ -68,7 +65,7 @@ void Model::reset()
     gameStateManager_ = std::make_unique<GameStateManager>();
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
-    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *screenTextManager_, *scoreManager_);
+    screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *scoreManager_);
 
     pacman_->reset();
     blueGhost_->reset();
