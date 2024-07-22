@@ -5,7 +5,7 @@
 
 class GhostTimingManager;
 
-class AbstractGhost : public MovableCharacter, public MovingObject
+class AbstractGhost : public MovableCharacter, public QGraphicsItem
 {
 Q_OBJECT
 
@@ -13,6 +13,8 @@ public:
     AbstractGhost(const Coordinates& coordinates, Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout);
     ~AbstractGhost() override = 0;
 
+    [[nodiscard]] QRectF boundingRect() const override
+    { return rect_; }
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
     void advanceAnimation() override;
@@ -71,8 +73,8 @@ private:
 
     //    QTimer currentStateTimer_;
 
-//    QTimer scaredBlueStateTimer_;
-//    QTimer scaredWhiteStateTimer_;
+    //    QTimer scaredBlueStateTimer_;
+    //    QTimer scaredWhiteStateTimer_;
 
     GhostTimingManager* ghostTimingManager_{};
 };

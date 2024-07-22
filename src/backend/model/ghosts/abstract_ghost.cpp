@@ -3,7 +3,7 @@
 #include "config.h"
 #include "model/ghost_timing_manager.h"
 
-AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout) : MovableCharacter(coordinates, initialDirection), MovingObject(QRectF(0, 0, 30, 30))
+AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout) : MovableCharacter(coordinates, initialDirection)
 {
     ghostTimingManager_ = new GhostTimingManager(moveOutOfTheStartingBoxTimeout);
 
@@ -60,8 +60,6 @@ void AbstractGhost::advanceAnimation()
 
 void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    CustomGraphicsItem::paint(painter, option, widget);
-
     const QRect boundingRect = MovableCharacter::rect_;
     const int animationState = animationState_;
 

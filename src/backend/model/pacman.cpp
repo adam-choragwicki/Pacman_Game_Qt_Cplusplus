@@ -2,7 +2,7 @@
 #include "config.h"
 #include <QtGui/QPainter>
 
-Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN), MovingObject(QRectF(0, 0, 30, 30))
+Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN)
 
 // : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN), MovingObject(QRectF(0, 0, 30, 30))
 {
@@ -16,10 +16,8 @@ Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config:
 
 void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    CustomGraphicsItem::paint(painter, option, widget);
-
     painter->setRenderHint(QPainter::Antialiasing);
-    painter->setPen(pen_);
+//    painter->setPen(pen_);
     painter->setBrush(Qt::red);
 
     const QRect boundingRect = MovableCharacter::rect_;
