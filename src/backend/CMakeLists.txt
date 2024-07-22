@@ -42,7 +42,7 @@ set(SOURCE_FILES
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h
 
-        score_display.h score_display.cpp)
+        score_display.h score_display.cpp model/game_manager.cpp model/game_manager.h)
 
 # Create the backend library
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})

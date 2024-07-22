@@ -31,10 +31,6 @@ Model::Model()
 
     initScene();
 
-    scoreManager_ = std::make_unique<ScoreManager>();
-    scoreDisplay_ = std::make_unique<ScoreDisplay>(*scoreManager_);
-    screenTextManager_ = std::make_unique<ScreenTextManager>();
-
     pathPoints_ = std::make_unique<PathPoints>();
 
     pacman_ = std::make_unique<Pacman>();
@@ -43,20 +39,29 @@ Model::Model()
     purpleGhost_ = std::make_unique<PurpleGhost>();
     redGhost_ = std::make_unique<RedGhost>();
 
+
+    scoreManager_ = std::make_unique<ScoreManager>();
+    scoreDisplay_ = std::make_unique<ScoreDisplay>(*scoreManager_);
+    screenTextManager_ = std::make_unique<ScreenTextManager>();
+
+
     pacmanMovementManager_ = std::make_unique<PacmanMovementManager>();
     ghostMovementManager_ = std::make_unique<GhostMovementManager>();
 
-    gameStateManager_ = std::make_unique<GameStateManager>();
-    ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
+    gameStateManager_ = std::make_unique<GameStateManager>(*gameLoop_);
 
     screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *screenTextManager_, *scoreManager_);
+
+    ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
+
+    gameLoop_ = std::make_unique<GameLoop>(*this);
 
     addItemsToScene();
 }
 
 void Model::reset()
 {
-    gameStateManager_ = std::make_unique<GameStateManager>();
+    gameStateManager_ = std::make_unique<GameStateManager>(*gameLoop_);
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
     screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*gameStateManager_, *screenTextManager_, *scoreManager_);
@@ -91,17 +96,6 @@ void Model::addItemsToScene()
     scene_->addItem(screenTextDisplay_.get());
 
     scene_->addItem(scoreDisplay_.get());
-}
-
-void Model::startGame()
-{
-    if(!getGameStateManager().isBeforeFirstRun())
-    {
-        reset();
-    }
-
-    gameStateManager_->startGame();
-    scoreManager_->resetScore();
 }
 
 void Model::addBallsToScene()

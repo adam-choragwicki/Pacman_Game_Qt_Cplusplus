@@ -19,6 +19,9 @@
 #include "balls/powerball.h"
 #include "score_manager.h"
 #include "score_display.h"
+
+#include "game_loop.h"
+
 #include <map>
 #include <memory>
 #include <QtWidgets/QGraphicsScene>
@@ -90,15 +93,11 @@ public:
     ScreenTextManager& getScreenTextManager()
     { return *screenTextManager_; }
 
-    //TODO this should not be here
-    void startGame();
-
 private:
     void addItemsToScene();
     void addBallsToScene();
 
     std::unique_ptr<PathPoints> pathPoints_;
-    std::unique_ptr<BallItemsManager> ballItemsManager_;
 
     std::unique_ptr<Pacman> pacman_;
     std::unique_ptr<BlueGhost> blueGhost_;
@@ -106,17 +105,19 @@ private:
     std::unique_ptr<PurpleGhost> purpleGhost_;
     std::unique_ptr<RedGhost> redGhost_;
 
-    std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
-
-    std::unique_ptr<ScoreDisplay> scoreDisplay_;
-
     std::unique_ptr<ScoreManager> scoreManager_;
+    std::unique_ptr<ScoreDisplay> scoreDisplay_;
     std::unique_ptr<ScreenTextManager> screenTextManager_;
-
-    std::unique_ptr<GameStateManager> gameStateManager_;
 
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;
 
+    std::unique_ptr<GameLoop> gameLoop_;
+    std::unique_ptr<GameStateManager> gameStateManager_;
+
     std::unique_ptr<QGraphicsScene> scene_;
+
+    std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
+
+    std::unique_ptr<BallItemsManager> ballItemsManager_;
 };

@@ -29,13 +29,10 @@ class GameLoop : public QObject
 {
 Q_OBJECT
 
-public slots:
-    void startGame();
-    void togglePause();
-
 public:
     explicit GameLoop(Model& model);
     void start();
+    void stop();
 
 private slots:
     void execute();
@@ -45,12 +42,6 @@ private slots:
 
 private:
     Model& model_;
-    //    QGraphicsScene& scene_;
-    //
-    //    AbstractGhost* ghost1_{};
-    //    AbstractGhost* ghost2_{};
-    //    AbstractGhost* ghost3_{};
-    //    AbstractGhost* ghost4_{};
 
     Pacman& pacman_;
 
@@ -72,4 +63,6 @@ private:
     ScreenTextManager& screenTextManager_;
 
     QTimer* gameLoopTimer_{};
+
+    bool firstStartInCurrentGame_{};
 };

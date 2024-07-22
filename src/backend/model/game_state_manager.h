@@ -1,9 +1,19 @@
 #pragma once
 
-class GameStateManager
+#include <QObject>
+
+class GameLoop;
+
+class GameStateManager : public QObject
 {
+Q_OBJECT
+
+public slots:
+    void processStartGameRequest();
+    void processTogglePauseRequest();
+
 public:
-    explicit GameStateManager();
+    explicit GameStateManager(GameLoop& gameLoop);
     void startGame();
     void endGame();
     [[nodiscard]] bool isRunning() const;
@@ -23,4 +33,8 @@ private:
     {
         BEFORE_FIRST_RUN, RUNNING, STOPPED, PAUSED,
     } state_;
+
+    //    GameLoop* gameLoop_{};
+
+    GameLoop& gameLoop_;
 };

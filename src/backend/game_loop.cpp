@@ -25,30 +25,28 @@ GameLoop::GameLoop(Model& model) :
     ghosts_.at(1) = &orangeGhost_;
     ghosts_.at(2) = &purpleGhost_;
     ghosts_.at(3) = &redGhost_;
+
+    firstStartInCurrentGame_ = true;
 }
 
 void GameLoop::start()
 {
-    for(AbstractGhost* ghost : ghosts_)
+    if(firstStartInCurrentGame_)
     {
-        ghost->getGhostTimingManager()->startLeaveStartingBoxTimer();
+        for(AbstractGhost* ghost : ghosts_)
+        {
+            ghost->getGhostTimingManager()->startLeaveStartingBoxTimer();
+        }
+
+        firstStartInCurrentGame_ = false;
     }
 
     gameLoopTimer_->start(Config::Timing::GAME_LOOP_INTERVAL);
 }
 
-void GameLoop::togglePause()
+void GameLoop::stop()
 {
-    gameStateManager_.togglePause();
-
-    if(gameStateManager_.isRunning())
-    {
-        gameLoopTimer_->start();
-    }
-    else
-    {
-        gameLoopTimer_->stop();
-    }
+    gameLoopTimer_->stop();
 }
 
 void GameLoop::execute()
@@ -150,15 +148,4 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
     }
 
     ++turnsCounter;
-}
-
-void GameLoop::startGame()
-{
-    model_.getGameStateManager().transitionFromBeforeFirstRunToRunning();
-
-    if(model_.getGameStateManager().isBeforeFirstRun() || model_.getGameStateManager().isStopped())
-    {
-        model_.startGame();
-        start();
-    }
 }

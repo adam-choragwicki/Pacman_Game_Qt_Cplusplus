@@ -1,9 +1,5 @@
 #include "controller.h"
-#include "collision_manager.h"
-#include "config.h"
-#include "abstract_movement_manager.h"
 #include "input_handler.h"
-#include "game_loop.h"
 #include "spdlog/spdlog.h"
 #include <QKeyEvent>
 
@@ -12,7 +8,6 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
     spdlog::debug("Initializing controller");
 
     inputHandler_ = new InputHandler(model_);
-    gameLoop_ = new GameLoop(model_);
 
     subscribeToKeyEvents();
     initializeFrontendEvents();
@@ -22,9 +17,8 @@ void Controller::subscribeToKeyEvents()
 {
     connect(&view_, &MainWindow::keyPressedEvent, inputHandler_, &InputHandler::processKeyPressedEvent);
 
-//    connect(inputHandler_, &InputHandler::startGameRequested, this, &Controller::startGame);
-    connect(inputHandler_, &InputHandler::startGameRequested, gameLoop_, &GameLoop::startGame);
-    connect(inputHandler_, &InputHandler::togglePauseRequested, gameLoop_, &GameLoop::togglePause);
+    connect(inputHandler_, &InputHandler::startGameRequested, &model_.getGameStateManager(), &GameStateManager::processStartGameRequest);
+    connect(inputHandler_, &InputHandler::togglePauseRequested, &model_.getGameStateManager(), &GameStateManager::processTogglePauseRequest);
 }
 
 void Controller::initializeFrontendEvents()
@@ -38,17 +32,3 @@ void Controller::viewportUpdateHandler()
 {
     view_.updateViewport();
 }
-
-//void Controller::togglePause()
-//{
-//    if(model_.getGameStateManager().isRunning())
-//    {
-//        stopAllCharacters();
-//        model_.getGameStateManager().togglePause();
-//    }
-//    else if(model_.getGameStateManager().isPaused())
-//    {
-//        startAllCharacters();
-//        model_.getGameStateManager().togglePause();
-//    }
-//}
