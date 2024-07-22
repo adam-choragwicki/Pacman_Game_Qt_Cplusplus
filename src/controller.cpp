@@ -22,7 +22,8 @@ void Controller::subscribeToKeyEvents()
 {
     connect(&view_, &MainWindow::keyPressedEvent, inputHandler_, &InputHandler::processKeyPressedEvent);
 
-    connect(inputHandler_, &InputHandler::startGameRequested, this, &Controller::startGame);
+//    connect(inputHandler_, &InputHandler::startGameRequested, this, &Controller::startGame);
+    connect(inputHandler_, &InputHandler::startGameRequested, gameLoop_, &GameLoop::startGame);
     connect(inputHandler_, &InputHandler::togglePauseRequested, gameLoop_, &GameLoop::togglePause);
 }
 
@@ -36,26 +37,6 @@ void Controller::initializeFrontendEvents()
 void Controller::viewportUpdateHandler()
 {
     view_.updateViewport();
-}
-
-void Controller::startGame()
-{
-    if(model_.getGameStateManager().isBeforeFirstRun() || model_.getGameStateManager().isStopped())
-    {
-        model_.startGame();
-        gameLoop_->start();
-    }
-
-    //    if(!model_.getGameStateManager().isBeforeFirstRun())
-    //    {
-    //        model_.reset();
-    //    }
-    //
-    //    model_.getGameStateManager().startGame();
-    //
-    //    startAllCharacters();
-    //
-    //    model_.getScoreManager().resetScore();
 }
 
 //void Controller::togglePause()

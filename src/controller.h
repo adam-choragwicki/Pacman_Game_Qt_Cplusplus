@@ -14,8 +14,6 @@ Q_OBJECT
 public slots:
     void viewportUpdateHandler();
 
-    void startGame();
-
 public:
     Controller(Model& model, MainWindow& view);
 

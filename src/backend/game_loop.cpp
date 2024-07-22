@@ -151,3 +151,12 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
 
     ++turnsCounter;
 }
+
+void GameLoop::startGame()
+{
+    if(model_.getGameStateManager().isBeforeFirstRun() || model_.getGameStateManager().isStopped())
+    {
+        model_.startGame();
+        start();
+    }
+}

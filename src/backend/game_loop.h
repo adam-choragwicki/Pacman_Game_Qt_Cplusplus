@@ -30,6 +30,7 @@ class GameLoop : public QObject
 Q_OBJECT
 
 public slots:
+    void startGame();
     void togglePause();
 
 public:
