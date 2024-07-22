@@ -49,8 +49,6 @@ void GameLoop::stop()
 
 void GameLoop::execute()
 {
-    //    if(gameStateManager_.isRunning())
-    //    {
     pacmanMovementHandler();
 
     ghostMovementHandler(blueGhost_);
@@ -90,11 +88,9 @@ void GameLoop::execute()
     }
 
     if(ballItemsManager_.getRemainingFoodballsCount() == 0)
-        //        if(gameStateManager_.isRunning() && ballItemsManager_.getRemainingFoodballsCount() == 0)
     {
         emit endGame(GameResult::WIN);
     }
-    //    }
 }
 
 void GameLoop::pacmanMovementHandler()

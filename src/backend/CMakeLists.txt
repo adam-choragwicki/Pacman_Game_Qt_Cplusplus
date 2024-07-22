@@ -4,7 +4,7 @@ set(SOURCE_FILES
         game_loop.cpp game_loop.h
         input_handler.cpp input_handler.h
 
-        model/game_state_manager.cpp model/game_state_manager.h
+        model/game_manager.cpp model/game_manager.h
         model/pacman.h model/pacman.cpp
         model/ghosts/abstract_ghost.h model/ghosts/abstract_ghost.cpp
         model/ghosts/blue_ghost.h model/ghosts/blue_ghost.cpp

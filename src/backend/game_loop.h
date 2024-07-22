@@ -16,7 +16,7 @@ class OrangeGhost;
 class PurpleGhost;
 class RedGhost;
 
-class GameStateManager;
+class GameManager;
 class GhostMovementManager;
 
 class ScoreManager;

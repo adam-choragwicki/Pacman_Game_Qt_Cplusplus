@@ -10,7 +10,7 @@
 #include "model/ghosts/red_ghost.h"
 
 #include "screen_text_display.h"
-#include "game_state_manager.h"
+#include "game_manager.h"
 
 #include "pacman_movement_manager.h"
 #include "ghost_movement_manager.h"
@@ -33,7 +33,7 @@ class OrangeGhost;
 class PurpleGhost;
 class RedGhost;
 class ScoreManager;
-class GameStateManager;
+class GameManager;
 
 class PacmanMovementManager;
 class GhostMovementManager;
@@ -71,12 +71,6 @@ public:
     [[nodiscard]] BallItemsManager& getBallItemsManager() const
     { return *ballItemsManager_; }
 
-    //    [[nodiscard]] const GameStateManager& getGameStateManager() const
-    //    { return *gameStateManager_; }
-    //
-    //    GameStateManager& getGameStateManager()
-    //    { return *gameStateManager_; }
-
     [[nodiscard]] const PathPoints& getPathPoints() const
     { return *pathPoints_; }
 
@@ -109,9 +103,6 @@ private:
 
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;
-
-    //    std::unique_ptr<GameLoop> gameLoop_;
-    //    std::unique_ptr<GameStateManager> gameStateManager_;
 
     std::unique_ptr<QGraphicsScene> scene_;
 

@@ -2,7 +2,7 @@
 
 #include <QtWidgets/QGraphicsTextItem>
 
-class GameStateManager;
+class GameManager;
 class ScoreManager;
 
 class ScreenTextDisplay : public QGraphicsTextItem
@@ -17,15 +17,13 @@ public:
     static const int Y = 714 / 2 - HEIGHT / 2;
     static const int FONT_POINT_SIZE = 30;
 
-    void setGameStateManager(GameStateManager* gameStateManager)
-    { gameStateManager_ = gameStateManager; }
+    void setGameManager(GameManager* gameManager)
+    { gameManager_ = gameManager; }
 
 private:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 private:
-    //    const GameStateManager& gameStateManager_;
     const ScoreManager& scoreManager_;
-
-    GameStateManager* gameStateManager_{};
+    GameManager* gameManager_{};
 };

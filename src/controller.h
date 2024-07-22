@@ -24,5 +24,5 @@ private:
 
     InputHandler* inputHandler_{};
     GameLoop* gameLoop_{};
-    GameStateManager* gameStateManager_{};
+    GameManager* gameStateManager_{};
 };
