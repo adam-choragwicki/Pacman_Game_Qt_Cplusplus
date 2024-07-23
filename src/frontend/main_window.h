@@ -1,6 +1,5 @@
 #pragma once
 
-#include "game_arena.h"
 #include <QMainWindow>
 
 class Model;

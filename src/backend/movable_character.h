@@ -35,9 +35,6 @@ public:
     [[nodiscard]] Direction getNextDirection() const
     { return nextDirection_; }
 
-    [[nodiscard]] int getAnimationState() const
-    { return animationState_; }
-
     void setAnimationState(int animationState)
     { animationState_ = animationState; }
 
@@ -52,12 +49,6 @@ public:
 
     void moveCharacterBy(const std::pair<int, int>& offset);
     void moveTo(const Coordinates& coordinates);
-
-    [[nodiscard]] QRectF boundingRect() const override
-    {
-        //        return {static_cast<qreal>(STARTING_COORDINATES.x_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.x_ + DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ + DIAMETER / 2)};
-        return {0, 0, 30, 30};
-    }
 
 protected:
     int animationState_{};

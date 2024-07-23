@@ -1,7 +1,6 @@
 set(SOURCE_FILES
         main_window.h main_window.cpp
         graphics_view.h graphics_view.cpp
-        game_arena.cpp game_arena.h
         images_urls.h
         gui_config.h)
 

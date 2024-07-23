@@ -21,13 +21,11 @@ void MovableCharacter::reset()
     nextDirection_ = direction_;
 
     setPos(STARTING_COORDINATES.x_ - DIAMETER / 2, STARTING_COORDINATES.y_ - DIAMETER / 2);
-    //    rect_.setCoords(STARTING_COORDINATES.x_ - DIAMETER / 2, STARTING_COORDINATES.y_ - DIAMETER / 2, STARTING_COORDINATES.x_ + DIAMETER / 2, STARTING_COORDINATES.y_ + DIAMETER / 2);
 }
 
 void MovableCharacter::moveCharacterBy(const std::pair<int, int>& offset)
 {
     moveBy(offset.first, offset.second);
-    //    rect_.translate(offset.first, offset.second);
 }
 
 void MovableCharacter::moveTo(const Coordinates& coordinates)

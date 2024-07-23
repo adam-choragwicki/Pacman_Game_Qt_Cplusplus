@@ -6,11 +6,6 @@ Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config:
 {
     loadImages(PacmanImages::IMAGES_URLS);
 
-//    setPos(Config::StartingCoordinates::PACMAN.x_, Config::StartingCoordinates::PACMAN.y_);
-//    setPos(STARTING_COORDINATES.x_ - MovableCharacter::DIAMETER / 2, STARTING_COORDINATES.y_ - DIAMETER / 2);
-
-//            return {static_cast<qreal>(STARTING_COORDINATES.x_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.x_ + DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ + DIAMETER / 2)};
-
     animationState_ = 0;
     direction_ = Direction::LEFT;
 }
@@ -18,7 +13,6 @@ Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config:
 void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     painter->setRenderHint(QPainter::Antialiasing);
-    //    painter->setPen(pen_);
     painter->setBrush(Qt::red);
 
     const QRect boundingRect = MovableCharacter::boundingRect().toRect();
