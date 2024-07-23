@@ -8,10 +8,14 @@ Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config:
 
     animationState_ = 0;
     direction_ = Direction::LEFT;
+
+    drawRect_ = true;
 }
 
 void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
+    CustomGraphicsItem::paint(painter, option, widget);
+
     painter->setRenderHint(QPainter::Antialiasing);
     painter->setBrush(Qt::red);
 

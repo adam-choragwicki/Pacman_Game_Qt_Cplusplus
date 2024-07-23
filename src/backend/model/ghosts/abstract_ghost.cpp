@@ -12,6 +12,8 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
 
     movementTimer_.setInterval(Config::Timing::MovableCharacter::NORMAL_SPEED);
     movementTimer_.setSingleShot(true);
+
+    drawRect_ = true;
 }
 
 AbstractGhost::~AbstractGhost() = default;
@@ -51,6 +53,8 @@ void AbstractGhost::advanceAnimation()
 
 void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
+    CustomGraphicsItem::paint(painter, option, widget);
+
     const QRect boundingRect = MovableCharacter::boundingRect().toRect();
     const int animationState = animationState_;
 
