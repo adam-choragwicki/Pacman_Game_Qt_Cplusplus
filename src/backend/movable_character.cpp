@@ -1,7 +1,11 @@
 #include "movable_character.h"
 
-MovableCharacter::MovableCharacter(const Coordinates& startingCoordinates, const Direction initialDirection) :
-        STARTING_COORDINATES(startingCoordinates), STARTING_DIRECTION(initialDirection), direction_(initialDirection), nextDirection_(initialDirection)
+MovableCharacter::MovableCharacter(const Coordinates& startingCoordinates, const Direction initialDirection) : CustomGraphicsItem(QRectF(0, 0, DIAMETER, DIAMETER)),
+
+                                                                                                               STARTING_COORDINATES(startingCoordinates),
+                                                                                                               STARTING_DIRECTION(initialDirection),
+                                                                                                               direction_(initialDirection),
+                                                                                                               nextDirection_(initialDirection)
 {
     MovableCharacter::reset();
 }

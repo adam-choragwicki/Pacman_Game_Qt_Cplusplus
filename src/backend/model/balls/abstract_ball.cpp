@@ -2,9 +2,8 @@
 #include "config.h"
 #include <QtGui/QPainter>
 
-AbstractBall::AbstractBall(const Coordinates& coordinates, int diameter) : diameter_(diameter)
+AbstractBall::AbstractBall(const Coordinates& coordinates, int diameter) : CustomGraphicsItem(QRectF(0, 0, diameter, diameter))
 {
-    id_ = ++currentIdCounter;
     setPos(coordinates.x_, coordinates.y_);
 }
 

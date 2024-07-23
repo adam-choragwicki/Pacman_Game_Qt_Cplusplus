@@ -1,14 +1,14 @@
 #pragma once
 
-#include "common.h"
-#include "coordinates.h"
-#include "config.h"
 #include <QRect>
 #include <QObject>
 #include <QTimer>
-#include <QtWidgets/QGraphicsItem>
+#include "common.h"
+#include "coordinates.h"
+#include "config.h"
+#include "custom_graphics_item.h"
 
-class MovableCharacter : public QObject, public QGraphicsItem
+class MovableCharacter : public QObject, public CustomGraphicsItem
 {
 Q_OBJECT
 
@@ -20,8 +20,8 @@ public:
 
     virtual void reset();
 
-//    [[nodiscard]] Coordinates getCoordinates() const
-//    { return Coordinates{rect_.center().x(), rect_.center().y()}; }
+    //    [[nodiscard]] Coordinates getCoordinates() const
+    //    { return Coordinates{rect_.center().x(), rect_.center().y()}; }
 
     [[nodiscard]] Coordinates getCoordinates() const
     { return Coordinates{static_cast<int>(sceneBoundingRect().center().x()), static_cast<int>(sceneBoundingRect().center().y())}; }
@@ -67,7 +67,6 @@ protected:
 
     const Coordinates STARTING_COORDINATES;
     const Direction STARTING_DIRECTION;
-    QRect rect_;
 
     QTimer movementTimer_;
 
