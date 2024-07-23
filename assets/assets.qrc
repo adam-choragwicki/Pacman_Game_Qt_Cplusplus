@@ -1,9 +1,9 @@
 <RCC>
-    <qresource prefix="/">
-        <file>map.png</file>
+    <qresource>
+        <file>map/map.png</file>
     </qresource>
 
-    <qresource prefix="/">
+    <qresource>
         <file>ghost/ghost_blue_left_1.png</file>
         <file>ghost/ghost_blue_left_2.png</file>
         <file>ghost/ghost_blue_right_1.png</file>
@@ -47,7 +47,7 @@
         <file>ghost/ghost_scared_white_2.png</file>
     </qresource>
 
-    <qresource prefix="/">
+    <qresource>
         <file>pacman/pacman_left_close.png</file>
         <file>pacman/pacman_left_open_1.png</file>
         <file>pacman/pacman_left_open_2.png</file>
