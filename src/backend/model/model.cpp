@@ -80,29 +80,11 @@ void Model::addItemsToScene()
 {
     addBallsToScene();
 
-    QList<QGraphicsItem*> itemsList;
-
-    itemsList.emplace_back(pacman_.get());
-    itemsList.emplace_back(blueGhost_.get());
-    itemsList.emplace_back(orangeGhost_.get());
-    itemsList.emplace_back(purpleGhost_.get());
-    itemsList.emplace_back(redGhost_.get());
-
-
-//    scene_->addItem(pacman_.get());
-//    scene_->addItem(blueGhost_.get());
-//    scene_->addItem(orangeGhost_.get());
-//    scene_->addItem(purpleGhost_.get());
-//    scene_->addItem(redGhost_.get());
-
-
-    auto itemGroup = scene_->createItemGroup(itemsList);
-
-//    scene_->addItem(pacman_.get());
-//    scene_->addItem(blueGhost_.get());
-//    scene_->addItem(orangeGhost_.get());
-//    scene_->addItem(purpleGhost_.get());
-//    scene_->addItem(redGhost_.get());
+    scene_->addItem(pacman_.get());
+    scene_->addItem(blueGhost_.get());
+    scene_->addItem(orangeGhost_.get());
+    scene_->addItem(purpleGhost_.get());
+    scene_->addItem(redGhost_.get());
 
     scene_->addItem(screenTextDisplay_.get());
 
