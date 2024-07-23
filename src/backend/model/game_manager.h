@@ -4,7 +4,6 @@
 #include "common.h"
 
 class Model;
-
 class GameLoop;
 
 class GameManager : public QObject
@@ -19,10 +18,19 @@ public slots:
 
 public:
     explicit GameManager(Model& model);
-    [[nodiscard]] bool isRunning() const;
-    [[nodiscard]] bool isPaused() const;
-    [[nodiscard]] bool isReadyToStart() const;
-    [[nodiscard]] bool isStopped() const;
+
+    [[nodiscard]] bool isRunning() const
+    { return gameState_ == GameState::RUNNING; }
+
+    [[nodiscard]] bool isPaused() const
+    { return gameState_ == GameState::PAUSED; }
+
+    [[nodiscard]] bool isReadyToStart() const
+    { return gameState_ == GameState::READY_TO_START; }
+
+    [[nodiscard]] bool isStopped() const
+    { return gameState_ == GameState::STOPPED; }
+
     void togglePause();
 
     void prepareGameToStart();
