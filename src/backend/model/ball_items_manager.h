@@ -23,6 +23,9 @@ public:
     [[nodiscard]] std::set<Powerball>& getPowerballs()
     { return powerballs_; }
 
+    void hideAllBalls();
+    void showAllBalls();
+
 private:
     void createBalls();
     void createFoodBalls();

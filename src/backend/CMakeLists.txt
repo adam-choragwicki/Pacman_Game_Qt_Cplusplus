@@ -33,8 +33,8 @@ set(SOURCE_FILES
         screen_text_display.h screen_text_display.cpp
 
         model/balls/abstract_ball.cpp model/balls/abstract_ball.h
-        model/balls/foodball.cpp model/balls/foodball.h
-        model/balls/powerball.cpp model/balls/powerball.h
+        model/balls/foodball.h
+        model/balls/powerball.h
 
         moving_object.cpp moving_object.h
 

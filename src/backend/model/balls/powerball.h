@@ -5,7 +5,9 @@
 class Powerball : public AbstractBall
 {
 public:
-    explicit Powerball(const Coordinates& coordinates);
+    explicit Powerball(const Coordinates& coordinates) : AbstractBall(coordinates, DIAMETER)
+    {}
+
     ~Powerball() override = default;
 
     bool operator<(const Powerball& other) const

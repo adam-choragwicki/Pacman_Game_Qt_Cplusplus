@@ -5,7 +5,9 @@
 class Foodball : public AbstractBall
 {
 public:
-    explicit Foodball(const Coordinates& coordinates);
+    explicit Foodball(const Coordinates& coordinates) : AbstractBall(coordinates, DIAMETER)
+    {}
+
     ~Foodball() override = default;
 
     bool operator<(const Foodball& other) const

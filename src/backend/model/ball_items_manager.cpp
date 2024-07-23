@@ -47,3 +47,29 @@ void BallItemsManager::createPowerballs()
         powerballs_.emplace(powerballPosition);
     }
 }
+
+void BallItemsManager::hideAllBalls()
+{
+    std::for_each(foodballs_.begin(), foodballs_.end(), [](const QGraphicsItem& item)
+    {
+        const_cast<QGraphicsItem&>(item).hide();
+    });
+
+    std::for_each(powerballs_.begin(), powerballs_.end(), [](const QGraphicsItem& item)
+    {
+        const_cast<QGraphicsItem&>(item).hide();
+    });
+}
+
+void BallItemsManager::showAllBalls()
+{
+    std::for_each(foodballs_.begin(), foodballs_.end(), [](const QGraphicsItem& item)
+    {
+        const_cast<QGraphicsItem&>(item).show();
+    });
+
+    std::for_each(powerballs_.begin(), powerballs_.end(), [](const QGraphicsItem& item)
+    {
+        const_cast<QGraphicsItem&>(item).show();
+    });
+}

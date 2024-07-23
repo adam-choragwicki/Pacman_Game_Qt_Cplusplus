@@ -130,8 +130,15 @@ void GameManager::endGame(GameResult gameResult)
     shouldDrawBackground_ = false;
     gameState_ = GameState::STOPPED;
 
-    gameResult_ = gameResult;
+    model_.getPacman().hide();
+    model_.getBlueGhost().hide();
+    model_.getOrangeGhost().hide();
+    model_.getPurpleGhost().hide();
+    model_.getRedGhost().hide();
 
+    model_.getBallItemsManager().hideAllBalls();
+
+    gameResult_ = gameResult;
     gameLoop_->stop();
 }
 
@@ -175,6 +182,14 @@ void GameManager::prepareGameToStart()
 {
     spdlog::debug("Prepare game to start");
     model_.reset();
+
+    model_.getPacman().show();
+    model_.getBlueGhost().show();
+    model_.getOrangeGhost().show();
+    model_.getPurpleGhost().show();
+    model_.getRedGhost().show();
+
+    model_.getBallItemsManager().showAllBalls();
 
     gameState_ = GameState::READY_TO_START;
 }
