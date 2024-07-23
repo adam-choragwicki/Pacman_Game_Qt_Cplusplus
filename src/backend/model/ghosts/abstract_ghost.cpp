@@ -7,20 +7,11 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
 {
     ghostTimingManager_ = new GhostTimingManager(moveOutOfTheStartingBoxTimeout);
 
-    canMoveAgain_ = true;
-
     MovableCharacter::reset();
     scaredState_ = ScaredState::NO_SCARED;
 
     movementTimer_.setInterval(Config::Timing::MovableCharacter::NORMAL_SPEED);
     movementTimer_.setSingleShot(true);
-    connect(&movementTimer_, &QTimer::timeout, this, &AbstractGhost::resetCanMoveAgain);
-
-    //    connect(ghostTimingManager_, &GhostTimingManager::changeToScaredWhite, this, &AbstractGhost::setScaredWhite);
-    //    connect(ghostTimingManager_, &GhostTimingManager::changeToNoScared, this, &AbstractGhost::resetScaredState);
-
-    //    connect(ghostTimingManager_, &GhostTimingManager::changeToScaredWhite, this, &AbstractGhost::setScaredWhite);
-    //    connect(ghostTimingManager_, &GhostTimingManager::changeToNoScared, this, &AbstractGhost::resetScaredState);
 }
 
 AbstractGhost::~AbstractGhost() = default;
@@ -166,11 +157,6 @@ void AbstractGhost::loadImages(const std::array<std::string, 12>& imagesUrls)
     {
         throw std::runtime_error("Error, cannot load ghost images");
     }
-}
-
-void AbstractGhost::resetCanMoveAgain()
-{
-    canMoveAgain_ = true;
 }
 
 void AbstractGhost::setScared()
