@@ -61,6 +61,8 @@ void Model::reset()
     purpleGhost_->reset();
     redGhost_->reset();
 
+    scoreManager_->resetScore();
+
     spdlog::debug("Items on scene after reset: {}", scene_->items().size());
 }
 
