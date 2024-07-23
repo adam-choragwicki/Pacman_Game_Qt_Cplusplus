@@ -1,6 +1,5 @@
 #pragma once
 
-#include "moving_object.h"
 #include "movable_character.h"
 
 class GhostTimingManager;

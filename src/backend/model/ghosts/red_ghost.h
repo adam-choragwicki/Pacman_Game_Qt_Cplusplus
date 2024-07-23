@@ -5,5 +5,5 @@
 class RedGhost : public AbstractGhost
 {
 public:
-    explicit RedGhost();
+    RedGhost();
 };

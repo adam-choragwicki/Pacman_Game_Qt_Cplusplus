@@ -5,5 +5,5 @@
 class PurpleGhost : public AbstractGhost
 {
 public:
-    explicit PurpleGhost();
+    PurpleGhost();
 };

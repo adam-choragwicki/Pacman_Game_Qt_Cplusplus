@@ -17,11 +17,6 @@ public:
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
-    //    QRectF boundingRect() const override;
-
-    //    [[nodiscard]] const Coordinates& getCoordinates() const
-    //    { return coordinates_; }
-
     bool operator<(const AbstractBall& other) const;
 
 protected:
@@ -30,8 +25,6 @@ protected:
     const int diameter_;
 
 private:
-    const Coordinates coordinates_;
-
     inline static int currentIdCounter = 0;
 
     int id_;
