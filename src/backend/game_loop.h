@@ -5,7 +5,6 @@
 class Model;
 class QTimer;
 class QGraphicsScene;
-class MovingObject;
 
 class AbstractGhost;
 

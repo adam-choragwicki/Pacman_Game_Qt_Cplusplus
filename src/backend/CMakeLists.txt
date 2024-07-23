@@ -20,7 +20,6 @@ set(SOURCE_FILES
         common.h
         movable_character.h movable_character.cpp
         path_points.h path_points.cpp
-        log_manager.h
         coordinates.h coordinates.cpp
         score_manager.h
         collision_manager.cpp collision_manager.h
@@ -35,8 +34,6 @@ set(SOURCE_FILES
         model/balls/abstract_ball.cpp model/balls/abstract_ball.h
         model/balls/foodball.h
         model/balls/powerball.h
-
-        moving_object.cpp moving_object.h
 
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h

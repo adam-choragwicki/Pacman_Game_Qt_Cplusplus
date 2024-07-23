@@ -15,9 +15,6 @@ public:
 protected:
     bool drawRect_{};
 
-    int paintOffsetX_{};
-    int paintOffsetY_{};
-
     QRectF rect_;
     QPen rectPen_;
 

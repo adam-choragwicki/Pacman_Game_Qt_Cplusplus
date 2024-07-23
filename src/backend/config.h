@@ -23,7 +23,6 @@ namespace Config
 
         namespace Ghost
         {
-            const auto REDUCED_SPEED = 50ms;
             const auto SCARED_BLUE_TIME = 1s;
             const auto SCARED_WHITE_TIME = 1s;
         }
