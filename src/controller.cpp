@@ -19,6 +19,8 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
 
     subscribeToKeyEvents();
     initializeFrontendEvents();
+
+    gameManager_->prepareGameToStart();
 }
 
 void Controller::subscribeToKeyEvents()

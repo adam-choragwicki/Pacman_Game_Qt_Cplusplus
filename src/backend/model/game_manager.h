@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include "common.h"
+
 class Model;
 
 class GameLoop;
@@ -24,7 +25,7 @@ public:
     [[nodiscard]] bool isStopped() const;
     void togglePause();
 
-    [[nodiscard]] const bool& getShouldDrawBackground() const;
+    void prepareGameToStart();
 
     void setGameLoop(GameLoop* gameLoop)
     { gameLoop_ = gameLoop; }
@@ -38,8 +39,6 @@ public:
 private:
     void startGame();
 
-    bool shouldDrawBackground_{};
-
     enum class GameState
     {
         READY_TO_START, RUNNING, PAUSED, STOPPED
@@ -48,7 +47,6 @@ private:
     GameLoop* gameLoop_{};
 
     GameResult gameResult_ = GameResult::NO_RESULT_YET;
-    void prepareGameToStart();
 
     Model& model_;
 };

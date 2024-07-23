@@ -1,7 +1,6 @@
 #include "model/game_manager.h"
 #include "spdlog/spdlog.h"
 #include "model.h"
-#include "game_loop.h"
 
 //STATE TRANSITIONS
 
@@ -59,7 +58,6 @@
 GameManager::GameManager(Model& model) : model_(model)
 {
     gameState_ = GameState::READY_TO_START;
-    shouldDrawBackground_ = true;
 }
 
 void GameManager::processStartOrRestartGameRequest()
@@ -101,8 +99,6 @@ void GameManager::startGame()
     gameState_ = GameState::RUNNING;
 
     gameLoop_->start();
-
-    shouldDrawBackground_ = true;
 }
 
 void GameManager::togglePause()
@@ -127,7 +123,6 @@ void GameManager::togglePause()
 
 void GameManager::endGame(GameResult gameResult)
 {
-    shouldDrawBackground_ = false;
     gameState_ = GameState::STOPPED;
 
     model_.getPacman().hide();
@@ -136,10 +131,14 @@ void GameManager::endGame(GameResult gameResult)
     model_.getPurpleGhost().hide();
     model_.getRedGhost().hide();
 
+    model_.getScoreDisplay()->hide();
+
     model_.getBallItemsManager().hideAllBalls();
 
     gameResult_ = gameResult;
     gameLoop_->stop();
+
+    model_.getWhatToDrawManager()->drawBackground_ = false;
 }
 
 bool GameManager::isRunning() const
@@ -162,22 +161,6 @@ bool GameManager::isStopped() const
     return gameState_ == GameState::STOPPED;
 }
 
-const bool& GameManager::getShouldDrawBackground() const
-{
-    return shouldDrawBackground_;
-
-    //    if(gameStateManager_->isStopped())
-    //    {
-    //        shouldDrawBackground_ = false;
-    ////        return false;
-    //    }
-    //    else
-    //    {
-    //        shouldDrawBackground_ = true;
-    ////        return true;
-    //    }
-}
-
 void GameManager::prepareGameToStart()
 {
     spdlog::debug("Prepare game to start");
@@ -189,7 +172,11 @@ void GameManager::prepareGameToStart()
     model_.getPurpleGhost().show();
     model_.getRedGhost().show();
 
+    model_.getScoreDisplay()->show();
+
     model_.getBallItemsManager().showAllBalls();
+
+    model_.getWhatToDrawManager()->drawBackground_ = true;
 
     gameState_ = GameState::READY_TO_START;
 }

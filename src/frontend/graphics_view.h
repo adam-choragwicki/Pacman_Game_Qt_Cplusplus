@@ -3,6 +3,7 @@
 #include <QGraphicsView>
 #include <QTimer>
 #include <QElapsedTimer>
+#include "model/what_to_draw_manager.h"
 
 class QTimer;
 
@@ -15,7 +16,7 @@ signals:
     void mouseLeftButtonClicked(const QPointF& mousePosition);
 
 public:
-    explicit GraphicsView(QGraphicsScene* scene, const bool& drawBackground, QWidget* parent = nullptr);
+    explicit GraphicsView(QGraphicsScene* scene, const WhatToDrawManager& whatToDrawManager, QWidget* parent = nullptr);
 
     void drawBackground(QPainter* painter, const QRectF& rect) override;
     void drawForeground(QPainter* painter, const QRectF& rect) override;
@@ -39,5 +40,5 @@ private:
 
     std::unique_ptr<QPixmap> arenaPixmap_;
 
-    const bool& drawBackground_;
+    const WhatToDrawManager& whatToDrawManager_;
 };

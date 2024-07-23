@@ -42,6 +42,8 @@ Model::Model()
 
     ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
 
+    whatToDrawManager_ = std::make_unique<WhatToDrawManager>();
+
     addItemsToScene();
 
     spdlog::debug("Items on scene: {}", scene_->items().size());

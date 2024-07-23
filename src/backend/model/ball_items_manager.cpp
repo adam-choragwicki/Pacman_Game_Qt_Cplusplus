@@ -5,9 +5,7 @@
 #include "spdlog/spdlog.h"
 
 BallItemsManager::BallItemsManager(const PathPoints& pathPoints) : pathPoints_(pathPoints)
-{
-    createBalls();
-}
+{}
 
 void BallItemsManager::reset()
 {

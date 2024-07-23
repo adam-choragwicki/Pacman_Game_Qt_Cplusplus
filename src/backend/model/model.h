@@ -21,6 +21,7 @@
 #include "score_display.h"
 
 #include "game_loop.h"
+#include "what_to_draw_manager.h"
 
 #include <map>
 #include <memory>
@@ -86,6 +87,12 @@ public:
     [[nodiscard]] ScreenTextDisplay* getScreenTextDisplay() const
     { return screenTextDisplay_.get(); }
 
+    [[nodiscard]] WhatToDrawManager* getWhatToDrawManager() const
+    { return whatToDrawManager_.get(); }
+
+    [[nodiscard]] ScoreDisplay* getScoreDisplay() const
+    { return scoreDisplay_.get(); }
+
 private:
     void addItemsToScene();
     void addBallsToScene();
@@ -109,4 +116,6 @@ private:
     std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
 
     std::unique_ptr<BallItemsManager> ballItemsManager_;
+
+    std::unique_ptr<WhatToDrawManager> whatToDrawManager_;
 };
