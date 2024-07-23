@@ -56,12 +56,12 @@ void GameLoop::execute()
     ghostMovementHandler(purpleGhost_);
     ghostMovementHandler(redGhost_);
 
-    if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_.getRect(), ballItemsManager_.getFoodballs()))
+    if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_, ballItemsManager_.getFoodballs()))
     {
         scoreManager_.increaseScoreForEatingFoodball();
     }
 
-    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_.getRect(), ballItemsManager_.getPowerballs()))
+    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_, ballItemsManager_.getPowerballs()))
     {
         scoreManager_.increaseScoreForEatingPowerball();
 
@@ -73,7 +73,7 @@ void GameLoop::execute()
 
     for(AbstractGhost* ghost : ghosts_)
     {
-        if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_.getRect(), ghost->getRect()))
+        if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_, *ghost))
         {
             if(!ghost->isScared())
             {

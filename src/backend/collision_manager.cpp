@@ -1,12 +1,13 @@
 #include "collision_manager.h"
 #include "model/balls/foodball.h"
 #include "model/balls/powerball.h"
+#include "model/ghosts/abstract_ghost.h"
 
-bool CollisionManager::checkAndProcessPacmanCollisionWithFoodball(const QRect& pacmanRect, std::set<Foodball>& foodballs)
+bool CollisionManager::checkAndProcessPacmanCollisionWithFoodball(const QGraphicsItem& pacman, std::set<Foodball>& foodballs)
 {
     for(const Foodball& foodball : foodballs)
     {
-        if(pacmanRect.intersects(foodball.getRect()))
+        if(pacman.collidesWithItem(&foodball))
         {
             foodballs.erase(foodball);
             return true;
@@ -16,11 +17,11 @@ bool CollisionManager::checkAndProcessPacmanCollisionWithFoodball(const QRect& p
     return false;
 }
 
-bool CollisionManager::checkAndProcessPacmanCollisionWithPowerball(const QRect& pacmanRect, std::set<Powerball>& powerballs)
+bool CollisionManager::checkAndProcessPacmanCollisionWithPowerball(const QGraphicsItem& pacman, std::set<Powerball>& powerballs)
 {
     for(const Powerball& powerball : powerballs)
     {
-        if(pacmanRect.intersects(powerball.getRect()))
+        if(pacman.collidesWithItem(&powerball))
         {
             powerballs.erase(powerball);
             return true;
@@ -30,7 +31,7 @@ bool CollisionManager::checkAndProcessPacmanCollisionWithPowerball(const QRect& 
     return false;
 }
 
-bool CollisionManager::checkAndProcessPacmanCollisionWithGhost(const QRect& pacmanRect, const QRect& ghostRect)
+bool CollisionManager::checkAndProcessPacmanCollisionWithGhost(const QGraphicsItem& pacman, const QGraphicsItem& ghost)
 {
-    return pacmanRect.intersects(ghostRect);
+    return pacman.collidesWithItem(&ghost);
 }
