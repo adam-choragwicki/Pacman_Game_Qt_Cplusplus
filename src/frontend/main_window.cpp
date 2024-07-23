@@ -22,8 +22,6 @@ MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)
 
     setPalette(QPalette(Qt::black));
 
-    //    gameArena_.setFixedSize(614, 680);
-
     setCentralWidget(graphicsView_);
 
     centerOnPrimaryScreen();

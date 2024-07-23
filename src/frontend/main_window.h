@@ -25,7 +25,6 @@ private:
     void centerOnPrimaryScreen();
 
     const Model& model_;
-//    GameArena gameArena_;
 
     GraphicsView* graphicsView_{};
 };

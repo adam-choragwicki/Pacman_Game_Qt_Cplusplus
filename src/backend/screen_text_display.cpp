@@ -38,7 +38,7 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     }
     else if(isRunning)
     {
-        //draw nothing
+        /*Draw nothing*/
     }
     else if(isStopped)
     {

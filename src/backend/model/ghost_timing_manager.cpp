@@ -32,19 +32,6 @@ void GhostTimingManager::startScaredWhiteTimer()
     scaredWhiteStateTimer_.start();
 }
 
-void GhostTimingManager::changeToScaredWhite()
-{
-    //    ghost_.setScaredWhiteState();
-    startScaredWhiteTimer();
-}
-
-void GhostTimingManager::changeToNoScared()
-{
-    //    ghost_.resetScaredState();
-    //    ghost_.setSlowedDown(false);
-    //    resetSpeed();
-}
-
 void GhostTimingManager::initializeTimers(const std::chrono::seconds& moveOutOfTheStartingBoxTimeout)
 {
     scaredBlueStateTimer_.setSingleShot(true);
@@ -60,7 +47,4 @@ void GhostTimingManager::initializeTimers(const std::chrono::seconds& moveOutOfT
                                               {
                                                   timeToLeaveStartingBox_ = true;
                                               });
-
-    connect(&scaredBlueStateTimer_, &QTimer::timeout, this, &GhostTimingManager::changeToScaredWhite);
-    connect(&scaredWhiteStateTimer_, &QTimer::timeout, this, &GhostTimingManager::changeToNoScared);
 }

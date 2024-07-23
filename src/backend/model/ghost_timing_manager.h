@@ -25,10 +25,6 @@ public:
     [[nodiscard]] const QTimer& getScaredWhiteStateTimer() const
     { return scaredWhiteStateTimer_; }
 
-public slots:
-    void changeToScaredWhite();
-    void changeToNoScared();
-
 private:
     QTimer scaredBlueStateTimer_;
     QTimer scaredWhiteStateTimer_;

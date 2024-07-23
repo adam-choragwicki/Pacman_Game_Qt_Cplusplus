@@ -43,7 +43,6 @@ void GraphicsView::drawForeground(QPainter* painter, const QRectF& rect)
         painter->setPen(fpsCounterPen_);
         painter->setFont(fpsCounterFont_);
 
-        // Get the viewport's top-left coordinates
         const QPointF topLeft = mapToScene(viewport()->rect().topLeft());
         painter->drawText(topLeft + QPointF(10, 20), QString("FPS: %1").arg(currentFPS_));
     }

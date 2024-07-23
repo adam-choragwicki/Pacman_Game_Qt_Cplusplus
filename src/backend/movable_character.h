@@ -20,9 +20,6 @@ public:
 
     virtual void reset();
 
-    //    [[nodiscard]] Coordinates getCoordinates() const
-    //    { return Coordinates{rect_.center().x(), rect_.center().y()}; }
-
     [[nodiscard]] Coordinates getCoordinates() const
     { return Coordinates{static_cast<int>(sceneBoundingRect().center().x()), static_cast<int>(sceneBoundingRect().center().y())}; }
 
