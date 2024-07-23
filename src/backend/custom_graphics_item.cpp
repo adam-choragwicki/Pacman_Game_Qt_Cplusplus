@@ -4,7 +4,6 @@
 
 CustomGraphicsItem::CustomGraphicsItem(const QRectF& rect) : rect_(rect), id_(IdGenerator::generateId())
 {
-    pen_ = Qt::NoPen;
     rectPen_ = QPen(Qt::red, 1);
 }
 

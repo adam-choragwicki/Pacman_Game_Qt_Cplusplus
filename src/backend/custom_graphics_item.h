@@ -15,8 +15,10 @@ public:
 protected:
     bool drawRect_{};
 
+    int paintOffsetX_{};
+    int paintOffsetY_{};
+
     QRectF rect_;
-    QPen pen_;
     QPen rectPen_;
 
     const uint id_;

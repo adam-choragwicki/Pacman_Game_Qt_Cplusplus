@@ -2,10 +2,9 @@
 #include "config.h"
 #include <QtGui/QPainter>
 
-AbstractBall::AbstractBall(const Coordinates& coordinates, int diameter) : CustomGraphicsItem(QRectF(0, 0, diameter, diameter))
+AbstractBall::AbstractBall(const Coordinates& coordinates, int diameter, int offsetX, int offsetY) : CustomGraphicsItem(QRectF(offsetX, offsetY, diameter, diameter))
 {
     setPos(coordinates.x_, coordinates.y_);
-
     drawRect_ = true;
 }
 

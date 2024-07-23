@@ -5,7 +5,7 @@
 class Powerball : public AbstractBall
 {
 public:
-    explicit Powerball(const Coordinates& coordinates) : AbstractBall(coordinates, DIAMETER)
+    explicit Powerball(const Coordinates& coordinates) : AbstractBall(coordinates, DIAMETER, OFFSET_X, OFFSET_Y)
     {}
 
     ~Powerball() override = default;

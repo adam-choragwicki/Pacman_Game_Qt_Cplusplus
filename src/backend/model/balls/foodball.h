@@ -5,7 +5,7 @@
 class Foodball : public AbstractBall
 {
 public:
-    explicit Foodball(const Coordinates& coordinates) : AbstractBall(coordinates, DIAMETER)
+    explicit Foodball(const Coordinates& coordinates) : AbstractBall(coordinates, DIAMETER, OFFSET_X, OFFSET_Y)
     {}
 
     ~Foodball() override = default;

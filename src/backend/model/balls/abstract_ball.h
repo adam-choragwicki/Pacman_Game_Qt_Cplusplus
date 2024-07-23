@@ -7,7 +7,7 @@ class Coordinates;
 class AbstractBall : public CustomGraphicsItem
 {
 public:
-    explicit AbstractBall(const Coordinates& coordinates, int diameter);
+    explicit AbstractBall(const Coordinates& coordinates, int diameter, int offsetX, int offsetY);
     ~AbstractBall() override = 0;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
