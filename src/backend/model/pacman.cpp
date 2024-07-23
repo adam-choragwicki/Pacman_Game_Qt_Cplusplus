@@ -3,12 +3,13 @@
 #include <QtGui/QPainter>
 
 Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN)
-
-// : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN), MovingObject(QRectF(0, 0, 30, 30))
 {
     loadImages(PacmanImages::IMAGES_URLS);
 
 //    setPos(Config::StartingCoordinates::PACMAN.x_, Config::StartingCoordinates::PACMAN.y_);
+//    setPos(STARTING_COORDINATES.x_ - MovableCharacter::DIAMETER / 2, STARTING_COORDINATES.y_ - DIAMETER / 2);
+
+//            return {static_cast<qreal>(STARTING_COORDINATES.x_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.x_ + DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ + DIAMETER / 2)};
 
     animationState_ = 0;
     direction_ = Direction::LEFT;
@@ -17,10 +18,10 @@ Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config:
 void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     painter->setRenderHint(QPainter::Antialiasing);
-//    painter->setPen(pen_);
+    //    painter->setPen(pen_);
     painter->setBrush(Qt::red);
 
-    const QRect boundingRect = MovableCharacter::rect_;
+    const QRect boundingRect = MovableCharacter::boundingRect().toRect();
     const int animationState = animationState_;
 
     switch(direction_)

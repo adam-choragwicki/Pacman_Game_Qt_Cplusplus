@@ -60,7 +60,7 @@ void AbstractGhost::advanceAnimation()
 
 void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    const QRect boundingRect = MovableCharacter::rect_;
+    const QRect boundingRect = MovableCharacter::boundingRect().toRect();
     const int animationState = animationState_;
 
     if(!isScared())

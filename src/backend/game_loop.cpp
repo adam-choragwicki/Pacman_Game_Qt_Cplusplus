@@ -56,36 +56,36 @@ void GameLoop::execute()
     ghostMovementHandler(purpleGhost_);
     ghostMovementHandler(redGhost_);
 
-    if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_.getRect(), ballItemsManager_.getFoodballs()))
-    {
-        scoreManager_.increaseScoreForEatingFoodball();
-    }
+//    if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_.getRect(), ballItemsManager_.getFoodballs()))
+//    {
+//        scoreManager_.increaseScoreForEatingFoodball();
+//    }
 
-    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_.getRect(), ballItemsManager_.getPowerballs()))
-    {
-        scoreManager_.increaseScoreForEatingPowerball();
+//    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_.getRect(), ballItemsManager_.getPowerballs()))
+//    {
+//        scoreManager_.increaseScoreForEatingPowerball();
+//
+//        for(AbstractGhost* ghost : ghosts_)
+//        {
+//            ghost->setScared();
+//        }
+//    }
 
-        for(AbstractGhost* ghost : ghosts_)
-        {
-            ghost->setScared();
-        }
-    }
-
-    for(AbstractGhost* ghost : ghosts_)
-    {
-        if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_.getRect(), ghost->getRect()))
-        {
-            if(!ghost->isScared())
-            {
-                emit endGame(GameResult::LOST);
-            }
-            else
-            {
-                scoreManager_.increaseScoreForEatingGhost();
-                ghost->reset();
-            }
-        }
-    }
+//    for(AbstractGhost* ghost : ghosts_)
+//    {
+//        if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_.getRect(), ghost->getRect()))
+//        {
+//            if(!ghost->isScared())
+//            {
+//                emit endGame(GameResult::LOST);
+//            }
+//            else
+//            {
+//                scoreManager_.increaseScoreForEatingGhost();
+//                ghost->reset();
+//            }
+//        }
+//    }
 
     if(ballItemsManager_.getRemainingFoodballsCount() == 0)
     {

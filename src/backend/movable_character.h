@@ -20,8 +20,11 @@ public:
 
     virtual void reset();
 
+//    [[nodiscard]] Coordinates getCoordinates() const
+//    { return Coordinates{rect_.center().x(), rect_.center().y()}; }
+
     [[nodiscard]] Coordinates getCoordinates() const
-    { return Coordinates{rect_.center().x(), rect_.center().y()}; }
+    { return Coordinates{static_cast<int>(sceneBoundingRect().center().x()), static_cast<int>(sceneBoundingRect().center().y())}; }
 
     void setNextDirection(Direction direction)
     { nextDirection_ = direction; }
@@ -54,7 +57,11 @@ public:
     void moveTo(const Coordinates& coordinates);
 
     [[nodiscard]] QRectF boundingRect() const override
-    { return {0, 0, 30, 30}; }
+    {
+        //        return {static_cast<qreal>(STARTING_COORDINATES.x_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.x_ + DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ + DIAMETER / 2)};
+
+        return {0, 0, 30, 30};
+    }
 
 protected:
     int animationState_{};
