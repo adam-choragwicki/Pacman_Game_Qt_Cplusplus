@@ -22,9 +22,6 @@ public:
     //    [[nodiscard]] const Coordinates& getCoordinates() const
     //    { return coordinates_; }
 
-    [[nodiscard]] QRect getRect() const
-    { return rect_; }
-
     bool operator<(const AbstractBall& other) const;
 
 protected:

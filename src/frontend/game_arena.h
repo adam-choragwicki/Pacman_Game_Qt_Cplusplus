@@ -2,7 +2,6 @@
 //
 //#include "model/model.h"
 //
-//#include "pacman_frontend.h"
 //#include "ghosts_frontends/blue_ghost_frontend.h"
 //#include "ghosts_frontends/orange_ghost_frontend.h"
 //#include "ghosts_frontends/purple_ghost_frontend.h"

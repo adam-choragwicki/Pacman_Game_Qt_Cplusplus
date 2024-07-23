@@ -41,9 +41,6 @@ public:
     void setAnimationState(int animationState)
     { animationState_ = animationState; }
 
-    [[nodiscard]] QRect getRect() const
-    { return rect_; }
-
     [[nodiscard]] bool isMoving() const
     { return moving_; }
 
