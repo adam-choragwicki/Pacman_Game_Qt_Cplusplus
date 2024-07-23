@@ -7,10 +7,8 @@ set(SOURCE_FILES
 add_subdirectory(backend)
 add_subdirectory(frontend)
 
-set(RESOURCE_FILES_DIR ${PROJECT_ROOT}/src/frontend/resource_files)
-
 # Create the main executable
-add_executable(${PROJECT_NAME} WIN32 ${SOURCE_FILES} ${RESOURCE_FILES_DIR}/images.qrc)
+add_executable(${PROJECT_NAME} WIN32 ${SOURCE_FILES} ${ASSETS_DIR}/assets.qrc)
 
 # Include directories for backend and spdlog
 target_include_directories(${PROJECT_NAME} PRIVATE ${BACKEND_DIR} ${PROJECT_ROOT}/libs/spdlog/include)

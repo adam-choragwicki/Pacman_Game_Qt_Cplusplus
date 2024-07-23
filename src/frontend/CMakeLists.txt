@@ -1,7 +1,6 @@
 set(SOURCE_FILES
         main_window.h main_window.cpp
-        graphics_view.h graphics_view.cpp
-        images_urls.h)
+        graphics_view.h graphics_view.cpp)
 
 # Create the frontend library
 add_library(lib${PROJECT_NAME}Frontend ${SOURCE_FILES})

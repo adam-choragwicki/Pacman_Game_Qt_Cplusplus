@@ -14,6 +14,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets REQUIRED)
 
 set(PROJECT_ROOT ${CMAKE_SOURCE_DIR})
 set(BACKEND_DIR ${PROJECT_ROOT}/src/backend)
+set(ASSETS_DIR ${PROJECT_ROOT}/assets)
 
 add_subdirectory(libs/spdlog)
 

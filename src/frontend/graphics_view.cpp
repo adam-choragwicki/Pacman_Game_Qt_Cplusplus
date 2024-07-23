@@ -5,7 +5,7 @@
 
 GraphicsView::GraphicsView(QGraphicsScene* scene, const WhatToDrawManager& whatToDrawManager, QWidget* parent) : QGraphicsView(scene, parent), whatToDrawManager_(whatToDrawManager)
 {
-    arenaPixmap_ = std::make_unique<QPixmap>(":/images/map.png");
+    arenaPixmap_ = std::make_unique<QPixmap>(":/map.png");
 
     setRenderHint(QPainter::Antialiasing, true);
     setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
