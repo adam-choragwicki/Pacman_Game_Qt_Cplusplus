@@ -17,7 +17,6 @@ void MovableCharacter::reset()
     nextDirection_ = direction_;
 
     setPos(STARTING_COORDINATES.x_ - DIAMETER / 2, STARTING_COORDINATES.y_ - DIAMETER / 2);
-
     //    rect_.setCoords(STARTING_COORDINATES.x_ - DIAMETER / 2, STARTING_COORDINATES.y_ - DIAMETER / 2, STARTING_COORDINATES.x_ + DIAMETER / 2, STARTING_COORDINATES.y_ + DIAMETER / 2);
 }
 
@@ -29,5 +28,5 @@ void MovableCharacter::moveCharacterBy(const std::pair<int, int>& offset)
 
 void MovableCharacter::moveTo(const Coordinates& coordinates)
 {
-    rect_.moveCenter(QPoint(coordinates.x_, coordinates.y_));
+    setPos(coordinates.x_ - DIAMETER / 2, coordinates.y_ - DIAMETER / 2);
 }

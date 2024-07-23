@@ -27,7 +27,7 @@ void GraphicsView::drawBackground(QPainter* painter, const QRectF& rect)
 
     if(drawBackground_)
     {
-//        painter->drawPixmap(0, 0, 614, 740, *arenaPixmap_);
+        painter->drawPixmap(0, 0, 614, 740, *arenaPixmap_);
     }
 }
 

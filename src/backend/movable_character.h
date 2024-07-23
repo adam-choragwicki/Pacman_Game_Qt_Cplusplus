@@ -59,7 +59,6 @@ public:
     [[nodiscard]] QRectF boundingRect() const override
     {
         //        return {static_cast<qreal>(STARTING_COORDINATES.x_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ - DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.x_ + DIAMETER / 2), static_cast<qreal>(STARTING_COORDINATES.y_ + DIAMETER / 2)};
-
         return {0, 0, 30, 30};
     }
 
