@@ -1,9 +1,7 @@
 #pragma once
 
 #include "coordinates.h"
-
 #include <set>
-#include <array>
 
 class PathPoints
 {

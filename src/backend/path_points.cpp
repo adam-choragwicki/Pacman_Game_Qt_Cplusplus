@@ -1,4 +1,5 @@
 #include "path_points.h"
+#include <array>
 
 PathPoints::PathPoints() : PATH_POINTS(generatePathPoints()), POWERBALL_POSITIONS(generatePowerballPositions()), FOODBALL_POSITIONS(generateFoodballPositions())
 {}
