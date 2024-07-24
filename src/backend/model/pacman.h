@@ -1,7 +1,6 @@
 #pragma once
 
 #include "movable_character.h"
-#include "images_urls.h"
 
 class Pacman : public MovableCharacter
 {
