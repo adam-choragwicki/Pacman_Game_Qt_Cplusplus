@@ -30,19 +30,24 @@ public:
     { return ghostTimingManager_; }
 
 protected:
-    void loadImages(const std::array<std::string, 12>& imagesUrls);
+    void loadImages(const std::array<std::string, 8>& imagesUrls);
 
     bool isSlowedDown_{};
 
 private:
+    void loadStaticPixmaps();
+
     enum class ScaredState
     {
         NO_SCARED, SCARED_BLUE, SCARED_WHITE
     } scaredState_;
 
     QPixmap left1Pixmap_, left2Pixmap_, up1Pixmap_, up2Pixmap_, down1Pixmap_, down2Pixmap_, right1Pixmap_, right2Pixmap_;
-    QPixmap scaredBlue1Pixmap_, scaredBlue2Pixmap_;
-    QPixmap scaredWhite1Pixmap_, scaredWhite2Pixmap_;
+
+    inline static std::unique_ptr<QPixmap> scaredBlue1Pixmap_, scaredBlue2Pixmap_;
+    inline static std::unique_ptr<QPixmap> scaredWhite1Pixmap_, scaredWhite2Pixmap_;
 
     GhostTimingManager* ghostTimingManager_{};
+
+    inline static bool staticPixmapsInitialized_{};
 };

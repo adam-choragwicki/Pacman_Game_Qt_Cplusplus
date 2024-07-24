@@ -5,6 +5,12 @@
 
 AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout) : MovableCharacter(coordinates, initialDirection)
 {
+    if(!staticPixmapsInitialized_)
+    {
+        loadStaticPixmaps();
+        staticPixmapsInitialized_ = true;
+    }
+
     ghostTimingManager_ = new GhostTimingManager(moveOutOfTheStartingBoxTimeout);
 
     MovableCharacter::reset();
@@ -111,45 +117,39 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     {
         if(animationState == 0)
         {
-            painter->drawPixmap(boundingRect, scaredBlue1Pixmap_);
+            painter->drawPixmap(boundingRect, *scaredBlue1Pixmap_);
         }
         else
         {
-            painter->drawPixmap(boundingRect, scaredBlue2Pixmap_);
+            painter->drawPixmap(boundingRect, *scaredBlue2Pixmap_);
         }
     }
     else if(isScaredWhite())
     {
         if(animationState == 0)
         {
-            painter->drawPixmap(boundingRect, scaredWhite1Pixmap_);
+            painter->drawPixmap(boundingRect, *scaredWhite1Pixmap_);
         }
         else
         {
-            painter->drawPixmap(boundingRect, scaredWhite2Pixmap_);
+            painter->drawPixmap(boundingRect, *scaredWhite2Pixmap_);
         }
     }
 }
 
-void AbstractGhost::loadImages(const std::array<std::string, 12>& imagesUrls)
+void AbstractGhost::loadImages(const std::array<std::string, 8>& imagesUrls)
 {
-    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&left1Pixmap_,        imagesUrls.at(0)},
-                                                              {&left2Pixmap_,        imagesUrls.at(1)},
+    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&left1Pixmap_,  imagesUrls.at(0)},
+                                                              {&left2Pixmap_,  imagesUrls.at(1)},
 
-                                                              {&right1Pixmap_,       imagesUrls.at(2)},
-                                                              {&right2Pixmap_,       imagesUrls.at(3)},
+                                                              {&right1Pixmap_, imagesUrls.at(2)},
+                                                              {&right2Pixmap_, imagesUrls.at(3)},
 
-                                                              {&up1Pixmap_,          imagesUrls.at(4)},
-                                                              {&up2Pixmap_,          imagesUrls.at(5)},
+                                                              {&up1Pixmap_,    imagesUrls.at(4)},
+                                                              {&up2Pixmap_,    imagesUrls.at(5)},
 
-                                                              {&down1Pixmap_,        imagesUrls.at(6)},
-                                                              {&down2Pixmap_,        imagesUrls.at(7)},
-
-                                                              {&scaredBlue1Pixmap_,  imagesUrls.at(8)},
-                                                              {&scaredBlue2Pixmap_,  imagesUrls.at(9)},
-
-                                                              {&scaredWhite1Pixmap_, imagesUrls.at(10)},
-                                                              {&scaredWhite2Pixmap_, imagesUrls.at(11)}};
+                                                              {&down1Pixmap_,  imagesUrls.at(6)},
+                                                              {&down2Pixmap_,  imagesUrls.at(7)}};
 
     auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair)
     {
@@ -186,4 +186,28 @@ void AbstractGhost::setScared()
     });
 
     ghostTimingManager_->startScaredBlueTimer();
+}
+
+void AbstractGhost::loadStaticPixmaps()
+{
+    scaredBlue1Pixmap_ = std::make_unique<QPixmap>();
+    scaredBlue2Pixmap_ = std::make_unique<QPixmap>();
+    scaredWhite1Pixmap_ = std::make_unique<QPixmap>();
+    scaredWhite2Pixmap_ = std::make_unique<QPixmap>();
+
+    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair)
+    {
+        const auto&[pixmap, path] = pixmapToPathPair;
+        return pixmap->load(QString::fromStdString(path));
+    };
+
+    const std::map<QPixmap*, std::string> pixmapToPathMapping{{scaredBlue1Pixmap_.get(),  ":/ghost/ghost_scared_blue_1.png"},
+                                                              {scaredBlue2Pixmap_.get(),  ":/ghost/ghost_scared_blue_2.png"},
+                                                              {scaredWhite1Pixmap_.get(), ":/ghost/ghost_scared_white_1.png"},
+                                                              {scaredWhite2Pixmap_.get(), ":/ghost/ghost_scared_white_2.png"}};
+
+    if(!std::all_of(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), loadImage))
+    {
+        throw std::runtime_error("Error, cannot load ghost static images");
+    }
 }
