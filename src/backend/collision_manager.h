@@ -1,15 +1,15 @@
 #pragma once
 
 class QGraphicsItem;
-class Foodball;
-class Powerball;
+class StandardPellet;
+class PowerPellet;
 
 #include <set>
 
 class CollisionManager
 {
 public:
-    static bool checkAndProcessPacmanCollisionWithFoodball(const QGraphicsItem& pacman, std::set<Foodball>& foodballs);
-    static bool checkAndProcessPacmanCollisionWithPowerball(const QGraphicsItem& pacman, std::set<Powerball>& powerballs);
+    static bool checkAndProcessPacmanCollisionWithStandardPellet(const QGraphicsItem& pacman, std::set<StandardPellet>& standardPellets);
+    static bool checkAndProcessPacmanCollisionWithPowerPellet(const QGraphicsItem& pacman, std::set<PowerPellet>& powerPellets);
     static bool checkAndProcessPacmanCollisionWithGhost(const QGraphicsItem& pacman, const QGraphicsItem& ghost);
 };

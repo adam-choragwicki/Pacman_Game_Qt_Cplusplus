@@ -14,7 +14,7 @@ GameLoop::GameLoop(Model& model) :
         redGhost_(model_.getRedGhost()),
         ghostMovementManager_(model_.getGhostMovementManager()),
         scoreManager_(model_.getScoreManager()),
-        ballItemsManager_(model_.getBallItemsManager())
+        pelletsManager_(model_.getPelletsManager())
 {
     gameLoopTimer_ = new QTimer;
     connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
@@ -56,14 +56,14 @@ void GameLoop::execute()
     ghostMovementHandler(purpleGhost_);
     ghostMovementHandler(redGhost_);
 
-    if(CollisionManager::checkAndProcessPacmanCollisionWithFoodball(pacman_, ballItemsManager_.getFoodballs()))
+    if(CollisionManager::checkAndProcessPacmanCollisionWithStandardPellet(pacman_, pelletsManager_.getStandardPellets()))
     {
-        scoreManager_.increaseScoreForEatingFoodball();
+        scoreManager_.increaseScoreForEatingStandardPellet();
     }
 
-    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerball(pacman_, ballItemsManager_.getPowerballs()))
+    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerPellet(pacman_, pelletsManager_.getPowerPellets()))
     {
-        scoreManager_.increaseScoreForEatingPowerball();
+        scoreManager_.increaseScoreForEatingPowerPellet();
 
         for(AbstractGhost* ghost : ghosts_)
         {
@@ -87,7 +87,7 @@ void GameLoop::execute()
         }
     }
 
-    if(ballItemsManager_.getRemainingFoodballsCount() == 0)
+    if(pelletsManager_.getRemainingStandardPelletsCount() == 0)
     {
         emit endGame(GameResult::WIN);
     }

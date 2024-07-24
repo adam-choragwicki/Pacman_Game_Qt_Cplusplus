@@ -20,7 +20,7 @@ void GameManager::prepareGameToStart()
 
     model_.getScoreDisplay()->show();
 
-    model_.getBallItemsManager().showAllBalls();
+    model_.getPelletsManager().showAllPellets();
 
     model_.getWhatToDrawManager()->drawBackground_ = true;
     model_.getWhatToDrawManager()->drawFPSCounter_ = true;
@@ -58,7 +58,7 @@ void GameManager::endGame(GameResult gameResult)
 
     model_.getScoreDisplay()->hide();
 
-    model_.getBallItemsManager().hideAllBalls();
+    model_.getPelletsManager().hideAllPellets();
 
     gameResult_ = gameResult;
     gameLoop_->stop();
@@ -127,7 +127,7 @@ void GameManager::togglePause()
 //What is displayed:
 //Background
 //Characters
-//Balls
+//Pellets
 //Score display
 //Screen text press space to start
 
@@ -137,7 +137,7 @@ void GameManager::togglePause()
 //What is displayed:
 //Background
 //Characters
-//Balls
+//Pellets
 //Score display
 //NO SCREEN TEXT
 
@@ -146,7 +146,7 @@ void GameManager::togglePause()
 //What is displayed:
 //Background
 //Characters
-//Balls
+//Pellets
 //Score display
 //Screen text PAUSED
 
@@ -155,6 +155,6 @@ void GameManager::togglePause()
 //What is displayed:
 //NO BACKGROUND
 //NO CHARACTERS
-//NO BALLS
+//NO PELLETS
 //NO SCORE DISPLAY
 //Screen text Game over/Congratulations etc.

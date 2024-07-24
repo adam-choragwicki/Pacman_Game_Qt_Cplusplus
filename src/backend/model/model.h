@@ -1,7 +1,7 @@
 #pragma once
 
 #include "path_points.h"
-#include "ball_items_manager.h"
+#include "pellets_manager.h"
 #include "pacman.h"
 
 #include "model/ghosts/blue_ghost.h"
@@ -15,8 +15,8 @@
 #include "pacman_movement_manager.h"
 #include "ghost_movement_manager.h"
 
-#include "balls/foodball.h"
-#include "balls/powerball.h"
+#include "pellets/standard_pellet.h"
+#include "pellets/power_pellet.h"
 #include "score_manager.h"
 #include "score_display.h"
 
@@ -69,8 +69,8 @@ public:
     [[nodiscard]] ScoreManager& getScoreManager()
     { return *scoreManager_; }
 
-    [[nodiscard]] BallItemsManager& getBallItemsManager() const
-    { return *ballItemsManager_; }
+    [[nodiscard]] PelletsManager& getPelletsManager() const
+    { return *pelletsManager_; }
 
     [[nodiscard]] const PathPoints& getPathPoints() const
     { return *pathPoints_; }
@@ -95,7 +95,7 @@ public:
 
 private:
     void addItemsToScene();
-    void addBallsToScene();
+    void addPelletsToScene();
 
     std::unique_ptr<PathPoints> pathPoints_;
 
@@ -115,7 +115,7 @@ private:
 
     std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
 
-    std::unique_ptr<BallItemsManager> ballItemsManager_;
+    std::unique_ptr<PelletsManager> pelletsManager_;
 
     std::unique_ptr<WhatToDrawManager> whatToDrawManager_;
 };

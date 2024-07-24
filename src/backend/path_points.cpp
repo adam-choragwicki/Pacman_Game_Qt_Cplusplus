@@ -1,7 +1,7 @@
 #include "path_points.h"
 #include <array>
 
-PathPoints::PathPoints() : PATH_POINTS(generatePathPoints()), POWERBALL_POSITIONS(generatePowerballPositions()), FOODBALL_POSITIONS(generateFoodballPositions())
+PathPoints::PathPoints() : PATH_POINTS(generatePathPoints()), POWER_PELLETS_POSITIONS(generatePowerPelletsPositions()), STANDARD_PELLETS_POSITIONS(generateStandardPelletsPositions())
 {}
 
 bool PathPoints::isPathPointValid(const Coordinates& coordinates) const
@@ -137,50 +137,50 @@ std::set<Coordinates> PathPoints::generatePathPointsBetweenPoints(int startX, in
     return pathPoints;
 }
 
-std::set<Coordinates> PathPoints::generateFoodballPositions()
+std::set<Coordinates> PathPoints::generateStandardPelletsPositions()
 {
-    /*Coordinates (X,Y) where foodballs will be placed*/
+    /*Coordinates (X,Y) where standard pellets will be placed*/
     const std::array<int, 10> verticalLinesXCoordinates = {35, 79, 144, 209, 274, 340, 406, 470, 536, 579};
     const std::array<int, 10> horizontalLinesYCoordinates = {35, 121, 187, 252, 318, 384, 449, 514, 580, 645};
 
-    std::set<Coordinates> foodballPositions;
+    std::set<Coordinates> standardPelletsPositions;
 
     for(int x : verticalLinesXCoordinates)
     {
         for(int y : horizontalLinesYCoordinates)
         {
-            const Coordinates foodballCoordinates(x, y);
+            const Coordinates standardPelletCoordinates(x, y);
 
             /*Check if point is on available path*/
-            if(PATH_POINTS.contains(foodballCoordinates))
+            if(PATH_POINTS.contains(standardPelletCoordinates))
             {
-                /*Skip points where powerballs are*/
-                if(POWERBALL_POSITIONS.contains(foodballCoordinates))
+                /*Skip points where power pellets are*/
+                if(POWER_PELLETS_POSITIONS.contains(standardPelletCoordinates))
                 {
                     continue;
                 }
 
-                foodballPositions.insert(foodballCoordinates);
+                standardPelletsPositions.insert(standardPelletCoordinates);
             }
         }
     }
 
-    if(foodballPositions.size() != TARGET_FOODBALLS_COUNT)
+    if(standardPelletsPositions.size() != TARGET_STANDARD_PELLETS_COUNT)
     {
-        throw std::runtime_error("Error, wrong number of foodball positions generated");
+        throw std::runtime_error("Error, wrong number of standard pellets positions generated");
     }
 
-    return foodballPositions;
+    return standardPelletsPositions;
 }
 
-std::set<Coordinates> PathPoints::generatePowerballPositions()
+std::set<Coordinates> PathPoints::generatePowerPelletsPositions()
 {
-    std::set<Coordinates> powerballPositions{Coordinates{35, 75}, Coordinates{579, 75}, Coordinates{35, 514}, Coordinates{579, 514}};
+    std::set<Coordinates> powerPelletsPositions{Coordinates{35, 75}, Coordinates{579, 75}, Coordinates{35, 514}, Coordinates{579, 514}};
 
-    if(powerballPositions.size() != TARGET_POWERBALLS_COUNT)
+    if(powerPelletsPositions.size() != TARGET_POWER_PELLETS_COUNT)
     {
-        throw std::runtime_error("Error, wrong number of powerball positions generated");
+        throw std::runtime_error("Error, wrong number of power pellets positions generated");
     }
 
-    return powerballPositions;
+    return powerPelletsPositions;
 }

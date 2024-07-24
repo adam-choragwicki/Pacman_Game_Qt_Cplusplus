@@ -8,14 +8,14 @@ public:
     [[nodiscard]] int getScore() const
     { return score_; }
 
-    void increaseScoreForEatingFoodball()
+    void increaseScoreForEatingStandardPellet()
     { score_ += 1; }
+
+    void increaseScoreForEatingPowerPellet()
+    { score_ += 100; }
 
     void increaseScoreForEatingGhost()
     { score_ += 200; }
-
-    void increaseScoreForEatingPowerball()
-    { score_ += 100; }
 
     void resetScore()
     { score_ = 0; }

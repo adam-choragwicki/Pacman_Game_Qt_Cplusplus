@@ -3,37 +3,38 @@ set(SOURCE_FILES
 
         game_loop.cpp game_loop.h
         input_handler.cpp input_handler.h
-
         model/game_manager.cpp model/game_manager.h
+
         model/pacman.h model/pacman.cpp
         model/ghosts/abstract_ghost.h model/ghosts/abstract_ghost.cpp
         model/ghosts/blue_ghost.h model/ghosts/blue_ghost.cpp
         model/ghosts/orange_ghost.h model/ghosts/orange_ghost.cpp
         model/ghosts/purple_ghost.h model/ghosts/purple_ghost.cpp
         model/ghosts/red_ghost.h model/ghosts/red_ghost.cpp
-        model/ball_items_manager.h model/ball_items_manager.cpp
 
         model/ghost_timing_manager.cpp model/ghost_timing_manager.h
 
-        ghost_movement_manager.h pacman_movement_manager.h
-
         common.h
+        config.h
+
         movable_character.h movable_character.cpp
         path_points.h path_points.cpp
         coordinates.h coordinates.cpp
         score_manager.h
         collision_manager.cpp collision_manager.h
-        config.h
+
         abstract_movement_manager.cpp abstract_movement_manager.h
-        pacman_movement_manager.cpp
-        ghost_movement_manager.cpp
+        pacman_movement_manager.cpp pacman_movement_manager.h
+        ghost_movement_manager.cpp ghost_movement_manager.h
+
         directional_offset.h
 
         screen_text_display.h screen_text_display.cpp
 
-        model/balls/abstract_ball.cpp model/balls/abstract_ball.h
-        model/balls/foodball.h
-        model/balls/powerball.h
+        model/pellets_manager.h model/pellets_manager.cpp
+        model/pellets/abstract_pellet.cpp model/pellets/abstract_pellet.h
+        model/pellets/standard_pellet.h
+        model/pellets/power_pellet.h
 
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h

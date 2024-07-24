@@ -1,15 +1,14 @@
 #include "collision_manager.h"
-#include "model/balls/foodball.h"
-#include "model/balls/powerball.h"
-#include "model/ghosts/abstract_ghost.h"
+#include "model/pellets/standard_pellet.h"
+#include "model/pellets/power_pellet.h"
 
-bool CollisionManager::checkAndProcessPacmanCollisionWithFoodball(const QGraphicsItem& pacman, std::set<Foodball>& foodballs)
+bool CollisionManager::checkAndProcessPacmanCollisionWithStandardPellet(const QGraphicsItem& pacman, std::set<StandardPellet>& standardPellets)
 {
-    for(const Foodball& foodball : foodballs)
+    for(const StandardPellet& standardPellet : standardPellets)
     {
-        if(pacman.collidesWithItem(&foodball))
+        if(pacman.collidesWithItem(&standardPellet))
         {
-            foodballs.erase(foodball);
+            standardPellets.erase(standardPellet);
             return true;
         }
     }
@@ -17,13 +16,13 @@ bool CollisionManager::checkAndProcessPacmanCollisionWithFoodball(const QGraphic
     return false;
 }
 
-bool CollisionManager::checkAndProcessPacmanCollisionWithPowerball(const QGraphicsItem& pacman, std::set<Powerball>& powerballs)
+bool CollisionManager::checkAndProcessPacmanCollisionWithPowerPellet(const QGraphicsItem& pacman, std::set<PowerPellet>& powerPellets)
 {
-    for(const Powerball& powerball : powerballs)
+    for(const PowerPellet& powerPellet : powerPellets)
     {
-        if(pacman.collidesWithItem(&powerball))
+        if(pacman.collidesWithItem(&powerPellet))
         {
-            powerballs.erase(powerball);
+            powerPellets.erase(powerPellet);
             return true;
         }
     }

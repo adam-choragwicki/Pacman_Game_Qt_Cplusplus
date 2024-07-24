@@ -2,7 +2,7 @@
 
 #include "path_points.h"
 #include "pacman.h"
-#include "ball_items_manager.h"
+#include "pellets_manager.h"
 #include "ghosts/red_ghost.h"
 #include "ghosts/purple_ghost.h"
 #include "ghosts/blue_ghost.h"
@@ -10,8 +10,8 @@
 #include "score_manager.h"
 #include "pacman_movement_manager.h"
 #include "ghost_movement_manager.h"
-#include "balls/foodball.h"
-#include "balls/powerball.h"
+#include "pellets/standard_pellet.h"
+#include "pellets/power_pellet.h"
 #include "screen_text_display.h"
 #include "score_display.h"
 #include "spdlog/spdlog.h"
@@ -40,7 +40,7 @@ Model::Model()
 
     screenTextDisplay_ = std::make_unique<ScreenTextDisplay>(*scoreManager_);
 
-    ballItemsManager_ = std::make_unique<BallItemsManager>(*pathPoints_);
+    pelletsManager_ = std::make_unique<PelletsManager>(*pathPoints_);
 
     whatToDrawManager_ = std::make_unique<WhatToDrawManager>();
 
@@ -53,9 +53,9 @@ void Model::reset()
 {
     spdlog::debug("Model reset");
 
-    ballItemsManager_->reset();
+    pelletsManager_->reset();
 
-    addBallsToScene();
+    addPelletsToScene();
 
     pacman_->reset();
     blueGhost_->reset();
@@ -78,7 +78,7 @@ void Model::initScene()
 
 void Model::addItemsToScene()
 {
-    addBallsToScene();
+    addPelletsToScene();
 
     scene_->addItem(pacman_.get());
     scene_->addItem(blueGhost_.get());
@@ -91,18 +91,18 @@ void Model::addItemsToScene()
     scene_->addItem(scoreDisplay_.get());
 }
 
-void Model::addBallsToScene()
+void Model::addPelletsToScene()
 {
-    std::set<Foodball>& foodballs = ballItemsManager_->getFoodballs();
-    std::set<Powerball>& powerballs = ballItemsManager_->getPowerballs();
+    std::set<StandardPellet>& standardPellets = pelletsManager_->getStandardPellets();
+    std::set<PowerPellet>& powerPellets = pelletsManager_->getPowerPellets();
 
-    for(const Foodball& foodball : foodballs)
+    for(const StandardPellet& standardPellet : standardPellets)
     {
-        scene_->addItem(&const_cast<Foodball&>(foodball));
+        scene_->addItem(&const_cast<StandardPellet&>(standardPellet));
     }
 
-    for(const Powerball& powerball : powerballs)
+    for(const PowerPellet& powerPellet : powerPellets)
     {
-        scene_->addItem(&const_cast<Powerball&>(powerball));
+        scene_->addItem(&const_cast<PowerPellet&>(powerPellet));
     }
 }

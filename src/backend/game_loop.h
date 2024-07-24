@@ -20,7 +20,7 @@ class GhostMovementManager;
 
 class ScoreManager;
 
-class BallItemsManager;
+class PelletsManager;
 
 enum class GameResult;
 
@@ -58,7 +58,7 @@ private:
 
     ScoreManager& scoreManager_;
 
-    BallItemsManager& ballItemsManager_;
+    PelletsManager& pelletsManager_;
 
     QTimer* gameLoopTimer_{};
 
