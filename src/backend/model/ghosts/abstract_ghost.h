@@ -20,8 +20,6 @@ public:
     void setScared();
 
     [[nodiscard]] bool isScared() const;
-    [[nodiscard]] bool isScaredWhite() const;
-    [[nodiscard]] bool isScaredBlue() const;
 
     [[nodiscard]] bool isSlowedDown() const
     { return isSlowedDown_; }

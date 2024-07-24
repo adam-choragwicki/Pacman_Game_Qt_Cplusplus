@@ -32,17 +32,7 @@ void AbstractGhost::reset()
 
 bool AbstractGhost::isScared() const
 {
-    return (scaredState_ == ScaredState::SCARED_BLUE) || (scaredState_ == ScaredState::SCARED_WHITE);
-}
-
-bool AbstractGhost::isScaredWhite() const
-{
-    return scaredState_ == ScaredState::SCARED_WHITE;
-}
-
-bool AbstractGhost::isScaredBlue() const
-{
-    return scaredState_ == ScaredState::SCARED_BLUE;
+    return scaredState_ != ScaredState::NO_SCARED;
 }
 
 void AbstractGhost::advanceAnimation()
@@ -61,15 +51,14 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    const QRect boundingRect = MovableCharacter::boundingRect().toRect();
-    const int animationState = animationState_;
+    const QRect boundingRect = CustomGraphicsItem::boundingRect().toRect();
 
-    if(!isScared())
+    if(scaredState_ == ScaredState::NO_SCARED)
     {
         switch(getDirection())
         {
             case Direction::LEFT:
-                if(animationState == 0)
+                if(animationState_ == 0)
                 {
                     painter->drawPixmap(boundingRect, left1Pixmap_);
                 }
@@ -80,7 +69,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
                 break;
 
             case Direction::RIGHT:
-                if(animationState == 0)
+                if(animationState_ == 0)
                 {
                     painter->drawPixmap(boundingRect, right1Pixmap_);
                 }
@@ -91,7 +80,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
                 break;
 
             case Direction::DOWN:
-                if(animationState == 0)
+                if(animationState_ == 0)
                 {
                     painter->drawPixmap(boundingRect, down1Pixmap_);
                 }
@@ -102,7 +91,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
                 break;
 
             case Direction::UP:
-                if(animationState == 0)
+                if(animationState_ == 0)
                 {
                     painter->drawPixmap(boundingRect, up1Pixmap_);
                 }
@@ -113,9 +102,9 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
                 break;
         }
     }
-    else if(isScaredBlue())
+    else if(scaredState_ == ScaredState::SCARED_BLUE)
     {
-        if(animationState == 0)
+        if(animationState_ == 0)
         {
             painter->drawPixmap(boundingRect, *scaredBlue1Pixmap_);
         }
@@ -124,9 +113,9 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
             painter->drawPixmap(boundingRect, *scaredBlue2Pixmap_);
         }
     }
-    else if(isScaredWhite())
+    else if(scaredState_ == ScaredState::SCARED_WHITE)
     {
-        if(animationState == 0)
+        if(animationState_ == 0)
         {
             painter->drawPixmap(boundingRect, *scaredWhite1Pixmap_);
         }
@@ -134,6 +123,10 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
         {
             painter->drawPixmap(boundingRect, *scaredWhite2Pixmap_);
         }
+    }
+    else
+    {
+        throw std::runtime_error("Cannot draw Ghost, wrong scared state");
     }
 }
 
