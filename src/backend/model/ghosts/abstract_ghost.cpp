@@ -5,10 +5,10 @@
 
 AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout) : MovableCharacter(coordinates, initialDirection)
 {
-    if(!staticPixmapsInitialized_)
+    if(!commonPixmapsInitialized_)
     {
-        loadStaticPixmaps();
-        staticPixmapsInitialized_ = true;
+        loadCommonPixmaps();
+        commonPixmapsInitialized_ = true;
     }
 
     ghostTimingManager_ = new GhostTimingManager(moveOutOfTheStartingBoxTimeout);
@@ -188,7 +188,7 @@ void AbstractGhost::setScared()
     ghostTimingManager_->startScaredBlueTimer();
 }
 
-void AbstractGhost::loadStaticPixmaps()
+void AbstractGhost::loadCommonPixmaps()
 {
     scaredBlue1Pixmap_ = std::make_unique<QPixmap>();
     scaredBlue2Pixmap_ = std::make_unique<QPixmap>();

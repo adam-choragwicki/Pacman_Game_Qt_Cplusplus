@@ -35,7 +35,7 @@ protected:
     bool isSlowedDown_{};
 
 private:
-    void loadStaticPixmaps();
+    void loadCommonPixmaps();
 
     enum class ScaredState
     {
@@ -49,5 +49,5 @@ private:
 
     GhostTimingManager* ghostTimingManager_{};
 
-    inline static bool staticPixmapsInitialized_{};
+    inline static bool commonPixmapsInitialized_{};
 };
