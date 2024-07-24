@@ -1,11 +1,11 @@
 #include "model/pacman.h"
 #include "config.h"
+#include "pixmap_loader.h"
 #include <QtGui/QPainter>
 
 Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN)
 {
     initializePixmaps();
-
 
     animationState_ = 0;
     direction_ = Direction::LEFT;
@@ -134,21 +134,12 @@ void Pacman::advanceAnimation()
 
 void Pacman::initializePixmaps()
 {
-    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair)
-    {
-        const auto&[pixmap, path] = pixmapToPathPair;
-        return pixmap->load(QString::fromStdString(path));
-    };
+    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{&right1Pixmap_, ":/pacman/pacman_right_close.png"},
+                                                                  {&right2Pixmap_, ":/pacman/pacman_right_open_1.png"},
+                                                                  {&right3Pixmap_, ":/pacman/pacman_right_open_2.png"},
+                                                                  {&right4Pixmap_, ":/pacman/pacman_right_open_3.png"}};
 
-    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&right1Pixmap_, ":/pacman/pacman_right_close.png"},
-                                                              {&right2Pixmap_, ":/pacman/pacman_right_open_1.png"},
-                                                              {&right3Pixmap_, ":/pacman/pacman_right_open_2.png"},
-                                                              {&right4Pixmap_, ":/pacman/pacman_right_open_3.png"}};
-
-    if(!std::all_of(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), loadImage))
-    {
-        throw std::runtime_error("Error, cannot load pacman images");
-    }
+    PixmapLoader::loadPixmaps(pixmapEntries);
 
     QTransform verticalMirrorTransformation;
     verticalMirrorTransformation.scale(-1, +1);
