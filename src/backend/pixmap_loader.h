@@ -5,36 +5,27 @@
 class PixmapLoader
 {
 public:
-    //    static bool loadPixmap(QPixmap* pixmap, const QString& imageUrl)
-    //    {
-    //        if(pixmap)
-    //        {
-    //            if(!pixmap->load(imageUrl))
-    //            {
-    //                throw std::runtime_error("Error, cannot load pixmap: " + imageUrl.toStdString());
-    //            }
-    //        }
-    //        else
-    //        {
-    //            throw std::runtime_error("Error, pixmap is null: " + imageUrl.toStdString());
-    //        }
-    //    }
-
-    static void loadPixmap(const std::pair<QPixmap*, QString>& pixmapToImageUrlPair)
+    struct PixmapEntry
     {
-        QPixmap* pixmap = pixmapToImageUrlPair.first;
-        QString imageUrl = pixmapToImageUrlPair.second;
+        QPixmap* pixmap;
+        QString url;
+    };
 
-        if(pixmap)
+    static void loadPixmaps(const std::vector<PixmapEntry>& pixmapEntries)
+    {
+        for(const PixmapEntry& pixmapEntry : pixmapEntries)
         {
-            if(!pixmap->load(imageUrl))
+            if(pixmapEntry.pixmap)
             {
-                throw std::runtime_error("Error, cannot load pixmap: " + imageUrl.toStdString());
+                if(!pixmapEntry.pixmap->load(pixmapEntry.url))
+                {
+                    throw std::runtime_error("Error, cannot load pixmap from URL: " + pixmapEntry.url.toStdString());
+                }
             }
-        }
-        else
-        {
-            throw std::runtime_error("Error, pixmap is null: " + imageUrl.toStdString());
+            else
+            {
+                throw std::runtime_error("Error, pixmap pointer is null for URL: " + pixmapEntry.url.toStdString());
+            }
         }
     }
 };

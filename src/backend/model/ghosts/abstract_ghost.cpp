@@ -189,10 +189,10 @@ void AbstractGhost::loadCommonPixmaps()
     scaredWhite1Pixmap_ = std::make_unique<QPixmap>();
     scaredWhite2Pixmap_ = std::make_unique<QPixmap>();
 
-    const std::map<QPixmap*, QString> pixmapToPathMapping{{scaredBlue1Pixmap_.get(),  ":/ghost/ghost_scared_blue_1.png"},
-                                                          {scaredBlue2Pixmap_.get(),  ":/ghost/ghost_scared_blue_2.png"},
-                                                          {scaredWhite1Pixmap_.get(), ":/ghost/ghost_scared_white_1.png"},
-                                                          {scaredWhite2Pixmap_.get(), ":/ghost/ghost_scared_white_2.png"}};
+    std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBlue1Pixmap_.get(),  ":/ghost/ghost_scared_blue_1.png"},
+                                                            {scaredBlue2Pixmap_.get(),  ":/ghost/ghost_scared_blue_2.png"},
+                                                            {scaredWhite1Pixmap_.get(), ":/ghost/ghost_scared_white_1.png"},
+                                                            {scaredWhite2Pixmap_.get(), ":/ghost/ghost_scared_white_2.png"}};
 
-    std::for_each(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), &PixmapLoader::loadPixmap);
+    PixmapLoader::loadPixmaps(pixmapEntries);
 }
