@@ -131,30 +131,21 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     }
 }
 
-void AbstractGhost::loadImages(const std::array<std::string, 8>& imagesUrls)
+void AbstractGhost::loadImages(const std::array<QString, 8>& imagesUrls)
 {
-    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&left1Pixmap_,  imagesUrls.at(0)},
-                                                              {&left2Pixmap_,  imagesUrls.at(1)},
+    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries{{&left1Pixmap_,  imagesUrls.at(0)},
+                                                               {&left2Pixmap_,  imagesUrls.at(1)},
 
-                                                              {&right1Pixmap_, imagesUrls.at(2)},
-                                                              {&right2Pixmap_, imagesUrls.at(3)},
+                                                               {&right1Pixmap_, imagesUrls.at(2)},
+                                                               {&right2Pixmap_, imagesUrls.at(3)},
 
-                                                              {&up1Pixmap_,    imagesUrls.at(4)},
-                                                              {&up2Pixmap_,    imagesUrls.at(5)},
+                                                               {&up1Pixmap_,    imagesUrls.at(4)},
+                                                               {&up2Pixmap_,    imagesUrls.at(5)},
 
-                                                              {&down1Pixmap_,  imagesUrls.at(6)},
-                                                              {&down2Pixmap_,  imagesUrls.at(7)}};
+                                                               {&down1Pixmap_,  imagesUrls.at(6)},
+                                                               {&down2Pixmap_,  imagesUrls.at(7)}};
 
-    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair)
-    {
-        const auto&[pixmap, path] = pixmapToPathPair;
-        return pixmap->load(QString::fromStdString(path));
-    };
-
-    if(!std::all_of(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), loadImage))
-    {
-        throw std::runtime_error("Error, cannot load ghost images");
-    }
+    PixmapLoader::loadPixmaps(pixmapEntries);
 }
 
 void AbstractGhost::setScared()
@@ -189,10 +180,10 @@ void AbstractGhost::loadCommonPixmaps()
     scaredWhite1Pixmap_ = std::make_unique<QPixmap>();
     scaredWhite2Pixmap_ = std::make_unique<QPixmap>();
 
-    std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBlue1Pixmap_.get(),  ":/ghost/ghost_scared_blue_1.png"},
-                                                            {scaredBlue2Pixmap_.get(),  ":/ghost/ghost_scared_blue_2.png"},
-                                                            {scaredWhite1Pixmap_.get(), ":/ghost/ghost_scared_white_1.png"},
-                                                            {scaredWhite2Pixmap_.get(), ":/ghost/ghost_scared_white_2.png"}};
+    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBlue1Pixmap_.get(),  ":/ghost/ghost_scared_blue_1.png"},
+                                                                  {scaredBlue2Pixmap_.get(),  ":/ghost/ghost_scared_blue_2.png"},
+                                                                  {scaredWhite1Pixmap_.get(), ":/ghost/ghost_scared_white_1.png"},
+                                                                  {scaredWhite2Pixmap_.get(), ":/ghost/ghost_scared_white_2.png"}};
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 }

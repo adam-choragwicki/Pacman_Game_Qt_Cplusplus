@@ -28,7 +28,7 @@ public:
     { return ghostTimingManager_; }
 
 protected:
-    void loadImages(const std::array<std::string, 8>& imagesUrls);
+    void loadImages(const std::array<QString, 8>& imagesUrls);
 
     bool isSlowedDown_{};
 
