@@ -33,7 +33,7 @@ protected:
     bool isSlowedDown_{};
 
 private:
-    void loadCommonPixmaps();
+    static void loadCommonPixmaps();
 
     enum class ScaredState
     {

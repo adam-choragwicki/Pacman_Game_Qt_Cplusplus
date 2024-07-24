@@ -2,6 +2,7 @@
 #include <QtGui/QPainter>
 #include "config.h"
 #include "model/ghost_timing_manager.h"
+#include "pixmap_loader.h"
 
 AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout) : MovableCharacter(coordinates, initialDirection)
 {
@@ -188,19 +189,10 @@ void AbstractGhost::loadCommonPixmaps()
     scaredWhite1Pixmap_ = std::make_unique<QPixmap>();
     scaredWhite2Pixmap_ = std::make_unique<QPixmap>();
 
-    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair)
-    {
-        const auto&[pixmap, path] = pixmapToPathPair;
-        return pixmap->load(QString::fromStdString(path));
-    };
+    const std::map<QPixmap*, QString> pixmapToPathMapping{{scaredBlue1Pixmap_.get(),  ":/ghost/ghost_scared_blue_1.png"},
+                                                          {scaredBlue2Pixmap_.get(),  ":/ghost/ghost_scared_blue_2.png"},
+                                                          {scaredWhite1Pixmap_.get(), ":/ghost/ghost_scared_white_1.png"},
+                                                          {scaredWhite2Pixmap_.get(), ":/ghost/ghost_scared_white_2.png"}};
 
-    const std::map<QPixmap*, std::string> pixmapToPathMapping{{scaredBlue1Pixmap_.get(),  ":/ghost/ghost_scared_blue_1.png"},
-                                                              {scaredBlue2Pixmap_.get(),  ":/ghost/ghost_scared_blue_2.png"},
-                                                              {scaredWhite1Pixmap_.get(), ":/ghost/ghost_scared_white_1.png"},
-                                                              {scaredWhite2Pixmap_.get(), ":/ghost/ghost_scared_white_2.png"}};
-
-    if(!std::all_of(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), loadImage))
-    {
-        throw std::runtime_error("Error, cannot load ghost static images");
-    }
+    std::for_each(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), &PixmapLoader::loadPixmap);
 }
