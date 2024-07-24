@@ -44,7 +44,7 @@ void GraphicsView::drawForeground(QPainter* painter, const QRectF& rect)
         painter->setFont(fpsCounterFont_);
 
         const QPointF topLeft = mapToScene(viewport()->rect().topLeft());
-        painter->drawText(topLeft + QPointF(10, 20), QString("FPS: %1").arg(currentFPS_));
+        painter->drawText(topLeft + QPointF(10, 20), QString("FPS: %1").arg(qRound(currentFPS_)));
     }
 }
 

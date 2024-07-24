@@ -48,9 +48,24 @@
     </qresource>
 
     <qresource>
+        <file>pacman/pacman_left_close.png</file>
+        <file>pacman/pacman_left_open_1.png</file>
+        <file>pacman/pacman_left_open_2.png</file>
+        <file>pacman/pacman_left_open_3.png</file>
+
         <file>pacman/pacman_right_close.png</file>
         <file>pacman/pacman_right_open_1.png</file>
         <file>pacman/pacman_right_open_2.png</file>
         <file>pacman/pacman_right_open_3.png</file>
+
+        <file>pacman/pacman_up_close.png</file>
+        <file>pacman/pacman_up_open_1.png</file>
+        <file>pacman/pacman_up_open_2.png</file>
+        <file>pacman/pacman_up_open_3.png</file>
+
+        <file>pacman/pacman_down_close.png</file>
+        <file>pacman/pacman_down_open_1.png</file>
+        <file>pacman/pacman_down_open_2.png</file>
+        <file>pacman/pacman_down_open_3.png</file>
     </qresource>
 </RCC>

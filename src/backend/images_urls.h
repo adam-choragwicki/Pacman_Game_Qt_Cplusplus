@@ -3,17 +3,6 @@
 #include <array>
 #include <string>
 
-namespace PacmanImages
-{
-    const std::array<std::string, 16> IMAGES_URLS{":/pacman/pacman_left_close.png", ":/pacman/pacman_left_open_1.png", ":/pacman/pacman_left_open_2.png", ":/pacman/pacman_left_open_3.png",
-
-                                                  ":/pacman/pacman_right_close.png", ":/pacman/pacman_right_open_1.png", ":/pacman/pacman_right_open_2.png", ":/pacman/pacman_right_open_3.png",
-
-                                                  ":/pacman/pacman_up_close.png", ":/pacman/pacman_up_open_1.png", ":/pacman/pacman_up_open_2.png", ":/pacman/pacman_up_open_3.png",
-
-                                                  ":/pacman/pacman_down_close.png", ":/pacman/pacman_down_open_1.png", ":/pacman/pacman_down_open_2.png", ":/pacman/pacman_down_open_3.png"};
-}
-
 namespace BlueGhostImages
 {
     const std::array<std::string, 12> IMAGES_URLS{":/ghost/ghost_blue_left_1.png", ":/ghost/ghost_blue_left_2.png", ":/ghost/ghost_blue_right_1.png", ":/ghost/ghost_blue_right_2.png", ":/ghost/ghost_blue_up_1.png", ":/ghost/ghost_blue_up_2.png",

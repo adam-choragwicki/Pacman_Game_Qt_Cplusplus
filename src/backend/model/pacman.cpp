@@ -4,7 +4,8 @@
 
 Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config::InitialDirection::PACMAN)
 {
-    loadImages(PacmanImages::IMAGES_URLS);
+    initializePixmaps();
+
 
     animationState_ = 0;
     direction_ = Direction::LEFT;
@@ -21,6 +22,20 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 
     const QRect boundingRect = MovableCharacter::boundingRect().toRect();
     const int animationState = animationState_;
+
+    //    QGraphicsEllipseItem asd;
+
+    //        painter->setBrush(Qt::yellow);
+
+    //    painter->drawEllipse(boundingRect);
+
+    //        int multiplier = 16;
+
+    //        painter->drawPie(boundingRect, 30 * multiplier, 300 * multiplier);
+
+    //        painter->drawPie(boundingRect, 20 * multiplier, 320 * multiplier);
+    //    painter->drawPie(boundingRect, 10 * multiplier, 340 * multiplier);
+
 
     switch(direction_)
     {
@@ -105,40 +120,6 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     }
 }
 
-void Pacman::loadImages(const std::array<std::string, 16>& imagesUrls)
-{
-    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&left1Pixmap_,  imagesUrls.at(0)},
-                                                              {&left2Pixmap_,  imagesUrls.at(1)},
-                                                              {&left3Pixmap_,  imagesUrls.at(2)},
-                                                              {&left4Pixmap_,  imagesUrls.at(3)},
-
-                                                              {&right1Pixmap_, imagesUrls.at(4)},
-                                                              {&right2Pixmap_, imagesUrls.at(5)},
-                                                              {&right3Pixmap_, imagesUrls.at(6)},
-                                                              {&right4Pixmap_, imagesUrls.at(7)},
-
-                                                              {&up1Pixmap_,    imagesUrls.at(8)},
-                                                              {&up2Pixmap_,    imagesUrls.at(9)},
-                                                              {&up3Pixmap_,    imagesUrls.at(10)},
-                                                              {&up4Pixmap_,    imagesUrls.at(11)},
-
-                                                              {&down1Pixmap_,  imagesUrls.at(12)},
-                                                              {&down2Pixmap_,  imagesUrls.at(13)},
-                                                              {&down3Pixmap_,  imagesUrls.at(14)},
-                                                              {&down4Pixmap_,  imagesUrls.at(15)}};
-
-    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair)
-    {
-        const auto&[pixmap, path] = pixmapToPathPair;
-        return pixmap->load(QString::fromStdString(path));
-    };
-
-    if(!std::all_of(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), loadImage))
-    {
-        throw std::runtime_error("Error, cannot load pacman images");
-    }
-}
-
 void Pacman::advanceAnimation()
 {
     if(animationState_ >= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
@@ -149,4 +130,47 @@ void Pacman::advanceAnimation()
     {
         ++animationState_;
     }
+}
+
+void Pacman::initializePixmaps()
+{
+    auto loadImage = [](const std::pair<QPixmap*, std::string>& pixmapToPathPair)
+    {
+        const auto&[pixmap, path] = pixmapToPathPair;
+        return pixmap->load(QString::fromStdString(path));
+    };
+
+    const std::map<QPixmap*, std::string> pixmapToPathMapping{{&right1Pixmap_, ":/pacman/pacman_right_close.png"},
+                                                              {&right2Pixmap_, ":/pacman/pacman_right_open_1.png"},
+                                                              {&right3Pixmap_, ":/pacman/pacman_right_open_2.png"},
+                                                              {&right4Pixmap_, ":/pacman/pacman_right_open_3.png"}};
+
+    if(!std::all_of(pixmapToPathMapping.cbegin(), pixmapToPathMapping.cend(), loadImage))
+    {
+        throw std::runtime_error("Error, cannot load pacman images");
+    }
+
+    QTransform verticalMirrorTransformation;
+    verticalMirrorTransformation.scale(-1, +1);
+
+    left1Pixmap_ = right1Pixmap_.transformed(verticalMirrorTransformation, Qt::TransformationMode::SmoothTransformation);
+    left2Pixmap_ = right2Pixmap_.transformed(verticalMirrorTransformation, Qt::TransformationMode::SmoothTransformation);
+    left3Pixmap_ = right3Pixmap_.transformed(verticalMirrorTransformation, Qt::TransformationMode::SmoothTransformation);
+    left4Pixmap_ = right4Pixmap_.transformed(verticalMirrorTransformation, Qt::TransformationMode::SmoothTransformation);
+
+    QTransform rotate90DegreesCounterclockwise;
+    rotate90DegreesCounterclockwise.rotate(-90);
+
+    up1Pixmap_ = right1Pixmap_.transformed(rotate90DegreesCounterclockwise, Qt::TransformationMode::SmoothTransformation);
+    up2Pixmap_ = right2Pixmap_.transformed(rotate90DegreesCounterclockwise, Qt::TransformationMode::SmoothTransformation);
+    up3Pixmap_ = right3Pixmap_.transformed(rotate90DegreesCounterclockwise, Qt::TransformationMode::SmoothTransformation);
+    up4Pixmap_ = right4Pixmap_.transformed(rotate90DegreesCounterclockwise, Qt::TransformationMode::SmoothTransformation);
+
+    QTransform rotate90DegreesClockwise;
+    rotate90DegreesClockwise.rotate(+90);
+
+    down1Pixmap_ = right1Pixmap_.transformed(rotate90DegreesClockwise, Qt::TransformationMode::SmoothTransformation);
+    down2Pixmap_ = right2Pixmap_.transformed(rotate90DegreesClockwise, Qt::TransformationMode::SmoothTransformation);
+    down3Pixmap_ = right3Pixmap_.transformed(rotate90DegreesClockwise, Qt::TransformationMode::SmoothTransformation);
+    down4Pixmap_ = right4Pixmap_.transformed(rotate90DegreesClockwise, Qt::TransformationMode::SmoothTransformation);
 }

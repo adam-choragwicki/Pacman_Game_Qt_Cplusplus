@@ -23,6 +23,7 @@ void GameManager::prepareGameToStart()
     model_.getBallItemsManager().showAllBalls();
 
     model_.getWhatToDrawManager()->drawBackground_ = true;
+    model_.getWhatToDrawManager()->drawFPSCounter_ = true;
 
     gameState_ = GameState::READY_TO_START;
 }
