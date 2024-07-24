@@ -17,8 +17,3 @@ void AbstractPellet::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
     painter->setBrush(Qt::white);
     painter->drawEllipse(boundingRect());
 }
-
-bool AbstractPellet::operator<(const AbstractPellet& other) const
-{
-    return id_ < other.id_;
-}

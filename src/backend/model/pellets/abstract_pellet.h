@@ -11,6 +11,4 @@ public:
     ~AbstractPellet() override = 0;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
-
-    bool operator<(const AbstractPellet& other) const;
 };

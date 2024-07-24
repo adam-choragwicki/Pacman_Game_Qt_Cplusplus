@@ -12,6 +12,8 @@ public:
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override = 0;
 
+    bool operator<(const CustomGraphicsItem& other) const;
+
 protected:
     bool drawRect_{};
 

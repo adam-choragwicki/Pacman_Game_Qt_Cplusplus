@@ -10,11 +10,6 @@ public:
 
     ~StandardPellet() override = default;
 
-    bool operator<(const StandardPellet& other) const
-    {
-        return AbstractPellet::operator<(other);
-    }
-
     static const int DIAMETER = 7;
 
     static const int OFFSET_X = -3;

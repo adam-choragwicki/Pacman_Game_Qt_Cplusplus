@@ -20,3 +20,8 @@ void CustomGraphicsItem::paint(QPainter* painter, const QStyleOptionGraphicsItem
         painter->drawRect(rect_);
     }
 }
+
+bool CustomGraphicsItem::operator<(const CustomGraphicsItem& other) const
+{
+    return id_ < other.id_;
+}
