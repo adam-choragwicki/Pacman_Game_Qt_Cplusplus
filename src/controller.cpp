@@ -2,6 +2,7 @@
 #include "input_handler.h"
 #include "spdlog/spdlog.h"
 #include <QKeyEvent>
+#include <QElapsedTimer>
 
 Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(view)
 {
@@ -33,6 +34,7 @@ void Controller::subscribeToKeyEvents()
 void Controller::initializeFrontendEvents()
 {
     auto* viewportUpdateTimer = new QTimer(this);
+    viewportUpdateTimer->setTimerType(Qt::PreciseTimer);
     connect(viewportUpdateTimer, &QTimer::timeout, this, &Controller::viewportUpdateHandler);
     viewportUpdateTimer->start(Config::Timing::VIEWPORT_UPDATE_INTERVAL);
 }

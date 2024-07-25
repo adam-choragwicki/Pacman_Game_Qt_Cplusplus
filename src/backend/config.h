@@ -9,7 +9,9 @@ namespace Config
     namespace Timing
     {
         using namespace std::chrono_literals;
-        static constexpr auto VIEWPORT_UPDATE_INTERVAL = 16ms;
+
+        /*Approximately 60Hz refresh rate*/
+        static constexpr auto VIEWPORT_UPDATE_INTERVAL = 17ms;
 
         namespace MovableCharacter
         {
