@@ -29,6 +29,8 @@ void AbstractGhost::reset()
 {
     MovableCharacter::reset();
     scaredState_ = ScaredState::NO_SCARED;
+
+    ghostTimingManager_->reset();
 }
 
 bool AbstractGhost::isScared() const

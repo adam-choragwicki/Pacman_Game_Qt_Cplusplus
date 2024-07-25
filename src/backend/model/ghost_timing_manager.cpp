@@ -9,8 +9,8 @@ GhostTimingManager::GhostTimingManager(const std::chrono::seconds& moveOutOfTheS
 void GhostTimingManager::reset()
 {
     timeToLeaveStartingBox_ = false;
-    timeToLeaveStartingBoxTimer.start();
 
+    timeToLeaveStartingBoxTimer.stop();
     scaredBlueStateTimer_.stop();
     scaredWhiteStateTimer_.stop();
 }
@@ -34,12 +34,6 @@ void GhostTimingManager::startScaredWhiteTimer()
 
 void GhostTimingManager::initializeTimers(const std::chrono::seconds& moveOutOfTheStartingBoxTimeout)
 {
-    scaredBlueStateTimer_.setSingleShot(true);
-    scaredBlueStateTimer_.setInterval(Config::Timing::Ghost::SCARED_BLUE_TIME);
-
-    scaredWhiteStateTimer_.setSingleShot(true);
-    scaredWhiteStateTimer_.setInterval(Config::Timing::Ghost::SCARED_WHITE_TIME);
-
     timeToLeaveStartingBoxTimer.setSingleShot(true);
     timeToLeaveStartingBoxTimer.setInterval(moveOutOfTheStartingBoxTimeout);
 
@@ -47,4 +41,10 @@ void GhostTimingManager::initializeTimers(const std::chrono::seconds& moveOutOfT
                                               {
                                                   timeToLeaveStartingBox_ = true;
                                               });
+
+    scaredBlueStateTimer_.setSingleShot(true);
+    scaredBlueStateTimer_.setInterval(Config::Timing::Ghost::SCARED_BLUE_TIME);
+
+    scaredWhiteStateTimer_.setSingleShot(true);
+    scaredWhiteStateTimer_.setInterval(Config::Timing::Ghost::SCARED_WHITE_TIME);
 }
