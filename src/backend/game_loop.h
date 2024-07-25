@@ -34,7 +34,6 @@ public:
     explicit GameLoop(Model& model);
     void start();
     void stop();
-    void resume();
 
 private slots:
     void execute();
@@ -61,6 +60,4 @@ private:
     PelletsManager& pelletsManager_;
 
     QTimer* gameLoopTimer_{};
-
-//    bool firstStartInCurrentGame_{};
 };

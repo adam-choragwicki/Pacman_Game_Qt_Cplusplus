@@ -40,11 +40,6 @@ void GameLoop::stop()
     gameLoopTimer_->stop();
 }
 
-void GameLoop::resume()
-{
-    gameLoopTimer_->start(Config::Timing::GAME_LOOP_INTERVAL);
-}
-
 void GameLoop::execute()
 {
     pacmanMovementHandler();
