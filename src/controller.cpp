@@ -7,15 +7,15 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
 {
     spdlog::debug("Initializing controller");
 
-    inputHandler_ = new InputHandler(model_);
-    gameLoop_ = new GameLoop(model_);
-    gameManager_ = new GameManager(model_);
+    inputHandler_ = std::make_unique<InputHandler>(model_);
+    gameLoop_ = std::make_unique<GameLoop>(model_);
+    gameManager_ = std::make_unique<GameManager>(model_);
 
-    gameManager_->setGameLoop(gameLoop_);
+    gameManager_->setGameLoop(gameLoop_.get());
 
-    connect(gameLoop_, &GameLoop::endGame, gameManager_, &GameManager::endGame);
+    connect(gameLoop_.get(), &GameLoop::endGame, gameManager_.get(), &GameManager::endGame);
 
-    model_.getScreenTextDisplay()->setGameManager(gameManager_);
+    model_.getScreenTextDisplay()->setGameManager(gameManager_.get());
 
     subscribeToKeyEvents();
     initializeFrontendEvents();
@@ -25,9 +25,9 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
 
 void Controller::subscribeToKeyEvents()
 {
-    connect(&view_, &MainWindow::keyPressedEvent, inputHandler_, &InputHandler::processKeyPressedEvent);
+    connect(&view_, &MainWindow::keyPressedEvent, inputHandler_.get(), &InputHandler::processKeyPressedEvent);
 
-    connect(inputHandler_, &InputHandler::startOrRestartGameRequested, gameManager_, &GameManager::processStartOrRestartGameRequest);
+    connect(inputHandler_.get(), &InputHandler::startOrRestartGameRequested, gameManager_.get(), &GameManager::processStartOrRestartGameRequest);
 }
 
 void Controller::initializeFrontendEvents()

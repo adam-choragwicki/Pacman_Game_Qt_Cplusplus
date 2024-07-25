@@ -1,7 +1,7 @@
 #include <QtGui/QPainter>
 #include "screen_text_display.h"
 #include "score_manager.h"
-#include "model/game_manager.h"
+#include "game_manager.h"
 
 ScreenTextDisplay::ScreenTextDisplay(const ScoreManager& scoreManager) : scoreManager_(scoreManager)
 {}

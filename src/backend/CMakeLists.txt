@@ -3,7 +3,7 @@ set(SOURCE_FILES
 
         game_loop.cpp game_loop.h
         input_handler.cpp input_handler.h
-        model/game_manager.cpp model/game_manager.h
+        game_manager.cpp game_manager.h
 
         model/pacman.h model/pacman.cpp
         model/ghosts/abstract_ghost.h model/ghosts/abstract_ghost.cpp
@@ -40,7 +40,7 @@ set(SOURCE_FILES
         id_generator.h
 
         score_display.h score_display.cpp
-        model/game_manager.cpp model/game_manager.h
+        game_manager.cpp game_manager.h
         model/what_to_draw_manager.h pixmap_loader.h)
 
 # Create the backend library

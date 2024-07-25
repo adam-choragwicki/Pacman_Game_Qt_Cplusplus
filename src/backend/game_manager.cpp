@@ -1,6 +1,6 @@
-#include "model/game_manager.h"
+#include "game_manager.h"
 #include "spdlog/spdlog.h"
-#include "model.h"
+#include "model/model.h"
 
 GameManager::GameManager(Model& model) : model_(model)
 {

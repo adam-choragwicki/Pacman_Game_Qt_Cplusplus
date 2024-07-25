@@ -2,8 +2,9 @@
 
 #include "model/model.h"
 #include "main_window.h"
-
-class InputHandler;
+#include "input_handler.h"
+#include "game_loop.h"
+#include "game_manager.h"
 
 class Controller : public QObject
 {
@@ -22,7 +23,7 @@ private:
     Model& model_;
     MainWindow& view_;
 
-    InputHandler* inputHandler_{};
-    GameLoop* gameLoop_{};
-    GameManager* gameManager_{};
+    std::unique_ptr<InputHandler> inputHandler_;
+    std::unique_ptr<GameLoop> gameLoop_;
+    std::unique_ptr<GameManager> gameManager_;
 };
