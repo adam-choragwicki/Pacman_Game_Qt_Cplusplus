@@ -25,7 +25,7 @@ public:
     { return isSlowedDown_; }
 
     [[nodiscard]] GhostTimingManager* getGhostTimingManager() const
-    { return ghostTimingManager_; }
+    { return ghostTimingManager_.get(); }
 
 protected:
     void loadImages(const std::array<QString, 8>& imagesUrls);
@@ -45,7 +45,7 @@ private:
     inline static std::unique_ptr<QPixmap> scaredBlue1Pixmap_, scaredBlue2Pixmap_;
     inline static std::unique_ptr<QPixmap> scaredWhite1Pixmap_, scaredWhite2Pixmap_;
 
-    GhostTimingManager* ghostTimingManager_{};
+    std::unique_ptr<GhostTimingManager> ghostTimingManager_;
 
     inline static bool commonPixmapsInitialized_{};
 };

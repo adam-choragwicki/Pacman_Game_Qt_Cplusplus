@@ -12,7 +12,7 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
         commonPixmapsInitialized_ = true;
     }
 
-    ghostTimingManager_ = new GhostTimingManager(moveOutOfTheStartingBoxTimeout);
+    ghostTimingManager_ = std::make_unique<GhostTimingManager>(moveOutOfTheStartingBoxTimeout);
 
     MovableCharacter::reset();
     scaredState_ = ScaredState::NO_SCARED;
@@ -28,9 +28,9 @@ AbstractGhost::~AbstractGhost() = default;
 void AbstractGhost::reset()
 {
     MovableCharacter::reset();
-    scaredState_ = ScaredState::NO_SCARED;
-
     ghostTimingManager_->reset();
+    scaredState_ = ScaredState::NO_SCARED;
+    isSlowedDown_ = false;
 }
 
 bool AbstractGhost::isScared() const
@@ -103,6 +103,9 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
                     pixmap = &up2Pixmap_;
                 }
                 break;
+
+            default:
+                throw std::runtime_error("Cannot draw Ghost, wrong direction");
         }
     }
     else if(scaredState_ == ScaredState::SCARED_BLUE)
