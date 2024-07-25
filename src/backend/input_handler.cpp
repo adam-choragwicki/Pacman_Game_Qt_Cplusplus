@@ -30,10 +30,6 @@ void InputHandler::processKeyPressedEvent(QKeyEvent* keyEvent)
             model_.getPacman().setNextDirection(Direction::DOWN);
             break;
 
-        case Qt::Key_P:
-            emit togglePauseRequested();
-            break;
-
         case Qt::Key_Space:
             emit startOrRestartGameRequested();
             break;

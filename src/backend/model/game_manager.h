@@ -12,8 +12,6 @@ Q_OBJECT
 
 public slots:
     void processStartOrRestartGameRequest();
-    void processTogglePauseRequest();
-
     void endGame(GameResult gameResult);
 
 public:
@@ -22,16 +20,11 @@ public:
     [[nodiscard]] bool isRunning() const
     { return gameState_ == GameState::RUNNING; }
 
-    [[nodiscard]] bool isPaused() const
-    { return gameState_ == GameState::PAUSED; }
-
     [[nodiscard]] bool isReadyToStart() const
     { return gameState_ == GameState::READY_TO_START; }
 
     [[nodiscard]] bool isStopped() const
     { return gameState_ == GameState::STOPPED; }
-
-    void togglePause();
 
     void prepareGameToStart();
 
@@ -49,7 +42,7 @@ private:
 
     enum class GameState
     {
-        READY_TO_START, RUNNING, PAUSED, STOPPED
+        READY_TO_START, RUNNING, STOPPED
     } gameState_;
 
     GameLoop* gameLoop_{};

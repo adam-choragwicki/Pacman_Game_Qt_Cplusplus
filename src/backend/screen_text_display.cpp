@@ -22,19 +22,12 @@ void ScreenTextDisplay::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     painter->setFont(font);
 
     bool isReadyToStart = gameManager_->isReadyToStart();
-    bool isPaused = gameManager_->isPaused();
     bool isRunning = gameManager_->isRunning();
     bool isStopped = gameManager_->isStopped();
 
     if(isReadyToStart)
     {
         painter->drawText(screenTextDisplayBoundingRect, Qt::AlignCenter, "PRESS SPACE TO START");
-    }
-    else if(isPaused)
-    {
-        painter->setPen(penYellow);
-        font.setPointSize(ScreenTextDisplay::FONT_POINT_SIZE + 20);
-        painter->drawText(screenTextDisplayBoundingRect, Qt::AlignVCenter | Qt::AlignHCenter, "PAUSED");
     }
     else if(isRunning)
     {

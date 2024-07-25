@@ -66,20 +66,6 @@ void GameManager::endGame(GameResult gameResult)
     model_.getWhatToDrawManager()->drawBackground_ = false;
 }
 
-void GameManager::processTogglePauseRequest()
-{
-    spdlog::debug("Processing toggle pause request");
-
-    if(gameState_ == GameState::PAUSED || gameState_ == GameState::RUNNING)
-    {
-        togglePause();
-    }
-    else
-    {
-        spdlog::debug("Game is not in PAUSED or RUNNING state. Toggle pause request rejected");
-    }
-}
-
 void GameManager::startGame()
 {
     spdlog::debug("Starting game");
@@ -89,34 +75,11 @@ void GameManager::startGame()
     gameLoop_->start();
 }
 
-void GameManager::togglePause()
-{
-    spdlog::debug("Toggling pause");
-
-    if(gameState_ == GameState::PAUSED)
-    {
-        gameState_ = GameState::RUNNING;
-        gameLoop_->resume();
-    }
-    else if(gameState_ == GameState::RUNNING)
-    {
-        gameState_ = GameState::PAUSED;
-        gameLoop_->stop();
-    }
-    else
-    {
-        spdlog::debug("Game is not in PAUSED or RUNNING state. Cannot toggle pause");
-    }
-}
-
 //STATE TRANSITIONS
 
 //FROM READY TO START ---> RUNNING
 
-//FROM RUNNING ---> PAUSED
 //FROM RUNNING ---> STOPPED
-
-//FROM PAUSED ---> RUNNING
 
 //FROM STOPPED ---> READY_TO_START
 
@@ -140,15 +103,6 @@ void GameManager::togglePause()
 //Pellets
 //Score display
 //NO SCREEN TEXT
-
-//PAUSED
-
-//What is displayed:
-//Background
-//Characters
-//Pellets
-//Score display
-//Screen text PAUSED
 
 //STOPPED
 

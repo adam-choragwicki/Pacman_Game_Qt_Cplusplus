@@ -11,7 +11,6 @@ Q_OBJECT
 
 signals:
     void startOrRestartGameRequested();
-    void togglePauseRequested();
 
 public:
     explicit InputHandler(Model& model);

@@ -28,7 +28,6 @@ void Controller::subscribeToKeyEvents()
     connect(&view_, &MainWindow::keyPressedEvent, inputHandler_, &InputHandler::processKeyPressedEvent);
 
     connect(inputHandler_, &InputHandler::startOrRestartGameRequested, gameManager_, &GameManager::processStartOrRestartGameRequest);
-    connect(inputHandler_, &InputHandler::togglePauseRequested, gameManager_, &GameManager::processTogglePauseRequest);
 }
 
 void Controller::initializeFrontendEvents()
