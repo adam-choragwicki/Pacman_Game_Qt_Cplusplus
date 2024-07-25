@@ -2,46 +2,26 @@
 
 #include "path_points.h"
 #include "pellets_manager.h"
+
 #include "pacman.h"
-
-#include "model/ghosts/blue_ghost.h"
-#include "model/ghosts/orange_ghost.h"
-#include "model/ghosts/purple_ghost.h"
-#include "model/ghosts/red_ghost.h"
-
-#include "screen_text_display.h"
-#include "game_manager.h"
+#include "ghosts/blue_ghost.h"
+#include "ghosts/orange_ghost.h"
+#include "ghosts/purple_ghost.h"
+#include "ghosts/red_ghost.h"
 
 #include "pacman_movement_manager.h"
 #include "ghost_movement_manager.h"
 
 #include "pellets/standard_pellet.h"
 #include "pellets/power_pellet.h"
+
+#include "screen_text_display.h"
 #include "score_manager.h"
 #include "score_display.h"
 
-#include "game_loop.h"
 #include "what_to_draw_manager.h"
 
-#include <map>
-#include <memory>
 #include <QtWidgets/QGraphicsScene>
-
-class MovableCharacter;
-class AbstractGhost;
-class BlueGhost;
-class OrangeGhost;
-class PurpleGhost;
-class RedGhost;
-class ScoreManager;
-class GameManager;
-
-class PacmanMovementManager;
-class GhostMovementManager;
-
-class ScreenTextDisplay;
-
-class ScoreDisplay;
 
 class Model
 {

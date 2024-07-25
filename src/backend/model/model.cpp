@@ -1,22 +1,5 @@
 #include "model.h"
-
-#include "path_points.h"
-#include "pacman.h"
-#include "pellets_manager.h"
-#include "ghosts/red_ghost.h"
-#include "ghosts/purple_ghost.h"
-#include "ghosts/blue_ghost.h"
-#include "ghosts/orange_ghost.h"
-#include "score_manager.h"
-#include "pacman_movement_manager.h"
-#include "ghost_movement_manager.h"
-#include "pellets/standard_pellet.h"
-#include "pellets/power_pellet.h"
-#include "screen_text_display.h"
-#include "score_display.h"
 #include "spdlog/spdlog.h"
-
-#include <QtWidgets/QGraphicsScene>
 
 Model::Model()
 {
