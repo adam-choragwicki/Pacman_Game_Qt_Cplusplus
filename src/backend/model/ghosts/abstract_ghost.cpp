@@ -52,53 +52,53 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    const QRect boundingRect = rect_.toRect();
+    QPixmap* pixmap{};
 
     if(scaredState_ == ScaredState::NO_SCARED)
     {
-        switch(getDirection())
+        switch(direction_)
         {
             case Direction::LEFT:
                 if(animationState_ == 0)
                 {
-                    painter->drawPixmap(boundingRect, left1Pixmap_);
+                    pixmap = &left1Pixmap_;
                 }
                 else
                 {
-                    painter->drawPixmap(boundingRect, left2Pixmap_);
+                    pixmap = &left2Pixmap_;
                 }
                 break;
 
             case Direction::RIGHT:
                 if(animationState_ == 0)
                 {
-                    painter->drawPixmap(boundingRect, right1Pixmap_);
+                    pixmap = &right1Pixmap_;
                 }
                 else
                 {
-                    painter->drawPixmap(boundingRect, right2Pixmap_);
+                    pixmap = &right2Pixmap_;
                 }
                 break;
 
             case Direction::DOWN:
                 if(animationState_ == 0)
                 {
-                    painter->drawPixmap(boundingRect, down1Pixmap_);
+                    pixmap = &down1Pixmap_;
                 }
                 else
                 {
-                    painter->drawPixmap(boundingRect, down2Pixmap_);
+                    pixmap = &down2Pixmap_;
                 }
                 break;
 
             case Direction::UP:
                 if(animationState_ == 0)
                 {
-                    painter->drawPixmap(boundingRect, up1Pixmap_);
+                    pixmap = &up1Pixmap_;
                 }
                 else
                 {
-                    painter->drawPixmap(boundingRect, up2Pixmap_);
+                    pixmap = &up2Pixmap_;
                 }
                 break;
         }
@@ -107,28 +107,30 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     {
         if(animationState_ == 0)
         {
-            painter->drawPixmap(boundingRect, *scaredBlue1Pixmap_);
+            pixmap = scaredBlue1Pixmap_.get();
         }
         else
         {
-            painter->drawPixmap(boundingRect, *scaredBlue2Pixmap_);
+            pixmap = scaredBlue2Pixmap_.get();
         }
     }
     else if(scaredState_ == ScaredState::SCARED_WHITE)
     {
         if(animationState_ == 0)
         {
-            painter->drawPixmap(boundingRect, *scaredWhite1Pixmap_);
+            pixmap = scaredWhite1Pixmap_.get();
         }
         else
         {
-            painter->drawPixmap(boundingRect, *scaredWhite2Pixmap_);
+            pixmap = scaredWhite2Pixmap_.get();
         }
     }
     else
     {
         throw std::runtime_error("Cannot draw Ghost, wrong scared state");
     }
+
+    painter->drawPixmap(rect_.toRect(), *pixmap);
 }
 
 void AbstractGhost::loadImages(const std::array<QString, 8>& imagesUrls)
