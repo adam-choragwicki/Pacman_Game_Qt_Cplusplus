@@ -16,7 +16,7 @@ public:
     explicit MainWindow(const Model& model);
     ~MainWindow() override = default;
 
-    void updateViewport();
+    void updateViewport(const QList<QRectF>& dirtyRegions);
 
 private:
     void keyPressEvent(QKeyEvent* event) override;

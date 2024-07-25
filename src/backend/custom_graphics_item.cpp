@@ -17,7 +17,9 @@ void CustomGraphicsItem::paint(QPainter* painter, const QStyleOptionGraphicsItem
     if(drawRect_)
     {
         painter->setPen(rectPen_);
-        painter->drawRect(rect_);
+        qreal penWidth = rectPen_.widthF();
+        const QRectF adjustedRect = rect_.adjusted(2 * penWidth, 2 * penWidth, -2 * penWidth, -2 * penWidth);
+        painter->drawRect(adjustedRect);
     }
 }
 

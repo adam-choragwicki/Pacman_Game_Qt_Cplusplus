@@ -95,6 +95,7 @@ void GameLoop::pacmanMovementHandler()
 {
     model_.getPacmanMovementManager().processMove(pacman_, model_.getPathPoints());
     pacman_.advanceAnimation();
+    pacman_.update();
 }
 
 void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
@@ -136,6 +137,8 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
         }
 
         ghost.advanceAnimation();
+
+        ghost.update();
     }
 
     ++turnsCounter;

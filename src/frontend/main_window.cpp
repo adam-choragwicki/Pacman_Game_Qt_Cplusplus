@@ -50,7 +50,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     emit keyPressedEvent(event);
 }
 
-void MainWindow::updateViewport()
+void MainWindow::updateViewport(const QList<QRectF>& dirtyRegions)
 {
-    graphicsView_->updateViewport();
+    graphicsView_->updateViewport(dirtyRegions);
 }

@@ -8,7 +8,15 @@ GraphicsView::GraphicsView(QGraphicsScene* scene, const WhatToDrawManager& whatT
     arenaPixmap_ = std::make_unique<QPixmap>(":/map/map.png");
 
     setRenderHint(QPainter::Antialiasing, true);
+//    setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
+//    setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
+//    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+//    setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+//    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+
     setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
+
+
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -87,7 +95,16 @@ void GraphicsView::initializePainterData()
     fpsCounterPen_.setColor(Qt::red);
 }
 
-void GraphicsView::updateViewport()
+//void GraphicsView::updateViewport(const QRect& dirtyRegion)
+//{
+//    viewport()->update(dirtyRegion);
+//}
+
+
+void GraphicsView::updateViewport(const QList<QRectF>& dirtyRegions)
 {
-    viewport()->update();
+    for (const QRectF& rect : dirtyRegions)
+    {
+        viewport()->update(rect.toRect());
+    }
 }
