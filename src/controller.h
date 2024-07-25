@@ -19,9 +19,6 @@ public:
     void subscribeToKeyEvents();
     void initializeFrontendEvents();
 
-private slots:
-    void updateDirtyRegion(const QList<QRectF>& dirtyRegions);
-
 private:
     Model& model_;
     MainWindow& view_;
@@ -29,7 +26,4 @@ private:
     std::unique_ptr<InputHandler> inputHandler_;
     std::unique_ptr<GameLoop> gameLoop_;
     std::unique_ptr<GameManager> gameManager_;
-
-    QList<QRectF> dirtyRegions_;
-//    QRect dirtyRegion_;
 };

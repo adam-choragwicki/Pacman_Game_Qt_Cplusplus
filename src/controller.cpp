@@ -21,8 +21,6 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
     subscribeToKeyEvents();
     initializeFrontendEvents();
 
-    connect(model_.getScene(), &QGraphicsScene::changed, this, &Controller::updateDirtyRegion);
-
     gameManager_->prepareGameToStart();
 }
 
@@ -41,31 +39,13 @@ void Controller::initializeFrontendEvents()
     viewportUpdateTimer->start(Config::Timing::VIEWPORT_UPDATE_INTERVAL);
 }
 
-//void Controller::viewportUpdateHandler()
-//{
-////    model_.getScene().chan
-//
-////    view_.updateViewport(dirtyRegion);
-//}
-
 void Controller::viewportUpdateHandler()
 {
-    if (!dirtyRegions_.isEmpty())
-    {
-        view_.updateViewport(dirtyRegions_);
-        dirtyRegions_.clear();  // Clear the collected dirty regions after updating
-    }
-}
-//
-//void Controller::updateDirtyRegion(const QList<QRectF>& dirtyRegions)
-//{
-//    view_.updateViewport(dirtyRegions);
-//}
+    QList<QRectF>& dirtyRegions = model_.getScene()->getDirtyRegions();
 
-void Controller::updateDirtyRegion(const QList<QRectF>& dirtyRegion)
-{
-    for (const QRectF& rect : dirtyRegion)
+    if(!dirtyRegions.isEmpty())
     {
-        dirtyRegions_.append(rect);
+        view_.updateViewport(dirtyRegions);
+        dirtyRegions.clear();
     }
 }

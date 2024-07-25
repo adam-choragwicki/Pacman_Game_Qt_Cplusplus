@@ -1,27 +1,20 @@
 #include "graphics_view.h"
+#include "model/graphics_scene.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <QTimer>
 
-GraphicsView::GraphicsView(QGraphicsScene* scene, const WhatToDrawManager& whatToDrawManager, QWidget* parent) : QGraphicsView(scene, parent), whatToDrawManager_(whatToDrawManager)
+GraphicsView::GraphicsView(GraphicsScene* scene, const WhatToDrawManager& whatToDrawManager, QWidget* parent) : QGraphicsView(scene, parent), whatToDrawManager_(whatToDrawManager)
 {
     arenaPixmap_ = std::make_unique<QPixmap>(":/map/map.png");
 
     setRenderHint(QPainter::Antialiasing, true);
-//    setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
-//    setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
-//    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-//    setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-//    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-
     setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
-
-
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     connect(&fpsTimer_, &QTimer::timeout, this, &GraphicsView::updateFPS);
-    fpsTimer_.start(1000); // Update FPS every second
+    fpsTimer_.start(500); // Update FPS every 500ms
     frameTimeTimer_.start();
 
     initializePainterData();
@@ -95,15 +88,9 @@ void GraphicsView::initializePainterData()
     fpsCounterPen_.setColor(Qt::red);
 }
 
-//void GraphicsView::updateViewport(const QRect& dirtyRegion)
-//{
-//    viewport()->update(dirtyRegion);
-//}
-
-
 void GraphicsView::updateViewport(const QList<QRectF>& dirtyRegions)
 {
-    for (const QRectF& rect : dirtyRegions)
+    for(const QRectF& rect : dirtyRegions)
     {
         viewport()->update(rect.toRect());
     }

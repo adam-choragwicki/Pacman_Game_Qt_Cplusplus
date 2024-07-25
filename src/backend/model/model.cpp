@@ -5,7 +5,7 @@ Model::Model()
 {
     spdlog::debug("Initializing model");
 
-    initScene();
+    scene_ = std::make_unique<GraphicsScene>();
 
     pathPoints_ = std::make_unique<PathPoints>();
 
@@ -49,14 +49,6 @@ void Model::reset()
     scoreManager_->reset();
 
     spdlog::debug("Items on scene after reset: {}", scene_->items().size());
-}
-
-void Model::initScene()
-{
-    const int ARENA_WIDTH_PX = 614;
-    const int ARENA_HEIGHT_PX = 730;
-
-    scene_ = std::make_unique<QGraphicsScene>(0, 0, ARENA_WIDTH_PX, ARENA_HEIGHT_PX);
 }
 
 void Model::addItemsToScene()

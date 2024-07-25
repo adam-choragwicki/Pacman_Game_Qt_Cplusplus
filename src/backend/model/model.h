@@ -21,15 +21,13 @@
 
 #include "what_to_draw_manager.h"
 
-#include <QtWidgets/QGraphicsScene>
+#include "graphics_scene.h"
 
 class Model
 {
 public:
     Model();
     void reset();
-
-    void initScene();
 
     [[nodiscard]] Pacman& getPacman()
     { return *pacman_; }
@@ -61,7 +59,7 @@ public:
     [[nodiscard]] GhostMovementManager& getGhostMovementManager()
     { return *ghostMovementManager_; }
 
-    [[nodiscard]] QGraphicsScene* getScene() const
+    [[nodiscard]] GraphicsScene* getScene() const
     { return scene_.get(); }
 
     [[nodiscard]] ScreenTextDisplay* getScreenTextDisplay() const
@@ -91,7 +89,7 @@ private:
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;
 
-    std::unique_ptr<QGraphicsScene> scene_;
+    std::unique_ptr<GraphicsScene> scene_;
 
     std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
 

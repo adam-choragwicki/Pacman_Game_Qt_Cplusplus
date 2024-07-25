@@ -41,7 +41,7 @@ set(SOURCE_FILES
 
         score_display.h score_display.cpp
         game_manager.cpp game_manager.h
-        model/what_to_draw_manager.h pixmap_loader.h)
+        model/what_to_draw_manager.h pixmap_loader.h model/graphics_scene.cpp model/graphics_scene.h)
 
 # Create the backend library
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})

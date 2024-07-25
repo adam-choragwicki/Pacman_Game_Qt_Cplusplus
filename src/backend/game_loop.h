@@ -4,7 +4,6 @@
 
 class Model;
 class QTimer;
-class QGraphicsScene;
 
 class AbstractGhost;
 

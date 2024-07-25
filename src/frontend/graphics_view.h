@@ -6,6 +6,7 @@
 #include "model/what_to_draw_manager.h"
 
 class QTimer;
+class GraphicsScene;
 
 class GraphicsView : public QGraphicsView
 {
@@ -16,13 +17,11 @@ signals:
     void mouseLeftButtonClicked(const QPointF& mousePosition);
 
 public:
-    explicit GraphicsView(QGraphicsScene* scene, const WhatToDrawManager& whatToDrawManager, QWidget* parent = nullptr);
+    explicit GraphicsView(GraphicsScene* scene, const WhatToDrawManager& whatToDrawManager, QWidget* parent = nullptr);
 
     void drawBackground(QPainter* painter, const QRectF& rect) override;
     void drawForeground(QPainter* painter, const QRectF& rect) override;
     bool eventFilter(QObject* obj, QEvent* event) override;
-
-//    void updateViewport(const QRect& dirtyRegion);
 
     void updateViewport(const QList<QRectF>& dirtyRegions);
 
