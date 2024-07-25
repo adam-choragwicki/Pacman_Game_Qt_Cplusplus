@@ -5,6 +5,9 @@ class ScoreManager
 public:
     ScoreManager() = default;
 
+    void reset()
+    { score_ = 0; }
+
     [[nodiscard]] int getScore() const
     { return score_; }
 
@@ -17,9 +20,6 @@ public:
     void increaseScoreForEatingGhost()
     { score_ += 200; }
 
-    void resetScore()
-    { score_ = 0; }
-
 private:
-    int score_ {};
+    int score_{};
 };
