@@ -96,7 +96,7 @@ void GameManager::togglePause()
     if(gameState_ == GameState::PAUSED)
     {
         gameState_ = GameState::RUNNING;
-        gameLoop_->start();
+        gameLoop_->resume();
     }
     else if(gameState_ == GameState::RUNNING)
     {

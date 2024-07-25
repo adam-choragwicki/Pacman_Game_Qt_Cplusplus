@@ -23,20 +23,13 @@ GameLoop::GameLoop(Model& model) :
     ghosts_.at(1) = &orangeGhost_;
     ghosts_.at(2) = &purpleGhost_;
     ghosts_.at(3) = &redGhost_;
-
-    firstStartInCurrentGame_ = true;
 }
 
 void GameLoop::start()
 {
-    if(firstStartInCurrentGame_)
+    for(AbstractGhost* ghost : ghosts_)
     {
-        for(AbstractGhost* ghost : ghosts_)
-        {
-            ghost->getGhostTimingManager()->startLeaveStartingBoxTimer();
-        }
-
-        firstStartInCurrentGame_ = false;
+        ghost->getGhostTimingManager()->startLeaveStartingBoxTimer();
     }
 
     gameLoopTimer_->start(Config::Timing::GAME_LOOP_INTERVAL);
@@ -45,6 +38,11 @@ void GameLoop::start()
 void GameLoop::stop()
 {
     gameLoopTimer_->stop();
+}
+
+void GameLoop::resume()
+{
+    gameLoopTimer_->start(Config::Timing::GAME_LOOP_INTERVAL);
 }
 
 void GameLoop::execute()

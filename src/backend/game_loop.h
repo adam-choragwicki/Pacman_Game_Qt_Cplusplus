@@ -35,6 +35,7 @@ public:
     explicit GameLoop(Model& model);
     void start();
     void stop();
+    void resume();
 
 private slots:
     void execute();
@@ -62,5 +63,5 @@ private:
 
     QTimer* gameLoopTimer_{};
 
-    bool firstStartInCurrentGame_{};
+//    bool firstStartInCurrentGame_{};
 };
