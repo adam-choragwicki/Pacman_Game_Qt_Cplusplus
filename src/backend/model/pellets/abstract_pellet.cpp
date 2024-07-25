@@ -15,5 +15,5 @@ void AbstractPellet::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
     CustomGraphicsItem::paint(painter, option, widget);
 
     painter->setBrush(Qt::white);
-    painter->drawEllipse(boundingRect());
+    painter->drawEllipse(rect_);
 }

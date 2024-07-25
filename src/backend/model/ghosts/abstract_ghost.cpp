@@ -52,7 +52,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    const QRect boundingRect = CustomGraphicsItem::boundingRect().toRect();
+    const QRect boundingRect = rect_.toRect();
 
     if(scaredState_ == ScaredState::NO_SCARED)
     {

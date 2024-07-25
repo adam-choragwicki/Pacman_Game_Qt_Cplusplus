@@ -20,9 +20,6 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     painter->setRenderHint(QPainter::Antialiasing);
     painter->setBrush(Qt::red);
 
-    const QRect boundingRect = MovableCharacter::boundingRect().toRect();
-    const int animationState = animationState_;
-
     //    QGraphicsEllipseItem asd;
 
     //        painter->setBrush(Qt::yellow);
@@ -36,88 +33,91 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     //        painter->drawPie(boundingRect, 20 * multiplier, 320 * multiplier);
     //    painter->drawPie(boundingRect, 10 * multiplier, 340 * multiplier);
 
+    QPixmap* pixmap{};
 
     switch(direction_)
     {
         case Direction::LEFT:
-            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            if(animationState_ < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, left1Pixmap_);
+                pixmap = &left1Pixmap_;
             }
-            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else if(animationState_ < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, left2Pixmap_);
+                pixmap = &left2Pixmap_;
             }
-            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else if(animationState_ < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, left3Pixmap_);
+                pixmap = &left3Pixmap_;
             }
-            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else
             {
-                painter->drawPixmap(boundingRect, left4Pixmap_);
+                pixmap = &left4Pixmap_;
             }
             break;
 
         case Direction::RIGHT:
-            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            if(animationState_ < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, right1Pixmap_);
+                pixmap = &right1Pixmap_;
             }
-            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else if(animationState_ < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, right2Pixmap_);
+                pixmap = &right2Pixmap_;
             }
-            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else if(animationState_ < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, right3Pixmap_);
+                pixmap = &right3Pixmap_;
             }
-            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else
             {
-                painter->drawPixmap(boundingRect, right4Pixmap_);
+                pixmap = &right4Pixmap_;
             }
             break;
 
         case Direction::UP:
-            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            if(animationState_ < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, up1Pixmap_);
+                pixmap = &up1Pixmap_;
             }
-            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else if(animationState_ < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, up2Pixmap_);
+                pixmap = &up2Pixmap_;
             }
-            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else if(animationState_ < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, up3Pixmap_);
+                pixmap = &up3Pixmap_;
             }
-            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else
             {
-                painter->drawPixmap(boundingRect, up4Pixmap_);
+                pixmap = &up4Pixmap_;
             }
             break;
 
         case Direction::DOWN:
-            if(animationState < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            if(animationState_ < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, down1Pixmap_);
+                pixmap = &down1Pixmap_;
             }
-            else if(animationState < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else if(animationState_ < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, down2Pixmap_);
+                pixmap = &down2Pixmap_;
             }
-            else if(animationState < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else if(animationState_ < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
             {
-                painter->drawPixmap(boundingRect, down3Pixmap_);
+                pixmap = &down3Pixmap_;
             }
-            else if(animationState <= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+            else
             {
-                painter->drawPixmap(boundingRect, down4Pixmap_);
+                pixmap = &down4Pixmap_;
             }
             break;
 
         default:
             throw std::runtime_error("Cannot draw Pacman, wrong direction");
     }
+
+    painter->drawPixmap(rect_.toRect(), *pixmap);
 }
 
 void Pacman::advanceAnimation()
