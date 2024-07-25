@@ -4,6 +4,13 @@
     </qresource>
 
     <qresource>
+        <file>pacman/pacman_right_close.png</file>
+        <file>pacman/pacman_right_open_1.png</file>
+        <file>pacman/pacman_right_open_2.png</file>
+        <file>pacman/pacman_right_open_3.png</file>
+    </qresource>
+
+    <qresource>
         <file>ghost/ghost_blue_left_1.png</file>
         <file>ghost/ghost_blue_left_2.png</file>
         <file>ghost/ghost_blue_right_1.png</file>
@@ -45,12 +52,5 @@
 
         <file>ghost/ghost_scared_white_1.png</file>
         <file>ghost/ghost_scared_white_2.png</file>
-    </qresource>
-
-    <qresource>
-        <file>pacman/pacman_right_close.png</file>
-        <file>pacman/pacman_right_open_1.png</file>
-        <file>pacman/pacman_right_open_2.png</file>
-        <file>pacman/pacman_right_open_3.png</file>
     </qresource>
 </RCC>
