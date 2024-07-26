@@ -20,7 +20,7 @@ void MovableCharacter::reset()
     direction_ = STARTING_DIRECTION;
     nextDirection_ = direction_;
 
-    setPos(STARTING_COORDINATES.x_ - DIAMETER / 2, STARTING_COORDINATES.y_ - DIAMETER / 2);
+    setPos(STARTING_COORDINATES.x_ - static_cast<double>(DIAMETER) / 2, STARTING_COORDINATES.y_ - static_cast<double>(DIAMETER) / 2);
 }
 
 void MovableCharacter::moveCharacterBy(const std::pair<int, int>& offset)
@@ -30,5 +30,5 @@ void MovableCharacter::moveCharacterBy(const std::pair<int, int>& offset)
 
 void MovableCharacter::moveTo(const Coordinates& coordinates)
 {
-    setPos(coordinates.x_ - DIAMETER / 2, coordinates.y_ - DIAMETER / 2);
+    setPos(coordinates.x_ - static_cast<double>(DIAMETER) / 2, coordinates.y_ - static_cast<double>(DIAMETER) / 2);
 }

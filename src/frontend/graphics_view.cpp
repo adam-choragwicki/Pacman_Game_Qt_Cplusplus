@@ -8,7 +8,7 @@ GraphicsView::GraphicsView(GraphicsScene* scene, const WhatToDrawManager& whatTo
 {
     arenaPixmap_ = std::make_unique<QPixmap>(":/map/map.png");
 
-    setRenderHint(QPainter::Antialiasing, true);
+    //    setRenderHint(QPainter::Antialiasing, true);
     setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

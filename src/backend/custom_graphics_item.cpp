@@ -14,11 +14,16 @@ QRectF CustomGraphicsItem::boundingRect() const
 
 void CustomGraphicsItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
+    painter->setRenderHint(QPainter::Antialiasing);
+
     if(drawRect_)
     {
         painter->setPen(rectPen_);
         qreal penWidth = rectPen_.widthF();
-        const QRectF adjustedRect = rect_.adjusted(2 * penWidth, 2 * penWidth, -2 * penWidth, -2 * penWidth);
+
+        /* This is required to avoid artifacts */
+        const int multiplier = 2;
+        const QRectF adjustedRect = rect_.adjusted(multiplier * penWidth, multiplier * penWidth, -multiplier * penWidth, -multiplier * penWidth);
         painter->drawRect(adjustedRect);
     }
 }

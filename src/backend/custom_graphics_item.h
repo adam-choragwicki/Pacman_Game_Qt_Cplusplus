@@ -17,7 +17,7 @@ public:
 protected:
     bool drawRect_{};
 
-    QRectF rect_;
+    const QRectF rect_;
     QPen rectPen_;
 
     const uint id_;

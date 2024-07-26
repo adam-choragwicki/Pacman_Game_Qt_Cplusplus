@@ -17,21 +17,7 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    painter->setRenderHint(QPainter::Antialiasing);
-    painter->setBrush(Qt::red);
-
-    //    QGraphicsEllipseItem asd;
-
-    //        painter->setBrush(Qt::yellow);
-
-    //    painter->drawEllipse(boundingRect);
-
-    //        int multiplier = 16;
-
-    //        painter->drawPie(boundingRect, 30 * multiplier, 300 * multiplier);
-
-    //        painter->drawPie(boundingRect, 20 * multiplier, 320 * multiplier);
-    //    painter->drawPie(boundingRect, 10 * multiplier, 340 * multiplier);
+        painter->setRenderHint(QPainter::Antialiasing);
 
     QPixmap* pixmap{};
 
@@ -117,7 +103,12 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
             throw std::runtime_error("Cannot draw Pacman, wrong direction");
     }
 
-    painter->drawPixmap(rect_.toRect(), *pixmap);
+    painter->setPen(Qt::NoPen);
+
+    /* This is required to avoid artifacts */
+    const qreal penWidth = painter->pen().widthF();
+    const QRectF targetRect = rect_.adjusted(penWidth / 2, penWidth / 2, -penWidth / 2, -penWidth / 2);
+    painter->drawPixmap(targetRect.toRect(), *pixmap);
 }
 
 void Pacman::advanceAnimation()
@@ -140,6 +131,21 @@ void Pacman::initializePixmaps()
                                                                   {&right4Pixmap_, ":/pacman/pacman_right_open_3.png"}};
 
     PixmapLoader::loadPixmaps(pixmapEntries);
+
+    qDebug() << "Original size: " << right1Pixmap_.size();
+    qDebug() << "Original size: " << right2Pixmap_.size();
+    qDebug() << "Original size: " << right3Pixmap_.size();
+    qDebug() << "Original size: " << right4Pixmap_.size();
+
+    right1Pixmap_ = right1Pixmap_.scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    right2Pixmap_ = right2Pixmap_.scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    right3Pixmap_ = right3Pixmap_.scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    right4Pixmap_ = right4Pixmap_.scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+
+    qDebug() << "After scaling: " << right1Pixmap_.size();
+    qDebug() << "After scaling: " << right2Pixmap_.size();
+    qDebug() << "After scaling: " << right3Pixmap_.size();
+    qDebug() << "After scaling: " << right4Pixmap_.size();
 
     QTransform verticalMirrorTransformation;
     verticalMirrorTransformation.scale(-1, +1);
