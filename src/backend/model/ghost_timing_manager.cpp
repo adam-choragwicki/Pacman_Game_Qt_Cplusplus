@@ -35,6 +35,7 @@ void GhostTimingManager::startScaredWhiteTimer()
 void GhostTimingManager::initializeTimers(const std::chrono::seconds& moveOutOfTheStartingBoxTimeout)
 {
     timeToLeaveStartingBoxTimer.setSingleShot(true);
+    timeToLeaveStartingBoxTimer.setTimerType(Qt::PreciseTimer);
     timeToLeaveStartingBoxTimer.setInterval(moveOutOfTheStartingBoxTimeout);
 
     timeToLeaveStartingBoxTimer.callOnTimeout([this]()
@@ -43,8 +44,10 @@ void GhostTimingManager::initializeTimers(const std::chrono::seconds& moveOutOfT
                                               });
 
     scaredBlueStateTimer_.setSingleShot(true);
+    scaredBlueStateTimer_.setTimerType(Qt::PreciseTimer);
     scaredBlueStateTimer_.setInterval(Config::Timing::Ghost::SCARED_BLUE_TIME);
 
     scaredWhiteStateTimer_.setSingleShot(true);
+    scaredWhiteStateTimer_.setTimerType(Qt::PreciseTimer);
     scaredWhiteStateTimer_.setInterval(Config::Timing::Ghost::SCARED_WHITE_TIME);
 }

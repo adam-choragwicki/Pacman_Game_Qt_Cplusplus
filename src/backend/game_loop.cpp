@@ -17,6 +17,7 @@ GameLoop::GameLoop(Model& model) :
         pelletsManager_(model_.getPelletsManager())
 {
     gameLoopTimer_ = new QTimer;
+    gameLoopTimer_->setTimerType(Qt::PreciseTimer);
     connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
 
     ghosts_.at(0) = &blueGhost_;

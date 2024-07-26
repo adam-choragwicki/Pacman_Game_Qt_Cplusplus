@@ -56,8 +56,6 @@ protected:
     const Coordinates STARTING_COORDINATES;
     const Direction STARTING_DIRECTION;
 
-    QTimer movementTimer_;
-
 private:
     static const int DIAMETER = 30;
 };

@@ -17,9 +17,6 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
     MovableCharacter::reset();
     scaredState_ = ScaredState::NO_SCARED;
 
-    movementTimer_.setInterval(Config::Timing::MovableCharacter::NORMAL_SPEED);
-    movementTimer_.setSingleShot(true);
-
     drawRect_ = true;
 }
 
