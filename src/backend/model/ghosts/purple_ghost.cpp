@@ -2,5 +2,5 @@
 
 PurpleGhost::PurpleGhost() : AbstractGhost(Config::StartingCoordinates::PURPLE_GHOST, Config::InitialDirection::PURPLE_GHOST, Config::MoveOutOfTheStartingBoxTimeout::PURPLE_GHOST)
 {
-    loadImages(IMAGES_URLS);
+    loadPixmaps(IMAGES_URLS);
 }

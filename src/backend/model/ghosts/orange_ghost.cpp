@@ -2,5 +2,5 @@
 
 OrangeGhost::OrangeGhost() : AbstractGhost(Config::StartingCoordinates::ORANGE_GHOST, Config::InitialDirection::ORANGE_GHOST, Config::MoveOutOfTheStartingBoxTimeout::ORANGE_GHOST)
 {
-    loadImages(IMAGES_URLS);
+    loadPixmaps(IMAGES_URLS);
 }

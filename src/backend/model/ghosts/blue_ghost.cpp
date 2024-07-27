@@ -2,5 +2,5 @@
 
 BlueGhost::BlueGhost() : AbstractGhost(Config::StartingCoordinates::BLUE_GHOST, Config::InitialDirection::BLUE_GHOST, Config::MoveOutOfTheStartingBoxTimeout::BLUE_GHOST)
 {
-    loadImages(IMAGES_URLS);
+    loadPixmaps(IMAGES_URLS);
 }

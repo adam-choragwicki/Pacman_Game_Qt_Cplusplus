@@ -63,6 +63,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 
     static const QPixmap* scaredWhitePixmaps[2] = {scaredWhite1Pixmap_.get(), scaredWhite2Pixmap_.get()};
 
+    const QPixmap* pixmap;
     const int phase = animationState_ % 2;
 
     if(scaredState_ == ScaredState::NO_SCARED)
@@ -147,7 +148,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     painter->drawPixmap(rect_.toRect(), *pixmap);
 }
 
-void AbstractGhost::loadImages(const std::array<QString, 8>& imagesUrls)
+void AbstractGhost::loadPixmaps(const std::array<QString, 8>& imagesUrls)
 {
     const std::vector<PixmapLoader::PixmapEntry> pixmapEntries{{&left1Pixmap_,  imagesUrls.at(0)},
                                                                {&left2Pixmap_,  imagesUrls.at(1)},
@@ -196,10 +197,10 @@ void AbstractGhost::loadCommonPixmaps()
     scaredWhite1Pixmap_ = std::make_unique<QPixmap>();
     scaredWhite2Pixmap_ = std::make_unique<QPixmap>();
 
-    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBlue1Pixmap_.get(),  ":/ghost/ghost_scared_blue_1.png"},
-                                                                  {scaredBlue2Pixmap_.get(),  ":/ghost/ghost_scared_blue_2.png"},
-                                                                  {scaredWhite1Pixmap_.get(), ":/ghost/ghost_scared_white_1.png"},
-                                                                  {scaredWhite2Pixmap_.get(), ":/ghost/ghost_scared_white_2.png"}};
+    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBlue1Pixmap_.get(),  ":/ghosts/scared_blue/ghost_scared_blue_1.png"},
+                                                                  {scaredBlue2Pixmap_.get(),  ":/ghosts/scared_blue/ghost_scared_blue_2.png"},
+                                                                  {scaredWhite1Pixmap_.get(), ":/ghosts/scared_white/ghost_scared_white_1.png"},
+                                                                  {scaredWhite2Pixmap_.get(), ":/ghosts/scared_white/ghost_scared_white_2.png"}};
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 }
