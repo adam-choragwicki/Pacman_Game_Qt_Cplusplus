@@ -12,8 +12,6 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
 
     MovableCharacter::reset();
     scaredState_ = ScaredState::NO_SCARED;
-
-    drawRect_ = true;
 }
 
 AbstractGhost::~AbstractGhost() = default;

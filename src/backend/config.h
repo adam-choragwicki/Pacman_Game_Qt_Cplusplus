@@ -49,14 +49,4 @@ namespace Config
         const Coordinates PURPLE_GHOST{307, 318};
         const Coordinates RED_GHOST{307, 252};
     }
-
-    namespace MoveOutOfTheStartingBoxTimeout
-    {
-        using namespace std::chrono_literals;
-
-        const auto BLUE_GHOST = 3s;
-        const auto ORANGE_GHOST = 2s;
-        const auto PURPLE_GHOST = 1s;
-        const auto RED_GHOST = 0s;
-    }
 }

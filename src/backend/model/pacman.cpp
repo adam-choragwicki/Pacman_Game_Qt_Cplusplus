@@ -8,8 +8,6 @@ Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, Config:
     initializePixmaps();
 
     direction_ = Direction::LEFT;
-
-    drawRect_ = true;
 }
 
 void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)

@@ -5,7 +5,6 @@
 AbstractPellet::AbstractPellet(const Coordinates& coordinates, int diameter, int offsetX, int offsetY) : CustomGraphicsItem(QRectF(offsetX, offsetY, diameter, diameter))
 {
     setPos(coordinates.x_, coordinates.y_);
-    drawRect_ = true;
 }
 
 AbstractPellet::~AbstractPellet() = default;
