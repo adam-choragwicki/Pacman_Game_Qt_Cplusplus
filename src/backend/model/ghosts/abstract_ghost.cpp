@@ -51,14 +51,26 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    QPixmap* pixmap{};
+    const QPixmap* pixmap;
+
+    static const QPixmap* normalPixmaps[4][2] = {{&left1Pixmap_,  &left2Pixmap_},   // LEFT
+                                                 {&right1Pixmap_, &right2Pixmap_}, // RIGHT
+                                                 {&down1Pixmap_,  &down2Pixmap_},   // DOWN
+                                                 {&up1Pixmap_,    &up2Pixmap_}        // UP
+    };
+
+    static const QPixmap* scaredBluePixmaps[2] = {scaredBlue1Pixmap_.get(), scaredBlue2Pixmap_.get()};
+
+    static const QPixmap* scaredWhitePixmaps[2] = {scaredWhite1Pixmap_.get(), scaredWhite2Pixmap_.get()};
+
+    const int phase = animationState_ % 2;
 
     if(scaredState_ == ScaredState::NO_SCARED)
     {
         switch(direction_)
         {
             case Direction::LEFT:
-                if(animationState_ == 0)
+                if(phase == 0)
                 {
                     pixmap = &left1Pixmap_;
                 }
@@ -69,7 +81,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
                 break;
 
             case Direction::RIGHT:
-                if(animationState_ == 0)
+                if(phase == 0)
                 {
                     pixmap = &right1Pixmap_;
                 }
@@ -80,7 +92,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
                 break;
 
             case Direction::DOWN:
-                if(animationState_ == 0)
+                if(phase == 0)
                 {
                     pixmap = &down1Pixmap_;
                 }
@@ -91,7 +103,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
                 break;
 
             case Direction::UP:
-                if(animationState_ == 0)
+                if(phase == 0)
                 {
                     pixmap = &up1Pixmap_;
                 }
@@ -107,7 +119,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     }
     else if(scaredState_ == ScaredState::SCARED_BLUE)
     {
-        if(animationState_ == 0)
+        if(phase == 0)
         {
             pixmap = scaredBlue1Pixmap_.get();
         }
@@ -118,7 +130,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     }
     else if(scaredState_ == ScaredState::SCARED_WHITE)
     {
-        if(animationState_ == 0)
+        if(phase == 0)
         {
             pixmap = scaredWhite1Pixmap_.get();
         }
