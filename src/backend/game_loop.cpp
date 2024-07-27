@@ -1,7 +1,6 @@
 #include "game_loop.h"
 #include "model/model.h"
 #include "collision_manager.h"
-#include "config.h"
 #include "model/ghost_timing_manager.h"
 #include <QTimer>
 
@@ -18,6 +17,7 @@ GameLoop::GameLoop(Model& model) :
 {
     gameLoopTimer_ = new QTimer;
     gameLoopTimer_->setTimerType(Qt::PreciseTimer);
+    gameLoopTimer_->setInterval(GAME_LOOP_INTERVAL);
     connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
 
     ghosts_.at(0) = &blueGhost_;
@@ -33,7 +33,7 @@ void GameLoop::start()
         ghost->getGhostTimingManager()->startLeaveStartingBoxTimer();
     }
 
-    gameLoopTimer_->start(Config::Timing::GAME_LOOP_INTERVAL);
+    gameLoopTimer_->start();
 }
 
 void GameLoop::stop()

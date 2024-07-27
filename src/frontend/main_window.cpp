@@ -28,7 +28,8 @@ MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)
 
     viewportUpdateTimer_ = new QTimer(this);
     viewportUpdateTimer_->setTimerType(Qt::PreciseTimer);
-    viewportUpdateTimer_->start(Config::Timing::VIEWPORT_UPDATE_INTERVAL);
+    viewportUpdateTimer_->setInterval(VIEWPORT_UPDATE_INTERVAL);
+    viewportUpdateTimer_->start();
 }
 
 void MainWindow::centerOnPrimaryScreen()

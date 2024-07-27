@@ -1,6 +1,5 @@
 #include "model/ghosts/abstract_ghost.h"
 #include <QtGui/QPainter>
-#include "config.h"
 #include "model/ghost_timing_manager.h"
 #include "pixmap_loader.h"
 

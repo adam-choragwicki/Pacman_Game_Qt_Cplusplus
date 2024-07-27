@@ -1,7 +1,6 @@
 #include <QtGui/QKeyEvent>
 #include "input_handler.h"
 #include "model/model.h"
-#include "config.h"
 
 InputHandler::InputHandler(Model& model) : model_(model)
 {}

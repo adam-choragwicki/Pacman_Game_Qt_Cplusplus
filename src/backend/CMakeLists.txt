@@ -15,7 +15,6 @@ set(SOURCE_FILES
         model/ghost_timing_manager.cpp model/ghost_timing_manager.h
 
         common.h
-        config.h
 
         movable_character.h movable_character.cpp
         path_points.h path_points.cpp

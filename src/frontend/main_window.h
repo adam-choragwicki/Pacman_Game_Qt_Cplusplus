@@ -32,4 +32,6 @@ private:
     GraphicsView* graphicsView_{};
 
     QTimer* viewportUpdateTimer_;
+
+    static constexpr auto VIEWPORT_UPDATE_INTERVAL = std::chrono::milliseconds(17);
 };

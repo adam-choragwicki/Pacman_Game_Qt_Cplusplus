@@ -1,5 +1,4 @@
 #include "model/pacman.h"
-#include "config.h"
 #include "pixmap_loader.h"
 #include <QtGui/QPainter>
 

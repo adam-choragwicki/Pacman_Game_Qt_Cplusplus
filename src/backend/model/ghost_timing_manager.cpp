@@ -1,5 +1,4 @@
 #include "ghost_timing_manager.h"
-#include "config.h"
 
 GhostTimingManager::GhostTimingManager(const std::chrono::seconds& moveOutOfTheStartingBoxTimeout)
 {

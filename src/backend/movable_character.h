@@ -5,7 +5,6 @@
 #include <QTimer>
 #include "common.h"
 #include "coordinates.h"
-#include "config.h"
 #include "custom_graphics_item.h"
 
 class MovableCharacter : public QObject, public CustomGraphicsItem

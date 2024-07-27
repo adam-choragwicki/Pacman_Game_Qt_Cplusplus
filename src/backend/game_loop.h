@@ -60,4 +60,6 @@ private:
     PelletsManager& pelletsManager_;
 
     QTimer* gameLoopTimer_{};
+
+    static constexpr auto GAME_LOOP_INTERVAL = std::chrono::milliseconds(6);
 };
