@@ -6,11 +6,7 @@
 
 AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout) : MovableCharacter(coordinates, initialDirection)
 {
-    if(!commonPixmapsInitialized_)
-    {
-        loadCommonPixmaps();
-        commonPixmapsInitialized_ = true;
-    }
+    initializePixmaps();
 
     ghostTimingManager_ = std::make_unique<GhostTimingManager>(moveOutOfTheStartingBoxTimeout);
 
@@ -21,6 +17,29 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
 }
 
 AbstractGhost::~AbstractGhost() = default;
+
+void AbstractGhost::initializePixmaps()
+{
+    if(!commonPixmapsInitialized_)
+    {
+        initializeCommonPixmaps();
+        commonPixmapsInitialized_ = true;
+    }
+
+    //    leftPixmaps_[0] = &left1Pixmap_;
+    //    leftPixmaps_[1] = &left2Pixmap_;
+    //    rightPixmaps_[0] = &right1Pixmap_;
+    //    rightPixmaps_[1] = &right2Pixmap_;
+    //    downPixmaps_[0] = &down1Pixmap_;
+    //    downPixmaps_[1] = &down2Pixmap_;
+    //    upPixmaps_[0] = &up1Pixmap_;
+    //    upPixmaps_[1] = &up2Pixmap_;
+
+    //    scaredBluePixmaps_[0] = scaredBlue1Pixmap_.get();
+    //    scaredBluePixmaps_[1] = scaredBlue2Pixmap_.get();
+    //    scaredWhitePixmaps_[0] = scaredWhite1Pixmap_.get();
+    //    scaredWhitePixmaps_[1] = scaredWhite2Pixmap_.get();
+}
 
 void AbstractGhost::reset()
 {
@@ -54,29 +73,22 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     const QPixmap* pixmap;
     const int animationPhase = animationState_ % 2;
 
-    const QPixmap* leftPixmaps[2] = {&left1Pixmap_, &left2Pixmap_};
-    const QPixmap* rightPixmaps[2] = {&right1Pixmap_, &right2Pixmap_};
-    const QPixmap* downPixmaps[2] = {&down1Pixmap_, &down2Pixmap_};
-    const QPixmap* upPixmaps[2] = {&up1Pixmap_, &up2Pixmap_};
-
-    const QPixmap* scaredBluePixmaps[2] = {scaredBlue1Pixmap_.get(), scaredBlue2Pixmap_.get()};
-    const QPixmap* scaredWhitePixmaps[2] = {scaredWhite1Pixmap_.get(), scaredWhite2Pixmap_.get()};
-
+    // Select the appropriate pixmap based on the current state and direction
     if(scaredState_ == ScaredState::NO_SCARED)
     {
         switch(direction_)
         {
             case Direction::LEFT:
-                pixmap = leftPixmaps[animationPhase];
+                pixmap = &leftPixmaps_[animationPhase];
                 break;
             case Direction::RIGHT:
-                pixmap = rightPixmaps[animationPhase];
+                pixmap = &rightPixmaps_[animationPhase];
                 break;
             case Direction::DOWN:
-                pixmap = downPixmaps[animationPhase];
+                pixmap = &downPixmaps_[animationPhase];
                 break;
             case Direction::UP:
-                pixmap = upPixmaps[animationPhase];
+                pixmap = &upPixmaps_[animationPhase];
                 break;
             default:
                 throw std::runtime_error("Cannot draw Ghost, wrong direction");
@@ -84,11 +96,11 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     }
     else if(scaredState_ == ScaredState::SCARED_BLUE)
     {
-        pixmap = scaredBluePixmaps[animationPhase];
+        pixmap = scaredBluePixmaps_[animationPhase].get();
     }
     else if(scaredState_ == ScaredState::SCARED_WHITE)
     {
-        pixmap = scaredWhitePixmaps[animationPhase];
+        pixmap = scaredWhitePixmaps_[animationPhase].get();
     }
     else
     {
@@ -98,20 +110,19 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     painter->drawPixmap(rect_.toRect(), *pixmap);
 }
 
-
 void AbstractGhost::loadPixmaps(const std::array<QString, 8>& imagesUrls)
 {
-    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries{{&left1Pixmap_,  imagesUrls.at(0)},
-                                                               {&left2Pixmap_,  imagesUrls.at(1)},
+    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries{{&leftPixmaps_[0],  imagesUrls.at(0)},
+                                                               {&leftPixmaps_[1],  imagesUrls.at(1)},
 
-                                                               {&right1Pixmap_, imagesUrls.at(2)},
-                                                               {&right2Pixmap_, imagesUrls.at(3)},
+                                                               {&rightPixmaps_[0], imagesUrls.at(2)},
+                                                               {&rightPixmaps_[1], imagesUrls.at(3)},
 
-                                                               {&up1Pixmap_,    imagesUrls.at(4)},
-                                                               {&up2Pixmap_,    imagesUrls.at(5)},
+                                                               {&upPixmaps_[0],    imagesUrls.at(4)},
+                                                               {&upPixmaps_[1],    imagesUrls.at(5)},
 
-                                                               {&down1Pixmap_,  imagesUrls.at(6)},
-                                                               {&down2Pixmap_,  imagesUrls.at(7)}};
+                                                               {&downPixmaps_[0],  imagesUrls.at(6)},
+                                                               {&downPixmaps_[1],  imagesUrls.at(7)}};
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 }
@@ -141,17 +152,31 @@ void AbstractGhost::setScared()
     ghostTimingManager_->startScaredBlueTimer();
 }
 
-void AbstractGhost::loadCommonPixmaps()
+void AbstractGhost::initializeCommonPixmaps()
 {
-    scaredBlue1Pixmap_ = std::make_unique<QPixmap>();
-    scaredBlue2Pixmap_ = std::make_unique<QPixmap>();
-    scaredWhite1Pixmap_ = std::make_unique<QPixmap>();
-    scaredWhite2Pixmap_ = std::make_unique<QPixmap>();
+    //    scaredBluePixmaps_[2];
+    //    scaredWhitePixmaps_[2];
 
-    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBlue1Pixmap_.get(),  ":/ghosts/scared_blue/ghost_scared_blue_1.png"},
-                                                                  {scaredBlue2Pixmap_.get(),  ":/ghosts/scared_blue/ghost_scared_blue_2.png"},
-                                                                  {scaredWhite1Pixmap_.get(), ":/ghosts/scared_white/ghost_scared_white_1.png"},
-                                                                  {scaredWhite2Pixmap_.get(), ":/ghosts/scared_white/ghost_scared_white_2.png"}};
+    scaredBluePixmaps_[0] = std::make_unique<QPixmap>();
+    scaredBluePixmaps_[1] = std::make_unique<QPixmap>();
+    scaredWhitePixmaps_[0] = std::make_unique<QPixmap>();
+    scaredWhitePixmaps_[1] = std::make_unique<QPixmap>();
+
+    //    scaredBlue1Pixmap_ = std::make_unique<QPixmap>();
+    //    scaredBlue2Pixmap_ = std::make_unique<QPixmap>();
+    //    scaredWhite1Pixmap_ = std::make_unique<QPixmap>();
+    //    scaredWhite2Pixmap_ = std::make_unique<QPixmap>();
+
+    //    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBlue1Pixmap_.get(),  ":/ghosts/scared_blue/ghost_scared_blue_1.png"},
+    //                                                                  {scaredBlue2Pixmap_.get(),  ":/ghosts/scared_blue/ghost_scared_blue_2.png"},
+    //                                                                  {scaredWhite1Pixmap_.get(), ":/ghosts/scared_white/ghost_scared_white_1.png"},
+    //                                                                  {scaredWhite2Pixmap_.get(), ":/ghosts/scared_white/ghost_scared_white_2.png"}};
+
+    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBluePixmaps_[0].get(),  ":/ghosts/scared_blue/ghost_scared_blue_1.png"},
+                                                                  {scaredBluePixmaps_[1].get(),  ":/ghosts/scared_blue/ghost_scared_blue_2.png"},
+                                                                  {scaredWhitePixmaps_[0].get(), ":/ghosts/scared_white/ghost_scared_white_1.png"},
+                                                                  {scaredWhitePixmaps_[1].get(), ":/ghosts/scared_white/ghost_scared_white_2.png"}};
+
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 }

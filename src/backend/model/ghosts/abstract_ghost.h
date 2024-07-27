@@ -33,17 +33,21 @@ protected:
     bool isSlowedDown_{};
 
 private:
-    static void loadCommonPixmaps();
+    void initializePixmaps();
+    static void initializeCommonPixmaps();
 
     enum class ScaredState
     {
         NO_SCARED, SCARED_BLUE, SCARED_WHITE
     } scaredState_;
 
-    QPixmap left1Pixmap_, left2Pixmap_, up1Pixmap_, up2Pixmap_, down1Pixmap_, down2Pixmap_, right1Pixmap_, right2Pixmap_;
+    QPixmap leftPixmaps_[2];
+    QPixmap rightPixmaps_[2];
+    QPixmap downPixmaps_[2];
+    QPixmap upPixmaps_[2];
 
-    inline static std::unique_ptr<QPixmap> scaredBlue1Pixmap_, scaredBlue2Pixmap_;
-    inline static std::unique_ptr<QPixmap> scaredWhite1Pixmap_, scaredWhite2Pixmap_;
+    inline static std::unique_ptr<QPixmap> scaredBluePixmaps_[2];
+    inline static std::unique_ptr<QPixmap> scaredWhitePixmaps_[2];
 
     std::unique_ptr<GhostTimingManager> ghostTimingManager_;
 
