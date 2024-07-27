@@ -32,8 +32,8 @@ public:
     [[nodiscard]] Direction getNextDirection() const
     { return nextDirection_; }
 
-    void setAnimationState(int animationState)
-    { animationState_ = animationState; }
+    void setAnimationPhase(int animationPhase)
+    { animationPhase_ = animationPhase; }
 
     [[nodiscard]] bool isMoving() const
     { return moving_; }
@@ -48,7 +48,7 @@ public:
     void moveTo(const Coordinates& coordinates);
 
 protected:
-    int animationState_{};
+    int animationPhase_{};
     bool moving_{};
     Direction direction_;
     Direction nextDirection_;

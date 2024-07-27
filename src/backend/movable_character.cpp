@@ -15,7 +15,7 @@ MovableCharacter::~MovableCharacter() = default;
 void MovableCharacter::reset()
 {
     moving_ = false;
-    animationState_ = 0;
+    animationPhase_ = 0;
 
     direction_ = STARTING_DIRECTION;
     nextDirection_ = direction_;

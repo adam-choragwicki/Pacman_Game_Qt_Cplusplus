@@ -13,8 +13,17 @@ public:
 private:
     void initializePixmaps();
 
-    QPixmap left1Pixmap_, left2Pixmap_, left3Pixmap_, left4Pixmap_;
-    QPixmap up1Pixmap_, up2Pixmap_, up3Pixmap_, up4Pixmap_;
-    QPixmap down1Pixmap_, down2Pixmap_, down3Pixmap_, down4Pixmap_;
-    QPixmap right1Pixmap_, right2Pixmap_, right3Pixmap_, right4Pixmap_;
+    static const int ANIMATION_PHASES_COUNT = 4;
+
+    QPixmap leftPixmaps_[ANIMATION_PHASES_COUNT];
+    QPixmap rightPixmaps_[ANIMATION_PHASES_COUNT];
+    QPixmap upPixmaps_[ANIMATION_PHASES_COUNT];
+    QPixmap downPixmaps_[ANIMATION_PHASES_COUNT];
+
+    bool animationPhaseAscending = true;
+
+    /* Set higher to make animation slower */
+    const int ANIMATION_SPEED_FACTOR = 10;
+
+    int stepCounter_{};
 };

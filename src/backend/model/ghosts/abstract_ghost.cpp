@@ -56,13 +56,13 @@ bool AbstractGhost::isScared() const
 
 void AbstractGhost::advanceAnimation()
 {
-    if(animationState_ > 2)
+    if(animationPhase_ > 2)
     {
-        setAnimationState(0);
+        animationPhase_ = 0;
     }
     else
     {
-        ++animationState_;
+        ++animationPhase_;
     }
 }
 
@@ -71,7 +71,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     CustomGraphicsItem::paint(painter, option, widget);
 
     const QPixmap* pixmap;
-    const int animationPhase = animationState_ % 2;
+    const int animationPhase = animationPhase_ % 2;
 
     // Select the appropriate pixmap based on the current state and direction
     if(scaredState_ == ScaredState::NO_SCARED)

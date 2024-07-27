@@ -41,8 +41,8 @@ private:
 
     QPixmap leftPixmaps_[2];
     QPixmap rightPixmaps_[2];
-    QPixmap downPixmaps_[2];
     QPixmap upPixmaps_[2];
+    QPixmap downPixmaps_[2];
 
     inline static std::unique_ptr<QPixmap> scaredBluePixmaps_[2];
     inline static std::unique_ptr<QPixmap> scaredWhitePixmaps_[2];
