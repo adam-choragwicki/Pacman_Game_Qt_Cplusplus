@@ -31,13 +31,4 @@ namespace Config
 
         static const auto GAME_LOOP_INTERVAL = MovableCharacter::NORMAL_SPEED;
     }
-
-    namespace StartingCoordinates
-    {
-        const Coordinates PACMAN{320, 514};
-        const Coordinates BLUE_GHOST{265, 318};
-        const Coordinates ORANGE_GHOST{349, 318};
-        const Coordinates PURPLE_GHOST{307, 318};
-        const Coordinates RED_GHOST{307, 252};
-    }
 }

@@ -3,7 +3,7 @@
 #include "pixmap_loader.h"
 #include <QtGui/QPainter>
 
-Pacman::Pacman() : MovableCharacter(Config::StartingCoordinates::PACMAN, INITIAL_DIRECTION)
+Pacman::Pacman() : MovableCharacter(STARTING_COORDINATES, INITIAL_DIRECTION)
 {
     initializePixmaps();
 

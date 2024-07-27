@@ -23,5 +23,6 @@ private:
     /* Set higher to make animation slower */
     const int ANIMATION_SPEED_FACTOR = 10;
 
-    inline static const Direction INITIAL_DIRECTION{Direction::LEFT};
+    inline static constexpr Direction INITIAL_DIRECTION{Direction::LEFT};
+    inline static const Coordinates STARTING_COORDINATES{320, 514};
 };
