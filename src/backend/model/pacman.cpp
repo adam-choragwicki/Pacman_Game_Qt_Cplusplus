@@ -17,88 +17,33 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-        painter->setRenderHint(QPainter::Antialiasing);
+    painter->setRenderHint(QPainter::Antialiasing);
 
-    QPixmap* pixmap{};
+    const QPixmap* pixmap;
+    const int animationPhase = animationState_ / Config::Timing::Pacman::ANIMATION_SPEED_FACTOR % 6;
+
+//    qDebug() << "Animation phase: " << animationPhase << "       " << "Animation state: " << animationState_;;
+
+    static const QPixmap* pixmaps[4][6] = {{&left1Pixmap_,  &left2Pixmap_,  &left3Pixmap_,  &left4Pixmap_,  &left3Pixmap_,  &left2Pixmap_}, // LEFT
+                                           {&right1Pixmap_, &right2Pixmap_, &right3Pixmap_, &right4Pixmap_, &right3Pixmap_, &right2Pixmap_}, // RIGHT
+                                           {&up1Pixmap_,    &up2Pixmap_,    &up3Pixmap_,    &up4Pixmap_,    &up3Pixmap_,    &up2Pixmap_}, // UP
+                                           {&down1Pixmap_,  &down2Pixmap_,  &down3Pixmap_,  &down4Pixmap_,  &down3Pixmap_,  &down2Pixmap_} // DOWN
+    };
 
     switch(direction_)
     {
         case Direction::LEFT:
-            if(animationState_ < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &left1Pixmap_;
-            }
-            else if(animationState_ < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &left2Pixmap_;
-            }
-            else if(animationState_ < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &left3Pixmap_;
-            }
-            else
-            {
-                pixmap = &left4Pixmap_;
-            }
+            pixmap = pixmaps[0][animationPhase];
             break;
-
         case Direction::RIGHT:
-            if(animationState_ < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &right1Pixmap_;
-            }
-            else if(animationState_ < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &right2Pixmap_;
-            }
-            else if(animationState_ < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &right3Pixmap_;
-            }
-            else
-            {
-                pixmap = &right4Pixmap_;
-            }
+            pixmap = pixmaps[1][animationPhase];
             break;
-
         case Direction::UP:
-            if(animationState_ < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &up1Pixmap_;
-            }
-            else if(animationState_ < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &up2Pixmap_;
-            }
-            else if(animationState_ < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &up3Pixmap_;
-            }
-            else
-            {
-                pixmap = &up4Pixmap_;
-            }
+            pixmap = pixmaps[2][animationPhase];
             break;
-
         case Direction::DOWN:
-            if(animationState_ < 2 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &down1Pixmap_;
-            }
-            else if(animationState_ < 4 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &down2Pixmap_;
-            }
-            else if(animationState_ < 6 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
-            {
-                pixmap = &down3Pixmap_;
-            }
-            else
-            {
-                pixmap = &down4Pixmap_;
-            }
+            pixmap = pixmaps[3][animationPhase];
             break;
-
         default:
             throw std::runtime_error("Cannot draw Pacman, wrong direction");
     }
@@ -113,7 +58,7 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 
 void Pacman::advanceAnimation()
 {
-    if(animationState_ >= 8 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
+    if(animationState_ >= 14 * Config::Timing::Pacman::ANIMATION_SPEED_FACTOR)
     {
         animationState_ = 0;
     }
