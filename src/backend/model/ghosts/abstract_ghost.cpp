@@ -52,93 +52,43 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     CustomGraphicsItem::paint(painter, option, widget);
 
     const QPixmap* pixmap;
+    const int animationPhase = animationState_ % 2;
 
-    static const QPixmap* normalPixmaps[4][2] = {{&left1Pixmap_,  &left2Pixmap_},   // LEFT
-                                                 {&right1Pixmap_, &right2Pixmap_}, // RIGHT
-                                                 {&down1Pixmap_,  &down2Pixmap_},   // DOWN
-                                                 {&up1Pixmap_,    &up2Pixmap_}        // UP
-    };
+    const QPixmap* leftPixmaps[2] = {&left1Pixmap_, &left2Pixmap_};
+    const QPixmap* rightPixmaps[2] = {&right1Pixmap_, &right2Pixmap_};
+    const QPixmap* downPixmaps[2] = {&down1Pixmap_, &down2Pixmap_};
+    const QPixmap* upPixmaps[2] = {&up1Pixmap_, &up2Pixmap_};
 
-    static const QPixmap* scaredBluePixmaps[2] = {scaredBlue1Pixmap_.get(), scaredBlue2Pixmap_.get()};
-
-    static const QPixmap* scaredWhitePixmaps[2] = {scaredWhite1Pixmap_.get(), scaredWhite2Pixmap_.get()};
-
-    const QPixmap* pixmap;
-    const int phase = animationState_ % 2;
+    const QPixmap* scaredBluePixmaps[2] = {scaredBlue1Pixmap_.get(), scaredBlue2Pixmap_.get()};
+    const QPixmap* scaredWhitePixmaps[2] = {scaredWhite1Pixmap_.get(), scaredWhite2Pixmap_.get()};
 
     if(scaredState_ == ScaredState::NO_SCARED)
     {
         switch(direction_)
         {
             case Direction::LEFT:
-                if(phase == 0)
-                {
-                    pixmap = &left1Pixmap_;
-                }
-                else
-                {
-                    pixmap = &left2Pixmap_;
-                }
+                pixmap = leftPixmaps[animationPhase];
                 break;
-
             case Direction::RIGHT:
-                if(phase == 0)
-                {
-                    pixmap = &right1Pixmap_;
-                }
-                else
-                {
-                    pixmap = &right2Pixmap_;
-                }
+                pixmap = rightPixmaps[animationPhase];
                 break;
-
             case Direction::DOWN:
-                if(phase == 0)
-                {
-                    pixmap = &down1Pixmap_;
-                }
-                else
-                {
-                    pixmap = &down2Pixmap_;
-                }
+                pixmap = downPixmaps[animationPhase];
                 break;
-
             case Direction::UP:
-                if(phase == 0)
-                {
-                    pixmap = &up1Pixmap_;
-                }
-                else
-                {
-                    pixmap = &up2Pixmap_;
-                }
+                pixmap = upPixmaps[animationPhase];
                 break;
-
             default:
                 throw std::runtime_error("Cannot draw Ghost, wrong direction");
         }
     }
     else if(scaredState_ == ScaredState::SCARED_BLUE)
     {
-        if(phase == 0)
-        {
-            pixmap = scaredBlue1Pixmap_.get();
-        }
-        else
-        {
-            pixmap = scaredBlue2Pixmap_.get();
-        }
+        pixmap = scaredBluePixmaps[animationPhase];
     }
     else if(scaredState_ == ScaredState::SCARED_WHITE)
     {
-        if(phase == 0)
-        {
-            pixmap = scaredWhite1Pixmap_.get();
-        }
-        else
-        {
-            pixmap = scaredWhite2Pixmap_.get();
-        }
+        pixmap = scaredWhitePixmaps[animationPhase];
     }
     else
     {
@@ -147,6 +97,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 
     painter->drawPixmap(rect_.toRect(), *pixmap);
 }
+
 
 void AbstractGhost::loadPixmaps(const std::array<QString, 8>& imagesUrls)
 {
