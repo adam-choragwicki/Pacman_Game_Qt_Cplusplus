@@ -53,10 +53,6 @@ private:
 
     inline static bool commonPixmapsInitialized_{};
 
-    bool animationPhaseAscending_ = true;
-
     /* Set higher to make animation slower */
     const int ANIMATION_SPEED_FACTOR = 20;
-
-    int stepCounter_{};
 };

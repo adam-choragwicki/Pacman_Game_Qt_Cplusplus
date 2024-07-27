@@ -32,9 +32,6 @@ public:
     [[nodiscard]] Direction getNextDirection() const
     { return nextDirection_; }
 
-    void setAnimationPhase(int animationPhase)
-    { animationPhase_ = animationPhase; }
-
     [[nodiscard]] bool isMoving() const
     { return moving_; }
 
@@ -55,6 +52,9 @@ protected:
 
     const Coordinates STARTING_COORDINATES;
     const Direction STARTING_DIRECTION;
+
+    bool animationPhaseAscending_ = true;
+    int stepCounter_{};
 
 private:
     static const int DIAMETER = 30;

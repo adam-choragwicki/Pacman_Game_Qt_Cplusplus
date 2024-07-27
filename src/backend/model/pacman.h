@@ -20,10 +20,6 @@ private:
     QPixmap upPixmaps_[ANIMATION_PHASES_COUNT];
     QPixmap downPixmaps_[ANIMATION_PHASES_COUNT];
 
-    bool animationPhaseAscending_ = true;
-
     /* Set higher to make animation slower */
     const int ANIMATION_SPEED_FACTOR = 10;
-
-    int stepCounter_{};
 };
