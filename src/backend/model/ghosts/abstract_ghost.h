@@ -16,6 +16,7 @@ public:
 
     void advanceAnimation() override;
     void reset() override;
+    void respawn();
 
     void setScared();
 

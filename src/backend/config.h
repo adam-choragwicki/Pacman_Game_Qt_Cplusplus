@@ -18,17 +18,6 @@ namespace Config
             const auto NORMAL_SPEED = 6ms;
         }
 
-        namespace Pacman
-        {
-            const auto ANIMATION_SPEED_FACTOR = 6;
-        }
-
-        namespace Ghost
-        {
-            const auto SCARED_BLUE_TIME = 1s;
-            const auto SCARED_WHITE_TIME = 1s;
-        }
-
         static const auto GAME_LOOP_INTERVAL = MovableCharacter::NORMAL_SPEED;
     }
 }

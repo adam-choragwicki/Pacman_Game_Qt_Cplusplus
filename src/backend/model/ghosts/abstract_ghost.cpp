@@ -47,6 +47,12 @@ void AbstractGhost::reset()
     isSlowedDown_ = false;
 }
 
+void AbstractGhost::respawn()
+{
+    reset();
+    ghostTimingManager_->setTimeToLeaveStartingBox();
+}
+
 bool AbstractGhost::isScared() const
 {
     return scaredState_ != ScaredState::NO_SCARED;

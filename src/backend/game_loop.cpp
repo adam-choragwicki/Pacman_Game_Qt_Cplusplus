@@ -76,7 +76,7 @@ void GameLoop::execute()
             else
             {
                 scoreManager_.increaseScoreForEatingGhost();
-                ghost->reset();
+                ghost->respawn();
             }
         }
     }

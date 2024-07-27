@@ -19,6 +19,9 @@ public:
     [[nodiscard]] bool isItTimeToLeaveStartingBox() const
     { return timeToLeaveStartingBox_; }
 
+    void setTimeToLeaveStartingBox()
+    { timeToLeaveStartingBox_ = true; }
+
     [[nodiscard]] const QTimer& getScaredBlueStateTimer() const
     { return scaredBlueStateTimer_; }
 
@@ -26,6 +29,9 @@ public:
     { return scaredWhiteStateTimer_; }
 
 private:
+    static constexpr auto SCARED_BLUE_TIME = std::chrono::seconds(3);
+    static constexpr auto SCARED_WHITE_TIME = std::chrono::seconds(1);
+
     QTimer scaredBlueStateTimer_;
     QTimer scaredWhiteStateTimer_;
     QTimer timeToLeaveStartingBoxTimer;
