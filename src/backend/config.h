@@ -32,15 +32,6 @@ namespace Config
         static const auto GAME_LOOP_INTERVAL = MovableCharacter::NORMAL_SPEED;
     }
 
-    namespace InitialDirection
-    {
-        const Direction PACMAN = Direction::LEFT;
-        const Direction BLUE_GHOST = Direction::UP;
-        const Direction ORANGE_GHOST = Direction::UP;
-        const Direction PURPLE_GHOST = Direction::UP;
-        const Direction RED_GHOST = Direction::LEFT;
-    }
-
     namespace StartingCoordinates
     {
         const Coordinates PACMAN{320, 514};

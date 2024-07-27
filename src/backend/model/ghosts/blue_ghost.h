@@ -12,4 +12,5 @@ private:
                                                            ":/ghosts/blue/ghost_blue_up_1.png", ":/ghosts/blue/ghost_blue_up_2.png", ":/ghosts/blue/ghost_blue_down_1.png", ":/ghosts/blue/ghost_blue_down_2.png"};
 
     inline static const std::chrono::seconds MOVE_OUT_OF_THE_STARTING_BOX_TIMEOUT{3};
+    inline static const Direction INITIAL_DIRECTION{Direction::UP};
 };
