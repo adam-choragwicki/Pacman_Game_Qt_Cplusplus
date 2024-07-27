@@ -16,6 +16,8 @@ void MovableCharacter::reset()
 {
     moving_ = false;
     animationPhase_ = 0;
+    animationPhaseAscending_ = true;
+    stepCounter_ = 0;
 
     direction_ = STARTING_DIRECTION;
     nextDirection_ = direction_;

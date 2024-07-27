@@ -25,6 +25,10 @@ MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)
     setCentralWidget(graphicsView_);
 
     centerOnPrimaryScreen();
+
+    viewportUpdateTimer_ = new QTimer(this);
+    viewportUpdateTimer_->setTimerType(Qt::PreciseTimer);
+    viewportUpdateTimer_->start(Config::Timing::VIEWPORT_UPDATE_INTERVAL);
 }
 
 void MainWindow::centerOnPrimaryScreen()

@@ -18,6 +18,9 @@ public:
 
     void updateViewport(const QList<QRectF>& dirtyRegions);
 
+    [[nodiscard]] QTimer* getViewportUpdateTimer() const
+    { return viewportUpdateTimer_; }
+
 private:
     void keyPressEvent(QKeyEvent* event) override;
 
@@ -27,4 +30,6 @@ private:
     const Model& model_;
 
     GraphicsView* graphicsView_{};
+
+    QTimer* viewportUpdateTimer_;
 };

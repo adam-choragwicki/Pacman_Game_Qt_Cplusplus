@@ -85,7 +85,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    const QPixmap* pixmap;
+    const QPixmap* pixmap{};
     const int animationPhase = animationPhase_ % 2;
 
     // Select the appropriate pixmap based on the current state and direction

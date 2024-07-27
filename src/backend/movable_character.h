@@ -45,7 +45,6 @@ public:
     void moveTo(const Coordinates& coordinates);
 
 protected:
-    int animationPhase_{};
     bool moving_{};
     Direction direction_;
     Direction nextDirection_;
@@ -53,6 +52,7 @@ protected:
     const Coordinates STARTING_COORDINATES;
     const Direction STARTING_DIRECTION;
 
+    int animationPhase_{};
     bool animationPhaseAscending_ = true;
     int stepCounter_{};
 

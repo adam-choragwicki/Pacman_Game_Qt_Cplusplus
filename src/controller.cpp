@@ -22,6 +22,8 @@ Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(vi
     initializeFrontendEvents();
 
     gameManager_->prepareGameToStart();
+
+    view_.getViewportUpdateTimer()->start();
 }
 
 void Controller::subscribeToKeyEvents()
@@ -33,10 +35,7 @@ void Controller::subscribeToKeyEvents()
 
 void Controller::initializeFrontendEvents()
 {
-    auto* viewportUpdateTimer = new QTimer(this);
-    viewportUpdateTimer->setTimerType(Qt::PreciseTimer);
-    connect(viewportUpdateTimer, &QTimer::timeout, this, &Controller::viewportUpdateHandler);
-    viewportUpdateTimer->start(Config::Timing::VIEWPORT_UPDATE_INTERVAL);
+    connect(view_.getViewportUpdateTimer(), &QTimer::timeout, this, &Controller::viewportUpdateHandler);
 }
 
 void Controller::viewportUpdateHandler()

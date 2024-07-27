@@ -75,6 +75,8 @@ private:
     void addItemsToScene();
     void addPelletsToScene();
 
+    std::unique_ptr<GraphicsScene> scene_;
+
     std::unique_ptr<PathPoints> pathPoints_;
 
     std::unique_ptr<Pacman> pacman_;
@@ -88,8 +90,6 @@ private:
 
     std::unique_ptr<PacmanMovementManager> pacmanMovementManager_;
     std::unique_ptr<GhostMovementManager> ghostMovementManager_;
-
-    std::unique_ptr<GraphicsScene> scene_;
 
     std::unique_ptr<ScreenTextDisplay> screenTextDisplay_;
 
