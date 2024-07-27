@@ -56,13 +56,28 @@ bool AbstractGhost::isScared() const
 
 void AbstractGhost::advanceAnimation()
 {
-    if(animationPhase_ > 2)
+    ++stepCounter_;
+
+    if(stepCounter_ >= ANIMATION_SPEED_FACTOR)
     {
-        animationPhase_ = 0;
-    }
-    else
-    {
-        ++animationPhase_;
+        stepCounter_ = 0;
+
+        if(animationPhaseAscending_)
+        {
+            ++animationPhase_;
+            if(animationPhase_ == ANIMATION_PHASES_COUNT - 1)
+            {
+                animationPhaseAscending_ = false;
+            }
+        }
+        else
+        {
+            --animationPhase_;
+            if(animationPhase_ == 0)
+            {
+                animationPhaseAscending_ = true;
+            }
+        }
     }
 }
 

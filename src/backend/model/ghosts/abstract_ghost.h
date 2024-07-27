@@ -39,15 +39,24 @@ private:
         NO_SCARED, SCARED_BLUE, SCARED_WHITE
     } scaredState_;
 
-    QPixmap leftPixmaps_[2];
-    QPixmap rightPixmaps_[2];
-    QPixmap upPixmaps_[2];
-    QPixmap downPixmaps_[2];
+    static const int ANIMATION_PHASES_COUNT = 2;
 
-    inline static std::unique_ptr<QPixmap> scaredBluePixmaps_[2];
-    inline static std::unique_ptr<QPixmap> scaredWhitePixmaps_[2];
+    QPixmap leftPixmaps_[ANIMATION_PHASES_COUNT];
+    QPixmap rightPixmaps_[ANIMATION_PHASES_COUNT];
+    QPixmap upPixmaps_[ANIMATION_PHASES_COUNT];
+    QPixmap downPixmaps_[ANIMATION_PHASES_COUNT];
+
+    inline static std::unique_ptr<QPixmap> scaredBluePixmaps_[ANIMATION_PHASES_COUNT];
+    inline static std::unique_ptr<QPixmap> scaredWhitePixmaps_[ANIMATION_PHASES_COUNT];
 
     std::unique_ptr<GhostTimingManager> ghostTimingManager_;
 
     inline static bool commonPixmapsInitialized_{};
+
+    bool animationPhaseAscending_ = true;
+
+    /* Set higher to make animation slower */
+    const int ANIMATION_SPEED_FACTOR = 20;
+
+    int stepCounter_{};
 };

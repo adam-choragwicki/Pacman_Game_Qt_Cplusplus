@@ -53,12 +53,12 @@ void Pacman::advanceAnimation()
     {
         stepCounter_ = 0;
 
-        if(animationPhaseAscending)
+        if(animationPhaseAscending_)
         {
             ++animationPhase_;
             if(animationPhase_ == ANIMATION_PHASES_COUNT - 1)
             {
-                animationPhaseAscending = false;
+                animationPhaseAscending_ = false;
             }
         }
         else
@@ -66,7 +66,7 @@ void Pacman::advanceAnimation()
             --animationPhase_;
             if(animationPhase_ == 0)
             {
-                animationPhaseAscending = true;
+                animationPhaseAscending_ = true;
             }
         }
     }
