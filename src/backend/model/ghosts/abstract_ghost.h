@@ -55,5 +55,5 @@ private:
     inline static bool commonPixmapsInitialized_{};
 
     /* Set higher to make animation slower */
-    const int ANIMATION_SPEED_FACTOR = 20;
+    const int ANIMATION_SPEED_FACTOR = 30;
 };
