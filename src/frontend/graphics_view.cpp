@@ -26,10 +26,10 @@ void GraphicsView::drawBackground(QPainter* painter, const QRectF& rect)
 {
     QGraphicsView::drawBackground(painter, rect);
 
-    if(whatToDrawManager_.drawBackground_)
-    {
-        painter->drawPixmap(0, 0, 614, 740, *arenaPixmap_);
-    }
+    //    if(whatToDrawManager_.drawBackground_)
+    //    {
+    //        painter->drawPixmap(0, 0, 614, 740, *arenaPixmap_);
+    //    }
 }
 
 void GraphicsView::drawForeground(QPainter* painter, const QRectF& rect)
@@ -90,8 +90,10 @@ void GraphicsView::initializePainterData()
 
 void GraphicsView::updateViewport(const QList<QRectF>& dirtyRegions)
 {
-    for(const QRectF& rect : dirtyRegions)
-    {
-        viewport()->update(rect.toRect());
-    }
+    viewport()->update();
+
+    //    for(const QRectF& rect : dirtyRegions)
+    //    {
+    //        viewport()->update(rect.toRect());
+    //    }
 }

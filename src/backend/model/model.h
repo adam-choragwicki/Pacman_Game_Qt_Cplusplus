@@ -22,6 +22,7 @@
 #include "what_to_draw_manager.h"
 
 #include "graphics_scene.h"
+#include "arena.h"
 
 class Model
 {
@@ -96,4 +97,6 @@ private:
     std::unique_ptr<PelletsManager> pelletsManager_;
 
     std::unique_ptr<WhatToDrawManager> whatToDrawManager_;
+
+    std::unique_ptr<Arena> arena_;
 };

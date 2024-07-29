@@ -45,46 +45,46 @@ void GameLoop::execute()
 {
     pacmanMovementHandler();
 
-    ghostMovementHandler(blueGhost_);
-    ghostMovementHandler(orangeGhost_);
-    ghostMovementHandler(purpleGhost_);
-    ghostMovementHandler(redGhost_);
+//    ghostMovementHandler(blueGhost_);
+//    ghostMovementHandler(orangeGhost_);
+//    ghostMovementHandler(purpleGhost_);
+//    ghostMovementHandler(redGhost_);
 
-    if(CollisionManager::checkAndProcessPacmanCollisionWithStandardPellet(pacman_, pelletsManager_.getStandardPellets()))
-    {
-        scoreManager_.increaseScoreForEatingStandardPellet();
-    }
+//    if(CollisionManager::checkAndProcessPacmanCollisionWithStandardPellet(pacman_, pelletsManager_.getStandardPellets()))
+//    {
+//        scoreManager_.increaseScoreForEatingStandardPellet();
+//    }
+//
+//    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerPellet(pacman_, pelletsManager_.getPowerPellets()))
+//    {
+//        scoreManager_.increaseScoreForEatingPowerPellet();
+//
+//        for(AbstractGhost* ghost : ghosts_)
+//        {
+//            ghost->setScared();
+//        }
+//    }
 
-    if(CollisionManager::checkAndProcessPacmanCollisionWithPowerPellet(pacman_, pelletsManager_.getPowerPellets()))
-    {
-        scoreManager_.increaseScoreForEatingPowerPellet();
+//    for(AbstractGhost* ghost : ghosts_)
+//    {
+//        if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_, *ghost))
+//        {
+//            if(!ghost->isScared())
+//            {
+//                emit endGame(GameResult::LOST);
+//            }
+//            else
+//            {
+//                scoreManager_.increaseScoreForEatingGhost();
+//                ghost->respawn();
+//            }
+//        }
+//    }
 
-        for(AbstractGhost* ghost : ghosts_)
-        {
-            ghost->setScared();
-        }
-    }
-
-    for(AbstractGhost* ghost : ghosts_)
-    {
-        if(CollisionManager::checkAndProcessPacmanCollisionWithGhost(pacman_, *ghost))
-        {
-            if(!ghost->isScared())
-            {
-                emit endGame(GameResult::LOST);
-            }
-            else
-            {
-                scoreManager_.increaseScoreForEatingGhost();
-                ghost->respawn();
-            }
-        }
-    }
-
-    if(pelletsManager_.getRemainingStandardPelletsCount() == 0)
-    {
-        emit endGame(GameResult::WIN);
-    }
+//    if(pelletsManager_.getRemainingStandardPelletsCount() == 0)
+//    {
+//        emit endGame(GameResult::WIN);
+//    }
 }
 
 void GameLoop::pacmanMovementHandler()

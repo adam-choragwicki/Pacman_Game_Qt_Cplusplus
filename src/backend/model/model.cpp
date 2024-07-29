@@ -27,6 +27,8 @@ Model::Model()
 
     whatToDrawManager_ = std::make_unique<WhatToDrawManager>();
 
+    arena_ = std::make_unique<Arena>();
+
     addItemsToScene();
 
     spdlog::debug("Items on scene: {}", scene_->items().size());
@@ -64,6 +66,20 @@ void Model::addItemsToScene()
     scene_->addItem(screenTextDisplay_.get());
 
     scene_->addItem(scoreDisplay_.get());
+
+    //    for(AbstractWall* wall : arena_->getWalls())
+    //    {
+    //
+    //    }
+
+    for(const auto&[coordinates, wall] : arena_->getWalls())
+    {
+        if(wall)
+        {
+            qDebug() << "Adding wall to scene";
+            scene_->addItem(wall);
+        }
+    }
 }
 
 void Model::addPelletsToScene()

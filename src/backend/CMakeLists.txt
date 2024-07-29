@@ -40,7 +40,7 @@ set(SOURCE_FILES
 
         score_display.h score_display.cpp
         game_manager.cpp game_manager.h
-        model/what_to_draw_manager.h pixmap_loader.h model/graphics_scene.cpp model/graphics_scene.h)
+        model/what_to_draw_manager.h pixmap_loader.h model/graphics_scene.cpp model/graphics_scene.h model/walls/vertical_wall.cpp model/walls/vertical_wall.h model/walls/horizontal_wall.cpp model/walls/horizontal_wall.h model/walls/rounded_vertical_wall.cpp model/walls/rounded_vertical_wall.h model/walls/rounded_horizontal_wall.cpp model/walls/rounded_horizontal_wall.h model/walls/abstract_wall.cpp model/walls/abstract_wall.h model/arena.cpp model/arena.h)
 
 # Create the backend library
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})

@@ -20,7 +20,7 @@ MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)
 
     setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    setPalette(QPalette(Qt::black));
+//    setPalette(QPalette(Qt::black));
 
     setCentralWidget(graphicsView_);
 
