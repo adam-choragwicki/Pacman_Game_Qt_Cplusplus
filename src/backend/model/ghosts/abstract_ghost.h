@@ -9,7 +9,7 @@ class AbstractGhost : public MovableCharacter
 Q_OBJECT
 
 public:
-    AbstractGhost(const Coordinates& coordinates, Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, const std::array<QString, 8>& imagesUrls);
+    AbstractGhost(const Coordinates& coordinates, Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, const std::array<QString, 6>& imagesUrls);
     ~AbstractGhost() override = 0;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
@@ -33,7 +33,7 @@ protected:
 
 private:
     static void initializeCommonPixmaps();
-    void initializePixmaps(const std::array<QString, 8>& imagesUrls);
+    void initializePixmaps(const std::array<QString, 6>& imagesUrls);
 
     enum class ScaredState
     {

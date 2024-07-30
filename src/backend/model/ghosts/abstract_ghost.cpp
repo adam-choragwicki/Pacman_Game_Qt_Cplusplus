@@ -3,7 +3,7 @@
 #include "model/ghost_timing_manager.h"
 #include "pixmap_loader.h"
 
-AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, const std::array<QString, 8>& imagesUrls) : MovableCharacter(coordinates, initialDirection)
+AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, const std::array<QString, 6>& imagesUrls) : MovableCharacter(coordinates, initialDirection)
 {
     initializePixmaps(imagesUrls);
 
@@ -15,7 +15,7 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
 
 AbstractGhost::~AbstractGhost() = default;
 
-void AbstractGhost::initializePixmaps(const std::array<QString, 8>& imagesUrls)
+void AbstractGhost::initializePixmaps(const std::array<QString, 6>& imagesUrls)
 {
     if(!commonPixmapsInitialized_)
     {
@@ -23,19 +23,23 @@ void AbstractGhost::initializePixmaps(const std::array<QString, 8>& imagesUrls)
         commonPixmapsInitialized_ = true;
     }
 
-    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries{{&leftPixmaps_[0],  imagesUrls.at(0)},
-                                                               {&leftPixmaps_[1],  imagesUrls.at(1)},
+    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries{{&rightPixmaps_[0], imagesUrls.at(0)},
+                                                               {&rightPixmaps_[1], imagesUrls.at(1)},
 
-                                                               {&rightPixmaps_[0], imagesUrls.at(2)},
-                                                               {&rightPixmaps_[1], imagesUrls.at(3)},
+                                                               {&upPixmaps_[0],    imagesUrls.at(2)},
+                                                               {&upPixmaps_[1],    imagesUrls.at(3)},
 
-                                                               {&upPixmaps_[0],    imagesUrls.at(4)},
-                                                               {&upPixmaps_[1],    imagesUrls.at(5)},
-
-                                                               {&downPixmaps_[0],  imagesUrls.at(6)},
-                                                               {&downPixmaps_[1],  imagesUrls.at(7)}};
+                                                               {&downPixmaps_[0],  imagesUrls.at(4)},
+                                                               {&downPixmaps_[1],  imagesUrls.at(5)}};
 
     PixmapLoader::loadPixmaps(pixmapEntries);
+
+    /* Mirror right pixmap to obtain left pixmap */
+    QTransform horizontalFlipTransformation;
+    horizontalFlipTransformation.scale(-1, 1);
+
+    leftPixmaps_[0] = rightPixmaps_[0].transformed(horizontalFlipTransformation, Qt::TransformationMode::SmoothTransformation);
+    leftPixmaps_[1] = rightPixmaps_[1].transformed(horizontalFlipTransformation, Qt::TransformationMode::SmoothTransformation);
 }
 
 void AbstractGhost::reset()
@@ -88,7 +92,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    const QPixmap* pixmap{};
+    const QPixmap* pixmap;
     const int animationPhase = animationPhase_ % 2;
 
     // Select the appropriate pixmap based on the current state and direction

@@ -11,8 +11,6 @@
     </qresource>
 
     <qresource>
-        <file>ghosts/blue/ghost_blue_left_1.png</file>
-        <file>ghosts/blue/ghost_blue_left_2.png</file>
         <file>ghosts/blue/ghost_blue_right_1.png</file>
         <file>ghosts/blue/ghost_blue_right_2.png</file>
         <file>ghosts/blue/ghost_blue_up_1.png</file>
@@ -20,8 +18,6 @@
         <file>ghosts/blue/ghost_blue_down_1.png</file>
         <file>ghosts/blue/ghost_blue_down_2.png</file>
 
-        <file>ghosts/orange/ghost_orange_left_1.png</file>
-        <file>ghosts/orange/ghost_orange_left_2.png</file>
         <file>ghosts/orange/ghost_orange_right_1.png</file>
         <file>ghosts/orange/ghost_orange_right_2.png</file>
         <file>ghosts/orange/ghost_orange_up_1.png</file>
@@ -29,8 +25,6 @@
         <file>ghosts/orange/ghost_orange_down_1.png</file>
         <file>ghosts/orange/ghost_orange_down_2.png</file>
 
-        <file>ghosts/purple/ghost_purple_left_1.png</file>
-        <file>ghosts/purple/ghost_purple_left_2.png</file>
         <file>ghosts/purple/ghost_purple_right_1.png</file>
         <file>ghosts/purple/ghost_purple_right_2.png</file>
         <file>ghosts/purple/ghost_purple_up_1.png</file>
@@ -38,8 +32,6 @@
         <file>ghosts/purple/ghost_purple_down_1.png</file>
         <file>ghosts/purple/ghost_purple_down_2.png</file>
 
-        <file>ghosts/red/ghost_red_left_1.png</file>
-        <file>ghosts/red/ghost_red_left_2.png</file>
         <file>ghosts/red/ghost_red_right_1.png</file>
         <file>ghosts/red/ghost_red_right_2.png</file>
         <file>ghosts/red/ghost_red_up_1.png</file>
