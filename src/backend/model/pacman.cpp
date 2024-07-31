@@ -35,9 +35,7 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
             throw std::runtime_error("Cannot draw Pacman, wrong direction");
     }
 
-    const double penWidth = painter->pen().widthF();
-    const QRectF targetRect = rect_.adjusted(penWidth / 2, penWidth / 2, -penWidth / 2, -penWidth / 2);
-    painter->drawPixmap(targetRect.toRect(), *pixmap);
+    drawPixmapAvoidingArtifacts(painter, pixmap);
 }
 
 void Pacman::advanceAnimation()

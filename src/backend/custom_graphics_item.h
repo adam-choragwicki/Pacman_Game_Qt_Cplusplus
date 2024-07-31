@@ -15,7 +15,10 @@ public:
     bool operator<(const CustomGraphicsItem& other) const;
 
 protected:
-    bool drawRect_{};
+    void drawPixmapAvoidingArtifacts(QPainter* painter, const QPixmap* pixmap);
+
+    bool globalDrawBoundingRect_{};
+    bool drawBoundingRect_{};
 
     const QRectF rect_;
     QPen rectPen_;
