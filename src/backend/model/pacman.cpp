@@ -75,23 +75,11 @@ void Pacman::initializePixmaps()
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 
-    rightPixmaps_[0] = PixmapManager::scalePixmap(&rightPixmaps_[0], rect_);
-    rightPixmaps_[1] = PixmapManager::scalePixmap(&rightPixmaps_[1], rect_);
-    rightPixmaps_[2] = PixmapManager::scalePixmap(&rightPixmaps_[2], rect_);
-    rightPixmaps_[3] = PixmapManager::scalePixmap(&rightPixmaps_[3], rect_);
-
-    leftPixmaps_[0] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[0]);
-    leftPixmaps_[1] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[1]);
-    leftPixmaps_[2] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[2]);
-    leftPixmaps_[3] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[3]);
-
-    upPixmaps_[0] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[0]);
-    upPixmaps_[1] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[1]);
-    upPixmaps_[2] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[2]);
-    upPixmaps_[3] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[3]);
-
-    downPixmaps_[0] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[0]);
-    downPixmaps_[1] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[1]);
-    downPixmaps_[2] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[2]);
-    downPixmaps_[3] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[3]);
+    for(int i = 0; i < ANIMATION_PHASES_COUNT; ++i)
+    {
+        rightPixmaps_[i] = PixmapManager::scalePixmap(&rightPixmaps_[i], rect_);
+        leftPixmaps_[i] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[i]);
+        upPixmaps_[i] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[i]);
+        downPixmaps_[i] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[i]);
+    }
 }

@@ -35,19 +35,15 @@ void AbstractGhost::initializePixmaps(const std::array<QString, 6>& imagesUrls)
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 
-    /* Scale size of pixmaps */
-    rightPixmaps_[0] = PixmapManager::scalePixmap(&rightPixmaps_[0], rect_);
-    rightPixmaps_[1] = PixmapManager::scalePixmap(&rightPixmaps_[1], rect_);
+    for(int i = 0; i < ANIMATION_PHASES_COUNT; ++i)
+    {
+        rightPixmaps_[i] = PixmapManager::scalePixmap(&rightPixmaps_[i], rect_);
+        upPixmaps_[i] = PixmapManager::scalePixmap(&upPixmaps_[i], rect_);
+        downPixmaps_[i] = PixmapManager::scalePixmap(&downPixmaps_[i], rect_);
 
-    upPixmaps_[0] = PixmapManager::scalePixmap(&upPixmaps_[0], rect_);
-    upPixmaps_[1] = PixmapManager::scalePixmap(&upPixmaps_[1], rect_);
-
-    downPixmaps_[0] = PixmapManager::scalePixmap(&downPixmaps_[0], rect_);
-    downPixmaps_[1] = PixmapManager::scalePixmap(&downPixmaps_[1], rect_);
-
-    /* Mirror right pixmap horizontally to obtain left pixmap */
-    leftPixmaps_[0] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[0]);
-    leftPixmaps_[1] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[1]);
+        /* Mirror right pixmap horizontally to obtain left pixmap */
+        leftPixmaps_[i] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[i]);
+    }
 }
 
 void AbstractGhost::reset()
@@ -100,7 +96,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    const QPixmap* pixmap;
+    QPixmap* pixmap;
     const int animationPhase = animationPhase_ % 2;
 
     if(scaredState_ == ScaredState::NO_SCARED)
@@ -136,9 +132,7 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
         throw std::runtime_error("Cannot draw Ghost, wrong scared state");
     }
 
-    const double penWidth = painter->pen().widthF();
-    const QRectF targetRect = rect_.adjusted(penWidth / 2, penWidth / 2, -penWidth / 2, -penWidth / 2);
-    painter->drawPixmap(targetRect.toRect(), *pixmap);
+    drawPixmapAvoidingArtifacts(painter, pixmap);
 }
 
 void AbstractGhost::setScared()

@@ -42,10 +42,10 @@ private:
 
     static const int ANIMATION_PHASES_COUNT = 2;
 
-    QPixmap leftPixmaps_[ANIMATION_PHASES_COUNT];
-    QPixmap rightPixmaps_[ANIMATION_PHASES_COUNT];
-    QPixmap upPixmaps_[ANIMATION_PHASES_COUNT];
-    QPixmap downPixmaps_[ANIMATION_PHASES_COUNT];
+    std::array<QPixmap, ANIMATION_PHASES_COUNT> leftPixmaps_;
+    std::array<QPixmap, ANIMATION_PHASES_COUNT> rightPixmaps_;
+    std::array<QPixmap, ANIMATION_PHASES_COUNT> upPixmaps_;
+    std::array<QPixmap, ANIMATION_PHASES_COUNT> downPixmaps_;
 
     inline static std::unique_ptr<QPixmap> scaredBluePixmaps_[ANIMATION_PHASES_COUNT];
     inline static std::unique_ptr<QPixmap> scaredWhitePixmaps_[ANIMATION_PHASES_COUNT];
