@@ -2,12 +2,12 @@
 
 MovableCharacter::MovableCharacter(const Coordinates& startingCoordinates, const Direction initialDirection, int animationSpeedFactor, int animationPhasesCount) : CustomGraphicsItem(QRectF(0, 0, DIAMETER, DIAMETER)),
 
-                                                                                                                                         STARTING_COORDINATES(startingCoordinates),
-                                                                                                                                         STARTING_DIRECTION(initialDirection),
-                                                                                                                                         direction_(initialDirection),
-                                                                                                                                         nextDirection_(initialDirection),
-                                                                                                                                         ANIMATION_SPEED_FACTOR(animationSpeedFactor),
-                                                                                                                                         ANIMATION_PHASES_COUNT(animationPhasesCount)
+                                                                                                                                                                   STARTING_COORDINATES(startingCoordinates),
+                                                                                                                                                                   STARTING_DIRECTION(initialDirection),
+                                                                                                                                                                   direction_(initialDirection),
+                                                                                                                                                                   nextDirection_(initialDirection),
+                                                                                                                                                                   ANIMATION_SPEED_FACTOR(animationSpeedFactor),
+                                                                                                                                                                   ANIMATION_PHASES_COUNT(animationPhasesCount)
 {
     MovableCharacter::reset();
 }
@@ -39,26 +39,29 @@ void MovableCharacter::moveTo(const Coordinates& coordinates)
 
 void MovableCharacter::advanceAnimation()
 {
-    ++stepCounter_;
-
-    if(stepCounter_ >= ANIMATION_SPEED_FACTOR)
+    if(moving_)
     {
-        stepCounter_ = 0;
+        ++stepCounter_;
 
-        if(animationPhaseAscending_)
+        if(stepCounter_ >= ANIMATION_SPEED_FACTOR)
         {
-            ++animationPhase_;
-            if(animationPhase_ == ANIMATION_PHASES_COUNT - 1)
+            stepCounter_ = 0;
+
+            if(animationPhaseAscending_)
             {
-                animationPhaseAscending_ = false;
+                ++animationPhase_;
+                if(animationPhase_ == ANIMATION_PHASES_COUNT - 1)
+                {
+                    animationPhaseAscending_ = false;
+                }
             }
-        }
-        else
-        {
-            --animationPhase_;
-            if(animationPhase_ == 0)
+            else
             {
-                animationPhaseAscending_ = true;
+                --animationPhase_;
+                if(animationPhase_ == 0)
+                {
+                    animationPhaseAscending_ = true;
+                }
             }
         }
     }
