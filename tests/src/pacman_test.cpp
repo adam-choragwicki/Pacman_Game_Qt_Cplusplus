@@ -5,7 +5,7 @@
 class PacmanTest : public CommonTestFixture
 {
 protected:
-    Pacman pacman_;
+    Pacman pacman_{nullptr};
 };
 
 TEST_F(PacmanTest, CreatePacman)
