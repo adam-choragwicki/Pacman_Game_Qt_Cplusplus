@@ -1,7 +1,8 @@
 #pragma once
 
 #include "abstract_ghost.h"
-#include "pixmap_providers/purple_ghost_pixmap_provider.h"
+
+class PurpleGhostPixmapProvider;
 
 class PurpleGhost : public AbstractGhost
 {
