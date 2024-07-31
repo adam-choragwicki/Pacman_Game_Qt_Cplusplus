@@ -2,6 +2,7 @@
 #include <QtGui/QPainter>
 #include "model/ghost_timing_manager.h"
 #include "pixmap_loader.h"
+#include "pixmap_manager.h"
 
 AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, const std::array<QString, 6>& imagesUrls) : MovableCharacter(coordinates, initialDirection)
 {
@@ -35,21 +36,18 @@ void AbstractGhost::initializePixmaps(const std::array<QString, 6>& imagesUrls)
     PixmapLoader::loadPixmaps(pixmapEntries);
 
     /* Scale size of pixmaps */
-    rightPixmaps_[0] = rightPixmaps_[0].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    rightPixmaps_[1] = rightPixmaps_[1].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    rightPixmaps_[0] = PixmapManager::scalePixmap(&rightPixmaps_[0], rect_);
+    rightPixmaps_[1] = PixmapManager::scalePixmap(&rightPixmaps_[1], rect_);
 
-    upPixmaps_[0] = upPixmaps_[0].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    upPixmaps_[1] = upPixmaps_[1].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    upPixmaps_[0] = PixmapManager::scalePixmap(&upPixmaps_[0], rect_);
+    upPixmaps_[1] = PixmapManager::scalePixmap(&upPixmaps_[1], rect_);
 
-    downPixmaps_[0] = downPixmaps_[0].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    downPixmaps_[1] = downPixmaps_[1].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    downPixmaps_[0] = PixmapManager::scalePixmap(&downPixmaps_[0], rect_);
+    downPixmaps_[1] = PixmapManager::scalePixmap(&downPixmaps_[1], rect_);
 
-    /* Mirror right pixmap to obtain left pixmap */
-    QTransform horizontalFlipTransformation;
-    horizontalFlipTransformation.scale(-1, 1);
-
-    leftPixmaps_[0] = rightPixmaps_[0].transformed(horizontalFlipTransformation, Qt::TransformationMode::SmoothTransformation);
-    leftPixmaps_[1] = rightPixmaps_[1].transformed(horizontalFlipTransformation, Qt::TransformationMode::SmoothTransformation);
+    /* Mirror right pixmap horizontally to obtain left pixmap */
+    leftPixmaps_[0] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[0]);
+    leftPixmaps_[1] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[1]);
 }
 
 void AbstractGhost::reset()

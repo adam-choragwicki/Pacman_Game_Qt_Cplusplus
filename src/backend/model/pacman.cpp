@@ -1,5 +1,6 @@
 #include "model/pacman.h"
 #include "pixmap_loader.h"
+#include "pixmap_manager.h"
 #include <QtGui/QPainter>
 
 Pacman::Pacman() : MovableCharacter(STARTING_COORDINATES, INITIAL_DIRECTION)
@@ -74,32 +75,23 @@ void Pacman::initializePixmaps()
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 
-    rightPixmaps_[0] = rightPixmaps_[0].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    rightPixmaps_[1] = rightPixmaps_[1].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    rightPixmaps_[2] = rightPixmaps_[2].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-    rightPixmaps_[3] = rightPixmaps_[3].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    rightPixmaps_[0] = PixmapManager::scalePixmap(&rightPixmaps_[0], rect_);
+    rightPixmaps_[1] = PixmapManager::scalePixmap(&rightPixmaps_[1], rect_);
+    rightPixmaps_[2] = PixmapManager::scalePixmap(&rightPixmaps_[2], rect_);
+    rightPixmaps_[3] = PixmapManager::scalePixmap(&rightPixmaps_[3], rect_);
 
-    QTransform verticalMirrorTransformation;
-    verticalMirrorTransformation.scale(-1, +1);
+    leftPixmaps_[0] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[0]);
+    leftPixmaps_[1] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[1]);
+    leftPixmaps_[2] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[2]);
+    leftPixmaps_[3] = PixmapManager::mirrorPixmapHorizontally(&rightPixmaps_[3]);
 
-    leftPixmaps_[0] = rightPixmaps_[0].transformed(verticalMirrorTransformation, Qt::TransformationMode::SmoothTransformation);
-    leftPixmaps_[1] = rightPixmaps_[1].transformed(verticalMirrorTransformation, Qt::TransformationMode::SmoothTransformation);
-    leftPixmaps_[2] = rightPixmaps_[2].transformed(verticalMirrorTransformation, Qt::TransformationMode::SmoothTransformation);
-    leftPixmaps_[3] = rightPixmaps_[3].transformed(verticalMirrorTransformation, Qt::TransformationMode::SmoothTransformation);
+    upPixmaps_[0] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[0]);
+    upPixmaps_[1] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[1]);
+    upPixmaps_[2] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[2]);
+    upPixmaps_[3] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[3]);
 
-    QTransform rotate90DegreesCounterclockwise;
-    rotate90DegreesCounterclockwise.rotate(-90);
-
-    upPixmaps_[0] = rightPixmaps_[0].transformed(rotate90DegreesCounterclockwise, Qt::TransformationMode::SmoothTransformation);
-    upPixmaps_[1] = rightPixmaps_[1].transformed(rotate90DegreesCounterclockwise, Qt::TransformationMode::SmoothTransformation);
-    upPixmaps_[2] = rightPixmaps_[2].transformed(rotate90DegreesCounterclockwise, Qt::TransformationMode::SmoothTransformation);
-    upPixmaps_[3] = rightPixmaps_[3].transformed(rotate90DegreesCounterclockwise, Qt::TransformationMode::SmoothTransformation);
-
-    QTransform rotate90DegreesClockwise;
-    rotate90DegreesClockwise.rotate(+90);
-
-    downPixmaps_[0] = rightPixmaps_[0].transformed(rotate90DegreesClockwise, Qt::TransformationMode::SmoothTransformation);
-    downPixmaps_[1] = rightPixmaps_[1].transformed(rotate90DegreesClockwise, Qt::TransformationMode::SmoothTransformation);
-    downPixmaps_[2] = rightPixmaps_[2].transformed(rotate90DegreesClockwise, Qt::TransformationMode::SmoothTransformation);
-    downPixmaps_[3] = rightPixmaps_[3].transformed(rotate90DegreesClockwise, Qt::TransformationMode::SmoothTransformation);
+    downPixmaps_[0] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[0]);
+    downPixmaps_[1] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[1]);
+    downPixmaps_[2] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[2]);
+    downPixmaps_[3] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[3]);
 }
