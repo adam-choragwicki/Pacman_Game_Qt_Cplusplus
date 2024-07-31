@@ -12,10 +12,6 @@ class GraphicsView : public QGraphicsView
 {
 Q_OBJECT
 
-signals:
-    void mousePositionChangedEvent(const QPointF& mousePosition);
-    void mouseLeftButtonClicked(const QPointF& mousePosition);
-
 public:
     explicit GraphicsView(GraphicsScene* scene, const WhatToDrawManager& whatToDrawManager, QWidget* parent = nullptr);
 

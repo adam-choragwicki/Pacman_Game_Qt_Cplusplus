@@ -1,6 +1,6 @@
 <RCC>
     <qresource>
-        <file>map/map.png</file>
+        <file>arena/arena.png</file>
     </qresource>
 
     <qresource>
