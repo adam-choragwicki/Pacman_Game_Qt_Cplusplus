@@ -40,10 +40,6 @@ void MainWindow::centerOnPrimaryScreen()
 
 void MainWindow::centerOnScreen(QScreen* screen)
 {
-    //spdlog::debug("Screen name: " + screen->name().toStdString());
-    //spdlog::debug("Screen manufacturer: " + screen->manufacturer().toStdString());
-    //spdlog::debug("Screen model: " + screen->model().toStdString());
-
     setScreen(screen);
     const QRect screenRect = screen->availableGeometry();
     const QRect widgetRect({}, frameSize().boundedTo(screenRect.size()));

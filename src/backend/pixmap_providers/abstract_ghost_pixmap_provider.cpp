@@ -1,7 +1,6 @@
 #include "abstract_ghost_pixmap_provider.h"
 #include "pixmap_loader.h"
 #include "pixmap_manager.h"
-#include <QDebug>
 #include "common.h"
 
 AbstractGhostPixmapProvider::AbstractGhostPixmapProvider(const std::array<QString, 6>& imageUrls)

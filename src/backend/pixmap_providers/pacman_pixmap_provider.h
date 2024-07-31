@@ -1,9 +1,9 @@
 #pragma once
 
 #include <array>
-#include <vector>
 #include <QtGui/QPixmap>
-#include "common.h"
+
+enum class Direction;
 
 class PacmanPixmapProvider
 {
