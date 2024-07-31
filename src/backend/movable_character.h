@@ -12,10 +12,10 @@ class MovableCharacter : public QObject, public CustomGraphicsItem
 Q_OBJECT
 
 public:
-    MovableCharacter(const Coordinates& startingCoordinates, Direction initialDirection);
+    MovableCharacter(const Coordinates& startingCoordinates, Direction initialDirection, int animationSpeedFactor, int animationPhasesCount);
     ~MovableCharacter() override = 0;
 
-    virtual void advanceAnimation() = 0;
+    void advanceAnimation();
 
     virtual void reset();
 
@@ -50,6 +50,9 @@ protected:
 
     const Coordinates STARTING_COORDINATES;
     const Direction STARTING_DIRECTION;
+
+    const int ANIMATION_SPEED_FACTOR;
+    const int ANIMATION_PHASES_COUNT;
 
     int animationPhase_{};
     bool animationPhaseAscending_ = true;

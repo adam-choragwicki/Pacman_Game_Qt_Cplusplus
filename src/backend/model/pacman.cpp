@@ -3,7 +3,7 @@
 #include "pixmap_manager.h"
 #include <QtGui/QPainter>
 
-Pacman::Pacman() : MovableCharacter(STARTING_COORDINATES, INITIAL_DIRECTION)
+Pacman::Pacman() : MovableCharacter(STARTING_COORDINATES, INITIAL_DIRECTION, ANIMATION_SPEED_FACTOR, ANIMATION_PHASES_COUNT)
 {
     initializePixmaps();
 
@@ -37,33 +37,6 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     }
 
     drawPixmapAvoidingArtifacts(painter, pixmap);
-}
-
-void Pacman::advanceAnimation()
-{
-    ++stepCounter_;
-
-    if(stepCounter_ >= ANIMATION_SPEED_FACTOR)
-    {
-        stepCounter_ = 0;
-
-        if(animationPhaseAscending_)
-        {
-            ++animationPhase_;
-            if(animationPhase_ == ANIMATION_PHASES_COUNT - 1)
-            {
-                animationPhaseAscending_ = false;
-            }
-        }
-        else
-        {
-            --animationPhase_;
-            if(animationPhase_ == 0)
-            {
-                animationPhaseAscending_ = true;
-            }
-        }
-    }
 }
 
 void Pacman::initializePixmaps()

@@ -14,7 +14,6 @@ public:
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
-    void advanceAnimation() override;
     void reset() override;
     void respawn();
 
@@ -42,6 +41,9 @@ private:
 
     static const int ANIMATION_PHASES_COUNT = 2;
 
+    /* Set higher to make animation slower */
+    static const int ANIMATION_SPEED_FACTOR = 30;
+
     std::array<QPixmap, ANIMATION_PHASES_COUNT> leftPixmaps_;
     std::array<QPixmap, ANIMATION_PHASES_COUNT> rightPixmaps_;
     std::array<QPixmap, ANIMATION_PHASES_COUNT> upPixmaps_;
@@ -53,7 +55,4 @@ private:
     std::unique_ptr<GhostTimingManager> ghostTimingManager_;
 
     inline static bool commonPixmapsInitialized_{};
-
-    /* Set higher to make animation slower */
-    const int ANIMATION_SPEED_FACTOR = 30;
 };

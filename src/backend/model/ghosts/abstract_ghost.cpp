@@ -4,7 +4,8 @@
 #include "pixmap_loader.h"
 #include "pixmap_manager.h"
 
-AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, const std::array<QString, 6>& imagesUrls) : MovableCharacter(coordinates, initialDirection)
+AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, const std::array<QString, 6>& imagesUrls) :
+        MovableCharacter(coordinates, initialDirection, ANIMATION_SPEED_FACTOR, ANIMATION_PHASES_COUNT)
 {
     initializePixmaps(imagesUrls);
 
@@ -63,33 +64,6 @@ void AbstractGhost::respawn()
 bool AbstractGhost::isScared() const
 {
     return scaredState_ != ScaredState::NO_SCARED;
-}
-
-void AbstractGhost::advanceAnimation()
-{
-    ++stepCounter_;
-
-    if(stepCounter_ >= ANIMATION_SPEED_FACTOR)
-    {
-        stepCounter_ = 0;
-
-        if(animationPhaseAscending_)
-        {
-            ++animationPhase_;
-            if(animationPhase_ == ANIMATION_PHASES_COUNT - 1)
-            {
-                animationPhaseAscending_ = false;
-            }
-        }
-        else
-        {
-            --animationPhase_;
-            if(animationPhase_ == 0)
-            {
-                animationPhaseAscending_ = true;
-            }
-        }
-    }
 }
 
 void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
