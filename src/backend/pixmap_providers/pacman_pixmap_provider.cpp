@@ -24,6 +24,29 @@ void PacmanPixmapProvider::initializePixmaps()
         upPixmaps_[i] = PixmapManager::rotatePixmap90DegreesCounterclockwise(&rightPixmaps_[i]);
         downPixmaps_[i] = PixmapManager::rotatePixmap90DegreesClockwise(&rightPixmaps_[i]);
     }
+
+    for(int i = 0; i < ANIMATION_PHASES_COUNT; ++i)
+    {
+        if(rightPixmaps_[i].isNull())
+        {
+            qDebug() << "Shitty right pixmap";
+        }
+
+        if(leftPixmaps_[i].isNull())
+        {
+            qDebug() << "Shitty left pixmap";
+        }
+
+        if(upPixmaps_[i].isNull())
+        {
+            qDebug() << "Shitty upt pixmap";
+        }
+
+        if(downPixmaps_[i].isNull())
+        {
+            qDebug() << "Shitty down pixmap";
+        }
+    }
 }
 
 const QPixmap& PacmanPixmapProvider::getPixmap(Direction direction, int animationPhase) const

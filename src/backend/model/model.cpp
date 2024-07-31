@@ -10,13 +10,19 @@ Model::Model()
     pathPoints_ = std::make_unique<PathPoints>();
 
     pacmanPixmapProvider_ = std::make_unique<PacmanPixmapProvider>();
-    ghostPixmapProvider_ = std::make_shared<GhostPixmapProvider>();
+
+    blueGhostPixmapProvider_ = std::make_unique<BlueGhostPixmapProvider>();
+    orangeGhostPixmapProvider_ = std::make_unique<OrangeGhostPixmapProvider>();
+    purpleGhostPixmapProvider_ = std::make_unique<PurpleGhostPixmapProvider>();
+    redGhostPixmapProvider_ = std::make_unique<RedGhostPixmapProvider>();
+
+    scaredGhostPixmapProvider_ = std::make_shared<ScaredGhostPixmapProvider>();
 
     pacman_ = std::make_unique<Pacman>(pacmanPixmapProvider_.get());
-    blueGhost_ = std::make_unique<BlueGhost>(ghostPixmapProvider_);
-    orangeGhost_ = std::make_unique<OrangeGhost>(ghostPixmapProvider_);
-    purpleGhost_ = std::make_unique<PurpleGhost>(ghostPixmapProvider_);
-    redGhost_ = std::make_unique<RedGhost>(ghostPixmapProvider_);
+    blueGhost_ = std::make_unique<BlueGhost>(blueGhostPixmapProvider_.get(), scaredGhostPixmapProvider_.get());
+    orangeGhost_ = std::make_unique<OrangeGhost>(orangeGhostPixmapProvider_.get(), scaredGhostPixmapProvider_.get());
+    purpleGhost_ = std::make_unique<PurpleGhost>(purpleGhostPixmapProvider_.get(), scaredGhostPixmapProvider_.get());
+    redGhost_ = std::make_unique<RedGhost>(redGhostPixmapProvider_.get(), scaredGhostPixmapProvider_.get());
 
     scoreManager_ = std::make_unique<ScoreManager>();
     scoreDisplay_ = std::make_unique<ScoreDisplay>(*scoreManager_);

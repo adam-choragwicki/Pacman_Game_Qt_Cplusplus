@@ -12,25 +12,25 @@ class GhostTest : public CommonTestFixture
 
 TEST_F(GhostTest, CreateBlueGhost)
 {
-    BlueGhost blueGhost(nullptr);
+    BlueGhost blueGhost(nullptr, nullptr);
     EXPECT_EQ(blueGhost.getCoordinates(), Coordinates(265, 318));
 }
 
 TEST_F(GhostTest, CreateOrangeGhost)
 {
-    OrangeGhost orangeGhost(nullptr);
+    OrangeGhost orangeGhost(nullptr, nullptr);
     EXPECT_EQ(orangeGhost.getCoordinates(), Coordinates(349, 318));
 }
 
 TEST_F(GhostTest, CreatePurpleGhost)
 {
-    PurpleGhost purpleGhost(nullptr);
+    PurpleGhost purpleGhost(nullptr, nullptr);
     EXPECT_EQ(purpleGhost.getCoordinates(), Coordinates(307, 318));
 }
 
 TEST_F(GhostTest, CreateRedGhost)
 {
-    RedGhost redGhost(nullptr);
+    RedGhost redGhost(nullptr, nullptr);
     EXPECT_EQ(redGhost.getCoordinates(), Coordinates(307, 252));
 }
 
@@ -38,10 +38,10 @@ TEST_F(GhostTest, ResetGhost)
 {
     Pacman pacman(nullptr);
 
-    BlueGhost blueGhost(nullptr);
-    OrangeGhost orangeGhost(nullptr);
-    PurpleGhost purpleGhost(nullptr);
-    RedGhost redGhost(nullptr);
+    BlueGhost blueGhost(nullptr, nullptr);
+    OrangeGhost orangeGhost(nullptr, nullptr);
+    PurpleGhost purpleGhost(nullptr, nullptr);
+    RedGhost redGhost(nullptr, nullptr);
 
     GhostMovementManager ghostMovementManager;
 

@@ -10,32 +10,6 @@ Pacman::Pacman(AbstractPixmapProvider* pixmapProvider) : MovableCharacter(STARTI
 
 void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    //    CustomGraphicsItem::paint(painter, option, widget);
-    //
-    //    painter->setRenderHint(QPainter::Antialiasing);
-    //
-    //    const QPixmap* pixmap;
-    //
-    //    switch(direction_)
-    //    {
-    //        case Direction::LEFT:
-    //            pixmap = &leftPixmaps_[animationPhase_];
-    //            break;
-    //        case Direction::RIGHT:
-    //            pixmap = &rightPixmaps_[animationPhase_];
-    //            break;
-    //        case Direction::UP:
-    //            pixmap = &upPixmaps_[animationPhase_];
-    //            break;
-    //        case Direction::DOWN:
-    //            pixmap = &downPixmaps_[animationPhase_];
-    //            break;
-    //        default:
-    //            throw std::runtime_error("Cannot draw Pacman, wrong direction");
-    //    }
-    //
-    //    drawPixmapAvoidingArtifacts(painter, pixmap);
-
     CustomGraphicsItem::paint(painter, option, widget);
 
     painter->setRenderHint(QPainter::Antialiasing);

@@ -1,16 +1,14 @@
 #pragma once
 
 #include "abstract_ghost.h"
+#include "pixmap_providers/blue_ghost_pixmap_provider.h"
 
 class BlueGhost : public AbstractGhost
 {
 public:
-    BlueGhost(std::shared_ptr<GhostPixmapProvider> pixmapProvider);
+    BlueGhost(BlueGhostPixmapProvider* pixmapProvider, ScaredGhostPixmapProvider* scaredGhostPixmapProvider);
 
 private:
-    inline static const std::array<QString, 6> IMAGES_URLS{":/ghosts/blue/ghost_blue_right_1.png", ":/ghosts/blue/ghost_blue_right_2.png", ":/ghosts/blue/ghost_blue_up_1.png", ":/ghosts/blue/ghost_blue_up_2.png",
-                                                           ":/ghosts/blue/ghost_blue_down_1.png", ":/ghosts/blue/ghost_blue_down_2.png"};
-
     inline static constexpr std::chrono::seconds MOVE_OUT_OF_THE_STARTING_BOX_TIMEOUT{3};
     inline static constexpr Direction INITIAL_DIRECTION{Direction::UP};
     inline static const Coordinates STARTING_COORDINATES{265, 318};
