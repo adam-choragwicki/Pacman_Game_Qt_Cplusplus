@@ -13,25 +13,6 @@ AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction ini
 
 AbstractGhost::~AbstractGhost() = default;
 
-void AbstractGhost::reset()
-{
-    MovableCharacter::reset();
-    ghostTimingManager_->reset();
-    scaredState_ = ScaredState::NO_SCARED;
-    isSlowedDown_ = false;
-}
-
-void AbstractGhost::respawn()
-{
-    reset();
-    ghostTimingManager_->setTimeToLeaveStartingBox();
-}
-
-bool AbstractGhost::isScared() const
-{
-    return scaredState_ != ScaredState::NO_SCARED;
-}
-
 void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     CustomGraphicsItem::paint(painter, option, widget);
@@ -56,6 +37,25 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     }
 
     drawPixmapAvoidingArtifacts(painter, pixmap);
+}
+
+void AbstractGhost::reset()
+{
+    MovableCharacter::reset();
+    ghostTimingManager_->reset();
+    scaredState_ = ScaredState::NO_SCARED;
+    isSlowedDown_ = false;
+}
+
+void AbstractGhost::respawn()
+{
+    reset();
+    ghostTimingManager_->setTimeToLeaveStartingBox();
+}
+
+bool AbstractGhost::isScared() const
+{
+    return scaredState_ != ScaredState::NO_SCARED;
 }
 
 void AbstractGhost::setScared()

@@ -11,10 +11,10 @@ add_subdirectory(frontend)
 add_executable(${PROJECT_NAME} WIN32 ${SOURCE_FILES} ${ASSETS_DIR}/assets.qrc)
 
 # Include directories for backend and spdlog
-target_include_directories(${PROJECT_NAME} PRIVATE ${BACKEND_DIR} ${PROJECT_ROOT}/libs/spdlog/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${BACKEND_DIR} ${PROJECT_ROOT}/libs/spdlog/include)
 
 # Link libraries for backend and frontend
-target_link_libraries(${PROJECT_NAME} PRIVATE lib${PROJECT_NAME}Backend lib${PROJECT_NAME}Frontend)
+target_link_libraries(${PROJECT_NAME} PUBLIC lib${PROJECT_NAME}Backend lib${PROJECT_NAME}Frontend)
 
 # Set the output directory for the executable
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT}/bin)
