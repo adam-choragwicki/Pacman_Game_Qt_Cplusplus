@@ -46,7 +46,8 @@ set(SOURCE_FILES
         game_manager.cpp game_manager.h
 
         pixmap_loader.h
-        pixmap_manager.h)
+        abstract_pixmap_provider.h
+        pixmap_manager.h pixmap_provider.cpp)
 
 # Create the backend library
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})

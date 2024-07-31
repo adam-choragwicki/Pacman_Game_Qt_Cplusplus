@@ -9,7 +9,9 @@ Model::Model()
 
     pathPoints_ = std::make_unique<PathPoints>();
 
-    pacman_ = std::make_unique<Pacman>();
+    pixmapProvider_ = std::make_unique<PixmapProvider>();
+
+    pacman_ = std::make_unique<Pacman>(pixmapProvider_.get());
     blueGhost_ = std::make_unique<BlueGhost>();
     orangeGhost_ = std::make_unique<OrangeGhost>();
     purpleGhost_ = std::make_unique<PurpleGhost>();
