@@ -2,7 +2,6 @@
 #include "input_handler.h"
 #include "spdlog/spdlog.h"
 #include <QKeyEvent>
-#include <QElapsedTimer>
 
 Controller::Controller(Model& model, MainWindow& view) : model_(model), view_(view)
 {

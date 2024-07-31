@@ -15,7 +15,7 @@ void Pacman::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 
     painter->setRenderHint(QPainter::Antialiasing);
 
-    const QPixmap* pixmap{};
+    const QPixmap* pixmap;
 
     switch(direction_)
     {
