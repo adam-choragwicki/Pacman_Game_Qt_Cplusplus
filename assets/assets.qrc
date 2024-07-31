@@ -1,6 +1,6 @@
 <RCC>
     <qresource>
-        <file>map/map.png</file>
+        <file>arena/arena.png</file>
     </qresource>
 
     <qresource>
@@ -44,5 +44,11 @@
 
         <file>ghosts/scared_white/ghost_scared_white_1.png</file>
         <file>ghosts/scared_white/ghost_scared_white_2.png</file>
+    </qresource>
+
+    <qresource>
+        <file>arena/vertical_wall.png</file>
+        <file>arena/rounded_vertical_wall.png</file>
+        <file>arena/corner_wall_NW.png</file>
     </qresource>
 </RCC>

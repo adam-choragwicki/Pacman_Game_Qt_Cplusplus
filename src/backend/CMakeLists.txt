@@ -5,6 +5,10 @@ set(SOURCE_FILES
         input_handler.cpp input_handler.h
         game_manager.cpp game_manager.h
 
+        model/arena.cpp model/arena.h
+
+        config.h config.cpp
+
         model/pacman.h model/pacman.cpp
         model/ghosts/abstract_ghost.h model/ghosts/abstract_ghost.cpp
         model/ghosts/blue_ghost.h model/ghosts/blue_ghost.cpp
@@ -40,7 +44,25 @@ set(SOURCE_FILES
 
         score_display.h score_display.cpp
         game_manager.cpp game_manager.h
-        model/what_to_draw_manager.h pixmap_loader.h model/graphics_scene.cpp model/graphics_scene.h model/walls/vertical_wall.cpp model/walls/vertical_wall.h model/walls/horizontal_wall.cpp model/walls/horizontal_wall.h model/walls/rounded_vertical_wall.cpp model/walls/rounded_vertical_wall.h model/walls/rounded_horizontal_wall.cpp model/walls/rounded_horizontal_wall.h model/walls/abstract_wall.cpp model/walls/abstract_wall.h model/arena.cpp model/arena.h)
+        model/what_to_draw_manager.h
+
+        pixmap_loader.h
+
+        model/graphics_scene.cpp model/graphics_scene.h
+
+        model/tiles/abstract_tile.cpp model/tiles/abstract_tile.h
+        model/tiles/path.cpp model/tiles/path.h
+
+        model/tiles/straight_walls/vertical_wall.cpp model/tiles/straight_walls/vertical_wall.h
+        model/tiles/straight_walls/horizontal_wall.cpp model/tiles/straight_walls/horizontal_wall.h
+
+        model/tiles/rounded_walls/rounded_vertical_wall.cpp model/tiles/rounded_walls/rounded_vertical_wall.h
+        model/tiles/rounded_walls/rounded_horizontal_wall.cpp model/tiles/rounded_walls/rounded_horizontal_wall.h
+
+        model/tiles/corner_walls/corner_wall_nw.cpp model/tiles/corner_walls/corner_wall_nw.h
+        model/tiles/corner_walls/corner_wall_sw.cpp model/tiles/corner_walls/corner_wall_sw.h
+        model/tiles/corner_walls/corner_wall_ne.cpp model/tiles/corner_walls/corner_wall_ne.h
+        model/tiles/corner_walls/corner_wall_se.cpp model/tiles/corner_walls/corner_wall_se.h)
 
 # Create the backend library
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})

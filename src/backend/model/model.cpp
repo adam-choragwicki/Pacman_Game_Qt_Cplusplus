@@ -1,9 +1,12 @@
 #include "model.h"
 #include "spdlog/spdlog.h"
+#include "config.h"
 
 Model::Model()
 {
     spdlog::debug("Initializing model");
+
+    Config::initialize();
 
     scene_ = std::make_unique<GraphicsScene>();
 
@@ -67,17 +70,12 @@ void Model::addItemsToScene()
 
     scene_->addItem(scoreDisplay_.get());
 
-    //    for(AbstractWall* wall : arena_->getWalls())
-    //    {
-    //
-    //    }
-
-    for(const auto&[coordinates, wall] : arena_->getWalls())
+    for(const auto&[coordinates, tile] : arena_->getTiles())
     {
-        if(wall)
+        if(tile)
         {
-            qDebug() << "Adding wall to scene";
-            scene_->addItem(wall);
+            qDebug() << "Adding tile to scene";
+            scene_->addItem(tile);
         }
     }
 }

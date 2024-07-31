@@ -14,8 +14,11 @@ private slots:
     void updateDirtyRegion(const QList<QRectF>& dirtyRegion);
 
 private:
-    static const int ARENA_WIDTH_PX = 614;
-    static const int ARENA_HEIGHT_PX = 730;
+//    static const int ARENA_WIDTH_PX = 614;
+//    static const int ARENA_HEIGHT_PX = 730;
+//
+//    static const int ARENA_WIDTH_PX = 614;
+//    static const int ARENA_HEIGHT_PX = 730;
 
     QList<QRectF> dirtyRegions_;
 };

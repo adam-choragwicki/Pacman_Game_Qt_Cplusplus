@@ -1,6 +1,8 @@
 #include "graphics_scene.h"
+#include "config.h"
 
-GraphicsScene::GraphicsScene() : QGraphicsScene(0, 0, ARENA_WIDTH_PX, ARENA_HEIGHT_PX)
+GraphicsScene::GraphicsScene() :
+        QGraphicsScene(0, 0, Config::instance().worldMap.WORLD_HORIZONTAL_SQUARES_COUNT * Config::instance().worldMap.PRIMARY_SQUARE_SIZE, Config::instance().worldMap.WORLD_VERTICAL_SQUARES_COUNT * Config::instance().worldMap.PRIMARY_SQUARE_SIZE)
 {
     connect(this, &GraphicsScene::changed, this, &GraphicsScene::updateDirtyRegion);
 }

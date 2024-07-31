@@ -39,7 +39,7 @@ private:
     QFont fpsCounterFont_;
     QPen fpsCounterPen_;
 
-    std::unique_ptr<QPixmap> arenaPixmap_;
+//    std::unique_ptr<QPixmap> arenaPixmap_;
 
     const WhatToDrawManager& whatToDrawManager_;
 };
