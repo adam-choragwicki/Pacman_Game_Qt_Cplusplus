@@ -16,16 +16,16 @@ void CustomGraphicsItem::paint(QPainter* painter, const QStyleOptionGraphicsItem
 {
     //    painter->setRenderHint(QPainter::Antialiasing);
 
-//    if(drawRect_)
-//    {
-//        painter->setPen(rectPen_);
-//        double penWidth = rectPen_.widthF();
-//
-//        /* This is required to avoid artifacts */
-//        const int multiplier = 2;
-//        const QRectF adjustedRect = rect_.adjusted(multiplier * penWidth, multiplier * penWidth, -multiplier * penWidth, -multiplier * penWidth);
-//        painter->drawRect(adjustedRect);
-//    }
+    //    if(drawRect_)
+    //    {
+    //        painter->setPen(rectPen_);
+    //        double penWidth = rectPen_.widthF();
+    //
+    //        /* This is required to avoid artifacts */
+    //        const int multiplier = 2;
+    //        const QRectF adjustedRect = rect_.adjusted(multiplier * penWidth, multiplier * penWidth, -multiplier * penWidth, -multiplier * penWidth);
+    //        painter->drawRect(adjustedRect);
+    //    }
 }
 
 bool CustomGraphicsItem::operator<(const CustomGraphicsItem& other) const

@@ -6,12 +6,14 @@
 
 GraphicsView::GraphicsView(GraphicsScene* scene, const WhatToDrawManager& whatToDrawManager, QWidget* parent) : QGraphicsView(scene, parent), whatToDrawManager_(whatToDrawManager)
 {
-    arenaPixmap_ = std::make_unique<QPixmap>(":/map/map.png");
-
-    //    setRenderHint(QPainter::Antialiasing, true);
+    setFocusPolicy(Qt::NoFocus);
     setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    arenaPixmap_ = std::make_unique<QPixmap>(":/map/map.png");
+
+    //    setRenderHint(QPainter::Antialiasing, true);
 
     connect(&fpsTimer_, &QTimer::timeout, this, &GraphicsView::updateFPS);
     fpsTimer_.start(500); // Update FPS every 500ms

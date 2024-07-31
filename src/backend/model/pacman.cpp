@@ -76,20 +76,10 @@ void Pacman::initializePixmaps()
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 
-    qDebug() << "Original size: " << rightPixmaps_[0].size();
-    qDebug() << "Original size: " << rightPixmaps_[1].size();
-    qDebug() << "Original size: " << rightPixmaps_[2].size();
-    qDebug() << "Original size: " << rightPixmaps_[3].size();
-
     rightPixmaps_[0] = rightPixmaps_[0].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
     rightPixmaps_[1] = rightPixmaps_[1].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
     rightPixmaps_[2] = rightPixmaps_[2].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
     rightPixmaps_[3] = rightPixmaps_[3].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
-
-    qDebug() << "After scaling: " << rightPixmaps_[0].size();
-    qDebug() << "After scaling: " << rightPixmaps_[1].size();
-    qDebug() << "After scaling: " << rightPixmaps_[2].size();
-    qDebug() << "After scaling: " << rightPixmaps_[3].size();
 
     QTransform verticalMirrorTransformation;
     verticalMirrorTransformation.scale(-1, +1);
