@@ -34,6 +34,16 @@ void AbstractGhost::initializePixmaps(const std::array<QString, 6>& imagesUrls)
 
     PixmapLoader::loadPixmaps(pixmapEntries);
 
+    /* Scale size of pixmaps */
+    rightPixmaps_[0] = rightPixmaps_[0].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    rightPixmaps_[1] = rightPixmaps_[1].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+
+    upPixmaps_[0] = upPixmaps_[0].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    upPixmaps_[1] = upPixmaps_[1].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+
+    downPixmaps_[0] = downPixmaps_[0].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    downPixmaps_[1] = downPixmaps_[1].scaled(static_cast<int>(rect_.width()), static_cast<int>(rect_.height()), Qt::AspectRatioMode::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+
     /* Mirror right pixmap to obtain left pixmap */
     QTransform horizontalFlipTransformation;
     horizontalFlipTransformation.scale(-1, 1);
@@ -95,7 +105,6 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     const QPixmap* pixmap;
     const int animationPhase = animationPhase_ % 2;
 
-    // Select the appropriate pixmap based on the current state and direction
     if(scaredState_ == ScaredState::NO_SCARED)
     {
         switch(direction_)
@@ -129,7 +138,9 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
         throw std::runtime_error("Cannot draw Ghost, wrong scared state");
     }
 
-    painter->drawPixmap(rect_.toRect(), *pixmap);
+    const double penWidth = painter->pen().widthF();
+    const QRectF targetRect = rect_.adjusted(penWidth / 2, penWidth / 2, -penWidth / 2, -penWidth / 2);
+    painter->drawPixmap(targetRect.toRect(), *pixmap);
 }
 
 void AbstractGhost::setScared()
