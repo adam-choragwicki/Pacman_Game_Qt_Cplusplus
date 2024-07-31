@@ -14,6 +14,15 @@ set(SOURCE_FILES
 
         model/ghost_timing_manager.cpp model/ghost_timing_manager.h
 
+        model/pellets_manager.h model/pellets_manager.cpp
+        model/pellets/abstract_pellet.cpp model/pellets/abstract_pellet.h
+        model/pellets/standard_pellet.h
+        model/pellets/power_pellet.h
+
+        model/what_to_draw_manager.h
+
+        model/graphics_scene.cpp model/graphics_scene.h
+
         common.h
 
         movable_character.h movable_character.cpp
@@ -30,19 +39,11 @@ set(SOURCE_FILES
 
         screen_text_display.h screen_text_display.cpp
 
-        model/pellets_manager.h model/pellets_manager.cpp
-        model/pellets/abstract_pellet.cpp model/pellets/abstract_pellet.h
-        model/pellets/standard_pellet.h
-        model/pellets/power_pellet.h
-
         custom_graphics_item.cpp custom_graphics_item.h
         id_generator.h
 
         score_display.h score_display.cpp
         game_manager.cpp game_manager.h
-        model/what_to_draw_manager.h
-
-        model/graphics_scene.cpp model/graphics_scene.h
 
         pixmap_loader.h
         pixmap_manager.h)

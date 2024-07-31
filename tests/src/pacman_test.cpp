@@ -1,11 +1,11 @@
 #include "common_test_fixture.h"
 #include "model/pacman.h"
-#include "movement_manager.h"
+#include "pacman_movement_manager.h"
 
 class PacmanTest : public CommonTestFixture
 {
 protected:
-    Pacman pacman_;;
+    Pacman pacman_;
 };
 
 TEST_F(PacmanTest, CreatePacman)

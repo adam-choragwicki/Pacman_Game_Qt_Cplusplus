@@ -4,7 +4,7 @@
 #include "model/ghosts/purple_ghost.h"
 #include "model/ghosts/red_ghost.h"
 #include "model/pacman.h"
-#include "movement_manager.h"
+#include "ghost_movement_manager.h"
 
 class GhostTest : public CommonTestFixture
 {
