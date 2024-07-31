@@ -15,10 +15,10 @@ GameLoop::GameLoop(Model& model) :
         scoreManager_(model_.getScoreManager()),
         pelletsManager_(model_.getPelletsManager())
 {
-    gameLoopTimer_ = new QTimer;
+    gameLoopTimer_ = std::make_unique<QTimer>();
     gameLoopTimer_->setTimerType(Qt::PreciseTimer);
     gameLoopTimer_->setInterval(GAME_LOOP_INTERVAL);
-    connect(gameLoopTimer_, &QTimer::timeout, this, &GameLoop::execute);
+    connect(gameLoopTimer_.get(), &QTimer::timeout, this, &GameLoop::execute);
 
     ghosts_.at(0) = &blueGhost_;
     ghosts_.at(1) = &orangeGhost_;
@@ -98,10 +98,11 @@ void GameLoop::ghostMovementHandler(AbstractGhost& ghost)
 {
     static int turnsCounter = 0;
 
+    /* Slowdown factor */
     static const int SKIP_TURNS = 5;
     bool canMoveThisTurn{};
 
-    //artificial slowdown of ghost
+    /* Artificial slowdown of ghost */
     if(ghost.isSlowedDown())
     {
         if(turnsCounter % SKIP_TURNS == 0)

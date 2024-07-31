@@ -16,7 +16,9 @@ GraphicsView::GraphicsView(GraphicsScene* scene, const WhatToDrawManager& whatTo
     setRenderHint(QPainter::Antialiasing, true);
 
     connect(&fpsTimer_, &QTimer::timeout, this, &GraphicsView::updateFPS);
-    fpsTimer_.start(500); // Update FPS every 500ms
+
+    /* Update FPS every 500m */
+    fpsTimer_.start(500);
     frameTimeTimer_.start();
 
     initializePainterData();

@@ -59,7 +59,7 @@ private:
 
     PelletsManager& pelletsManager_;
 
-    QTimer* gameLoopTimer_{};
+    std::unique_ptr<QTimer> gameLoopTimer_;
 
     static constexpr auto GAME_LOOP_INTERVAL = std::chrono::milliseconds(6);
 };

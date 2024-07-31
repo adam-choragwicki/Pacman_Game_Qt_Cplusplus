@@ -6,7 +6,7 @@ CustomGraphicsItem::CustomGraphicsItem(const QRectF& rect) : rect_(rect), id_(Id
 {
     rectPen_ = QPen(Qt::red, 1);
 
-    globalDrawBoundingRect_ = true;
+    globalDrawBoundingRect_ = false;
 }
 
 QRectF CustomGraphicsItem::boundingRect() const

@@ -13,7 +13,7 @@ MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)
     setWindowTitle("Pacman");
     setFocus(Qt::ActiveWindowFocusReason);
 
-    graphicsView_ = new GraphicsView(model_.getScene(), *model.getWhatToDrawManager(), this);
+    graphicsView_ = std::make_unique<GraphicsView>(model_.getScene(), *model.getWhatToDrawManager(), this);
 
     const int WINDOW_WIDTH = 614;
     const int WINDOW_HEIGHT = 730;
@@ -22,11 +22,11 @@ MainWindow::MainWindow(const Model& model) : QMainWindow(), model_(model)
 
     setPalette(QPalette(Qt::black));
 
-    setCentralWidget(graphicsView_);
+    setCentralWidget(graphicsView_.get());
 
     centerOnPrimaryScreen();
 
-    viewportUpdateTimer_ = new QTimer(this);
+    viewportUpdateTimer_ = std::make_unique<QTimer>(this);
     viewportUpdateTimer_->setTimerType(Qt::PreciseTimer);
     viewportUpdateTimer_->setInterval(VIEWPORT_UPDATE_INTERVAL);
     viewportUpdateTimer_->start();

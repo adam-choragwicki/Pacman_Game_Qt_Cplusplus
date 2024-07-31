@@ -1,9 +1,9 @@
 #pragma once
 
+#include "graphics_view.h"
 #include <QMainWindow>
 
 class Model;
-class GraphicsView;
 
 class MainWindow : public QMainWindow
 {
@@ -19,7 +19,7 @@ public:
     void updateViewport(const QList<QRectF>& dirtyRegions);
 
     [[nodiscard]] QTimer* getViewportUpdateTimer() const
-    { return viewportUpdateTimer_; }
+    { return viewportUpdateTimer_.get(); }
 
 private:
     void keyPressEvent(QKeyEvent* event) override;
@@ -29,9 +29,9 @@ private:
 
     const Model& model_;
 
-    GraphicsView* graphicsView_{};
+    std::unique_ptr<GraphicsView> graphicsView_;
 
-    QTimer* viewportUpdateTimer_;
+    std::unique_ptr<QTimer> viewportUpdateTimer_;
 
     static constexpr auto VIEWPORT_UPDATE_INTERVAL = std::chrono::milliseconds(17);
 };
