@@ -5,7 +5,6 @@
 #include "pixmap_providers/scared_ghost_pixmap_provider.h"
 
 class GhostTimingManager;
-class AbstractPixmapProvider;
 
 class AbstractGhost : public MovableCharacter
 {

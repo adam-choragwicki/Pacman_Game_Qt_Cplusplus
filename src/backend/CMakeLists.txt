@@ -46,7 +46,6 @@ set(SOURCE_FILES
         game_manager.cpp game_manager.h
 
         pixmap_loader.h
-        abstract_pixmap_provider.h
         pixmap_manager.h
 
         pixmap_providers/pacman_pixmap_provider.cpp pixmap_providers/pacman_pixmap_provider.h

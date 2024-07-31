@@ -1,15 +1,16 @@
 #pragma once
 
-#include "abstract_pixmap_provider.h"
 #include <array>
 #include <vector>
+#include <QtGui/QPixmap>
+#include "common.h"
 
-class PacmanPixmapProvider : public AbstractPixmapProvider
+class PacmanPixmapProvider
 {
 public:
     PacmanPixmapProvider();
 
-    [[nodiscard]] const QPixmap& getPixmap(Direction direction, int animationPhase) const override;
+    [[nodiscard]] const QPixmap& getPixmap(Direction direction, int animationPhase) const;
 
 private:
     void initializePixmaps();

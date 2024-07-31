@@ -2,12 +2,12 @@
 
 #include "movable_character.h"
 
-class AbstractPixmapProvider;
+class PacmanPixmapProvider;
 
 class Pacman : public MovableCharacter
 {
 public:
-    explicit Pacman(AbstractPixmapProvider* pixmapProvider);
+    explicit Pacman(PacmanPixmapProvider* pixmapProvider);
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
@@ -20,5 +20,5 @@ private:
     inline static constexpr Direction INITIAL_DIRECTION{Direction::LEFT};
     inline static const Coordinates STARTING_COORDINATES{320, 514};
 
-    AbstractPixmapProvider* pixmapProvider_{};
+    PacmanPixmapProvider* pacmanPixmapProvider_{};
 };

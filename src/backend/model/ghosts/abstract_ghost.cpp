@@ -40,27 +40,20 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    const QPixmap* pixmap = nullptr;
+    const QPixmap* pixmap{};
     const int animationPhase = animationPhase_ % ANIMATION_PHASES_COUNT;
 
-    try
+    if(scaredState_ == ScaredState::NO_SCARED)
     {
-        if(scaredState_ == ScaredState::NO_SCARED)
-        {
-            pixmap = &pixmapProvider_->getPixmap(direction_, animationPhase);
-        }
-        else if(scaredState_ == ScaredState::SCARED_BLUE)
-        {
-            pixmap = &scaredGhostPixmapProvider_->getScaredBluePixmap(animationPhase);
-        }
-        else if(scaredState_ == ScaredState::SCARED_WHITE)
-        {
-            pixmap = &scaredGhostPixmapProvider_->getScaredWhitePixmap(animationPhase);
-        }
+        pixmap = &pixmapProvider_->getPixmap(direction_, animationPhase);
     }
-    catch(const std::exception& e)
+    else if(scaredState_ == ScaredState::SCARED_BLUE)
     {
-        qCritical() << "Error in paint: " << e.what();
+        pixmap = &scaredGhostPixmapProvider_->getScaredBluePixmap(animationPhase);
+    }
+    else if(scaredState_ == ScaredState::SCARED_WHITE)
+    {
+        pixmap = &scaredGhostPixmapProvider_->getScaredWhitePixmap(animationPhase);
     }
 
     drawPixmapAvoidingArtifacts(painter, pixmap);
