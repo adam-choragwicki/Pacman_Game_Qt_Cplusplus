@@ -5,7 +5,7 @@
 class BlueGhost : public AbstractGhost
 {
 public:
-    BlueGhost();
+    BlueGhost(std::shared_ptr<GhostPixmapProvider> pixmapProvider);
 
 private:
     inline static const std::array<QString, 6> IMAGES_URLS{":/ghosts/blue/ghost_blue_right_1.png", ":/ghosts/blue/ghost_blue_right_2.png", ":/ghosts/blue/ghost_blue_up_1.png", ":/ghosts/blue/ghost_blue_up_2.png",

@@ -1,15 +1,17 @@
 #pragma once
 
 #include "movable_character.h"
+#include "ghost_pixmap_provider.h"
 
 class GhostTimingManager;
+class AbstractPixmapProvider;
 
 class AbstractGhost : public MovableCharacter
 {
 Q_OBJECT
 
 public:
-    AbstractGhost(const Coordinates& coordinates, Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, const std::array<QString, 6>& imagesUrls);
+    AbstractGhost(const Coordinates& coordinates, Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, std::shared_ptr<GhostPixmapProvider> pixmapProvider);
     ~AbstractGhost() override = 0;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
@@ -31,8 +33,8 @@ protected:
     bool isSlowedDown_{};
 
 private:
-    static void initializeCommonPixmaps();
-    void initializePixmaps(const std::array<QString, 6>& imagesUrls);
+//    static void initializeCommonPixmaps();
+//    void initializePixmaps(const std::array<QString, 6>& imagesUrls);
 
     enum class ScaredState
     {
@@ -44,15 +46,18 @@ private:
     /* Set higher to make animation slower */
     static const int ANIMATION_SPEED_FACTOR = 30;
 
-    std::array<QPixmap, ANIMATION_PHASES_COUNT> leftPixmaps_;
-    std::array<QPixmap, ANIMATION_PHASES_COUNT> rightPixmaps_;
-    std::array<QPixmap, ANIMATION_PHASES_COUNT> upPixmaps_;
-    std::array<QPixmap, ANIMATION_PHASES_COUNT> downPixmaps_;
+//    std::array<QPixmap, ANIMATION_PHASES_COUNT> leftPixmaps_;
+//    std::array<QPixmap, ANIMATION_PHASES_COUNT> rightPixmaps_;
+//    std::array<QPixmap, ANIMATION_PHASES_COUNT> upPixmaps_;
+//    std::array<QPixmap, ANIMATION_PHASES_COUNT> downPixmaps_;
 
-    inline static std::unique_ptr<QPixmap> scaredBluePixmaps_[ANIMATION_PHASES_COUNT];
-    inline static std::unique_ptr<QPixmap> scaredWhitePixmaps_[ANIMATION_PHASES_COUNT];
+//    inline static std::unique_ptr<QPixmap> scaredBluePixmaps_[ANIMATION_PHASES_COUNT];
+//    inline static std::unique_ptr<QPixmap> scaredWhitePixmaps_[ANIMATION_PHASES_COUNT];
 
     std::unique_ptr<GhostTimingManager> ghostTimingManager_;
 
     inline static bool commonPixmapsInitialized_{};
+
+    std::shared_ptr<GhostPixmapProvider> pixmapProvider_;
+//    AbstractPixmapProvider* pixmapProvider_{};
 };

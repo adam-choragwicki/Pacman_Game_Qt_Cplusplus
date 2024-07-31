@@ -22,7 +22,8 @@
 #include "what_to_draw_manager.h"
 
 #include "graphics_scene.h"
-#include "pixmap_provider.h"
+#include "pacman_pixmap_provider.h"
+#include "ghost_pixmap_provider.h"
 
 class Model
 {
@@ -80,7 +81,8 @@ private:
 
     std::unique_ptr<PathPoints> pathPoints_;
 
-    std::unique_ptr<PixmapProvider> pixmapProvider_;
+    std::unique_ptr<PacmanPixmapProvider> pacmanPixmapProvider_;
+    std::shared_ptr<GhostPixmapProvider> ghostPixmapProvider_;
 
     std::unique_ptr<Pacman> pacman_;
     std::unique_ptr<BlueGhost> blueGhost_;

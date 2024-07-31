@@ -9,13 +9,14 @@ Model::Model()
 
     pathPoints_ = std::make_unique<PathPoints>();
 
-    pixmapProvider_ = std::make_unique<PixmapProvider>();
+    pacmanPixmapProvider_ = std::make_unique<PacmanPixmapProvider>();
+    ghostPixmapProvider_ = std::make_shared<GhostPixmapProvider>();
 
-    pacman_ = std::make_unique<Pacman>(pixmapProvider_.get());
-    blueGhost_ = std::make_unique<BlueGhost>();
-    orangeGhost_ = std::make_unique<OrangeGhost>();
-    purpleGhost_ = std::make_unique<PurpleGhost>();
-    redGhost_ = std::make_unique<RedGhost>();
+    pacman_ = std::make_unique<Pacman>(pacmanPixmapProvider_.get());
+    blueGhost_ = std::make_unique<BlueGhost>(ghostPixmapProvider_);
+    orangeGhost_ = std::make_unique<OrangeGhost>(ghostPixmapProvider_);
+    purpleGhost_ = std::make_unique<PurpleGhost>(ghostPixmapProvider_);
+    redGhost_ = std::make_unique<RedGhost>(ghostPixmapProvider_);
 
     scoreManager_ = std::make_unique<ScoreManager>();
     scoreDisplay_ = std::make_unique<ScoreDisplay>(*scoreManager_);

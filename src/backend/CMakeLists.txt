@@ -47,7 +47,7 @@ set(SOURCE_FILES
 
         pixmap_loader.h
         abstract_pixmap_provider.h
-        pixmap_manager.h pixmap_provider.cpp)
+        pixmap_manager.h pacman_pixmap_provider.cpp ghost_pixmap_provider.cpp ghost_pixmap_provider.h)
 
 # Create the backend library
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})

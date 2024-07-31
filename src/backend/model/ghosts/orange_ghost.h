@@ -5,7 +5,7 @@
 class OrangeGhost : public AbstractGhost
 {
 public:
-    OrangeGhost();
+    OrangeGhost(std::shared_ptr<GhostPixmapProvider> pixmapProvider);
 
 private:
     inline static const std::array<QString, 6> IMAGES_URLS{":/ghosts/orange/ghost_orange_right_1.png", ":/ghosts/orange/ghost_orange_right_2.png", ":/ghosts/orange/ghost_orange_up_1.png", ":/ghosts/orange/ghost_orange_up_2.png",

@@ -7,5 +7,5 @@ class AbstractPixmapProvider
 {
 public:
     virtual ~AbstractPixmapProvider() = default;
-    [[nodiscard]] virtual QPixmap getPixmap(Direction direction, int animationPhase) const = 0;
+    [[nodiscard]] virtual const QPixmap& getPixmap(Direction direction, int animationPhase) const = 0;
 };

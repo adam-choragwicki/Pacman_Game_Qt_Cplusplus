@@ -4,12 +4,12 @@
 #include <array>
 #include <vector>
 
-class PixmapProvider : public AbstractPixmapProvider
+class PacmanPixmapProvider : public AbstractPixmapProvider
 {
 public:
-    PixmapProvider();
+    PacmanPixmapProvider();
 
-    [[nodiscard]] QPixmap getPixmap(Direction direction, int animationPhase) const override;
+    [[nodiscard]] const QPixmap& getPixmap(Direction direction, int animationPhase) const override;
 
 private:
     void initializePixmaps();

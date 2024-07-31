@@ -1,14 +1,14 @@
-#include "pixmap_provider.h"
+#include "pacman_pixmap_provider.h"
 #include "pixmap_loader.h"
 #include "pixmap_manager.h"
 #include <QDebug>
 
-PixmapProvider::PixmapProvider()
+PacmanPixmapProvider::PacmanPixmapProvider()
 {
     initializePixmaps();
 }
 
-void PixmapProvider::initializePixmaps()
+void PacmanPixmapProvider::initializePixmaps()
 {
     const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{&rightPixmaps_[0], ":/pacman/pacman_right_close.png"},
                                                                   {&rightPixmaps_[1], ":/pacman/pacman_right_open_1.png"},
@@ -26,7 +26,7 @@ void PixmapProvider::initializePixmaps()
     }
 }
 
-QPixmap PixmapProvider::getPixmap(Direction direction, int animationPhase) const
+const QPixmap& PacmanPixmapProvider::getPixmap(Direction direction, int animationPhase) const
 {
     switch(direction)
     {
