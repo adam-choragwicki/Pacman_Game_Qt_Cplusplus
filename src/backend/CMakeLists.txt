@@ -50,7 +50,7 @@ set(SOURCE_FILES
 
         pixmap_providers/pacman_pixmap_provider.cpp pixmap_providers/pacman_pixmap_provider.h
         pixmap_providers/abstract_ghost_pixmap_provider.cpp pixmap_providers/abstract_ghost_pixmap_provider.h
-        pixmap_providers/scared_ghost_pixmap_provider.cpp pixmap_providers/scared_ghost_pixmap_provider.h pixmap_providers/red_ghost_pixmap_provider.cpp pixmap_providers/red_ghost_pixmap_provider.h pixmap_providers/purple_ghost_pixmap_provider.cpp pixmap_providers/purple_ghost_pixmap_provider.h pixmap_providers/blue_ghost_pixmap_provider.cpp pixmap_providers/blue_ghost_pixmap_provider.h pixmap_providers/orange_ghost_pixmap_provider.cpp pixmap_providers/orange_ghost_pixmap_provider.h)
+        pixmap_providers/red_ghost_pixmap_provider.cpp pixmap_providers/red_ghost_pixmap_provider.h pixmap_providers/purple_ghost_pixmap_provider.cpp pixmap_providers/purple_ghost_pixmap_provider.h pixmap_providers/blue_ghost_pixmap_provider.cpp pixmap_providers/blue_ghost_pixmap_provider.h pixmap_providers/orange_ghost_pixmap_provider.cpp pixmap_providers/orange_ghost_pixmap_provider.h)
 
 # Create the backend library
 add_library(lib${PROJECT_NAME}Backend ${SOURCE_FILES})

@@ -11,6 +11,12 @@ AbstractGhostPixmapProvider::AbstractGhostPixmapProvider(const std::array<QStrin
 
 void AbstractGhostPixmapProvider::initializePixmaps(const std::array<QString, 6>& imageUrls)
 {
+    if(!commonPixmapsInitialized_)
+    {
+        initializeCommonPixmaps();
+        commonPixmapsInitialized_ = true;
+    }
+
     const std::vector<PixmapLoader::PixmapEntry> pixmapEntries{{&rightPixmaps_[0], imageUrls.at(0)},
                                                                {&rightPixmaps_[1], imageUrls.at(1)},
 
@@ -53,4 +59,39 @@ const QPixmap& AbstractGhostPixmapProvider::getPixmap(Direction direction, int a
         default:
             throw std::invalid_argument("Invalid direction");
     }
+}
+
+void AbstractGhostPixmapProvider::initializeCommonPixmaps()
+{
+    scaredBluePixmaps_[0] = std::make_unique<QPixmap>();
+    scaredBluePixmaps_[1] = std::make_unique<QPixmap>();
+    scaredWhitePixmaps_[0] = std::make_unique<QPixmap>();
+    scaredWhitePixmaps_[1] = std::make_unique<QPixmap>();
+
+    const std::vector<PixmapLoader::PixmapEntry> pixmapEntries = {{scaredBluePixmaps_[0].get(),  ":/ghosts/scared_blue/ghost_scared_blue_1.png"},
+                                                                  {scaredBluePixmaps_[1].get(),  ":/ghosts/scared_blue/ghost_scared_blue_2.png"},
+                                                                  {scaredWhitePixmaps_[0].get(), ":/ghosts/scared_white/ghost_scared_white_1.png"},
+                                                                  {scaredWhitePixmaps_[1].get(), ":/ghosts/scared_white/ghost_scared_white_2.png"}};
+
+    PixmapLoader::loadPixmaps(pixmapEntries);
+}
+
+const QPixmap& AbstractGhostPixmapProvider::getScaredBluePixmap(int animationPhase) const
+{
+    if(animationPhase >= ANIMATION_PHASES_COUNT)
+    {
+        throw std::out_of_range("Invalid animation phase");
+    }
+
+    return *scaredBluePixmaps_[animationPhase];
+}
+
+const QPixmap& AbstractGhostPixmapProvider::getScaredWhitePixmap(int animationPhase) const
+{
+    if(animationPhase >= ANIMATION_PHASES_COUNT)
+    {
+        throw std::out_of_range("Invalid animation phase");
+    }
+
+    return *scaredWhitePixmaps_[animationPhase];
 }

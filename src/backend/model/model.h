@@ -25,7 +25,6 @@
 
 #include "pixmap_providers/pacman_pixmap_provider.h"
 #include "pixmap_providers/abstract_ghost_pixmap_provider.h"
-#include "pixmap_providers/scared_ghost_pixmap_provider.h"
 #include "pixmap_providers/blue_ghost_pixmap_provider.h"
 #include "pixmap_providers/orange_ghost_pixmap_provider.h"
 #include "pixmap_providers/purple_ghost_pixmap_provider.h"
@@ -93,8 +92,6 @@ private:
     std::unique_ptr<OrangeGhostPixmapProvider> orangeGhostPixmapProvider_;
     std::unique_ptr<PurpleGhostPixmapProvider> purpleGhostPixmapProvider_;
     std::unique_ptr<RedGhostPixmapProvider> redGhostPixmapProvider_;
-
-    std::shared_ptr<ScaredGhostPixmapProvider> scaredGhostPixmapProvider_;
 
     std::unique_ptr<Pacman> pacman_;
     std::unique_ptr<BlueGhost> blueGhost_;

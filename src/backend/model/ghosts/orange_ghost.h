@@ -7,7 +7,7 @@ class OrangeGhostPixmapProvider;
 class OrangeGhost : public AbstractGhost
 {
 public:
-    OrangeGhost(OrangeGhostPixmapProvider* pixmapProvider, ScaredGhostPixmapProvider* scaredGhostPixmapProvider);
+    OrangeGhost(OrangeGhostPixmapProvider* pixmapProvider);
 
 private:
     inline static constexpr std::chrono::seconds MOVE_OUT_OF_THE_STARTING_BOX_TIMEOUT{2};

@@ -2,12 +2,8 @@
 #include <QtGui/QPainter>
 #include "model/ghost_timing_manager.h"
 
-AbstractGhost::AbstractGhost(const Coordinates& coordinates,
-                             const Direction initialDirection,
-                             const std::chrono::seconds& moveOutOfTheStartingBoxTimeout,
-                             AbstractGhostPixmapProvider* pixmapProvider,
-                             ScaredGhostPixmapProvider* scaredGhostPixmapProvider) :
-        MovableCharacter(coordinates, initialDirection, ANIMATION_SPEED_FACTOR, ANIMATION_PHASES_COUNT), pixmapProvider_(pixmapProvider), scaredGhostPixmapProvider_(scaredGhostPixmapProvider)
+AbstractGhost::AbstractGhost(const Coordinates& coordinates, const Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, AbstractGhostPixmapProvider* pixmapProvider) :
+        MovableCharacter(coordinates, initialDirection, ANIMATION_SPEED_FACTOR, ANIMATION_PHASES_COUNT), pixmapProvider_(pixmapProvider)
 {
     ghostTimingManager_ = std::make_unique<GhostTimingManager>(moveOutOfTheStartingBoxTimeout);
 
@@ -49,11 +45,11 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     }
     else if(scaredState_ == ScaredState::SCARED_BLUE)
     {
-        pixmap = &scaredGhostPixmapProvider_->getScaredBluePixmap(animationPhase);
+        pixmap = &pixmapProvider_->getScaredBluePixmap(animationPhase);
     }
     else if(scaredState_ == ScaredState::SCARED_WHITE)
     {
-        pixmap = &scaredGhostPixmapProvider_->getScaredWhitePixmap(animationPhase);
+        pixmap = &pixmapProvider_->getScaredWhitePixmap(animationPhase);
     }
 
     drawPixmapAvoidingArtifacts(painter, pixmap);

@@ -7,7 +7,7 @@ class RedGhostPixmapProvider;
 class RedGhost : public AbstractGhost
 {
 public:
-    explicit RedGhost(RedGhostPixmapProvider* pixmapProvider, ScaredGhostPixmapProvider* scaredGhostPixmapProvider);
+    explicit RedGhost(RedGhostPixmapProvider* pixmapProvider);
 
 private:
     inline static constexpr std::chrono::seconds MOVE_OUT_OF_THE_STARTING_BOX_TIMEOUT{0};

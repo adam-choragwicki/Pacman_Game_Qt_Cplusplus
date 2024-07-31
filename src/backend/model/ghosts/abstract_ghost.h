@@ -2,7 +2,6 @@
 
 #include "movable_character.h"
 #include "pixmap_providers/abstract_ghost_pixmap_provider.h"
-#include "pixmap_providers/scared_ghost_pixmap_provider.h"
 
 class GhostTimingManager;
 
@@ -11,7 +10,7 @@ class AbstractGhost : public MovableCharacter
 Q_OBJECT
 
 public:
-    AbstractGhost(const Coordinates& coordinates, Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, AbstractGhostPixmapProvider* pixmapProvider, ScaredGhostPixmapProvider* scaredGhostPixmapProvider);
+    AbstractGhost(const Coordinates& coordinates, Direction initialDirection, const std::chrono::seconds& moveOutOfTheStartingBoxTimeout, AbstractGhostPixmapProvider* pixmapProvider);
     ~AbstractGhost() override = 0;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
@@ -46,5 +45,4 @@ private:
     std::unique_ptr<GhostTimingManager> ghostTimingManager_;
 
     AbstractGhostPixmapProvider* pixmapProvider_{};
-    ScaredGhostPixmapProvider* scaredGhostPixmapProvider_{};
 };
