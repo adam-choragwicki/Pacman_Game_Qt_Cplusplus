@@ -36,20 +36,23 @@ void AbstractGhost::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     CustomGraphicsItem::paint(painter, option, widget);
 
-    const QPixmap* pixmap{};
-    const int animationPhase = animationPhase_ % ANIMATION_PHASES_COUNT;
+    const QPixmap* pixmap;
 
     if(scaredState_ == ScaredState::NO_SCARED)
     {
-        pixmap = &pixmapProvider_->getPixmap(direction_, animationPhase);
+        pixmap = &pixmapProvider_->getPixmap(direction_, animationPhase_);
     }
     else if(scaredState_ == ScaredState::SCARED_BLUE)
     {
-        pixmap = &pixmapProvider_->getScaredBluePixmap(animationPhase);
+        pixmap = &pixmapProvider_->getScaredBluePixmap(animationPhase_);
     }
     else if(scaredState_ == ScaredState::SCARED_WHITE)
     {
-        pixmap = &pixmapProvider_->getScaredWhitePixmap(animationPhase);
+        pixmap = &pixmapProvider_->getScaredWhitePixmap(animationPhase_);
+    }
+    else
+    {
+        throw std::runtime_error("Cannot draw Ghost, wrong scared state");
     }
 
     drawPixmapAvoidingArtifacts(painter, pixmap);
