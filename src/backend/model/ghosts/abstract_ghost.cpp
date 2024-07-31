@@ -150,14 +150,10 @@ void AbstractGhost::setScared()
 
     connect(&ghostTimingManager_->getScaredBlueStateTimer(), &QTimer::timeout, [this]()
     {
-        qDebug() << "Scared blue state timeout";
-
         scaredState_ = ScaredState::SCARED_WHITE;
 
         connect(&ghostTimingManager_->getScaredWhiteStateTimer(), &QTimer::timeout, [this]()
         {
-            qDebug() << "Scared white state timeout";
-
             scaredState_ = ScaredState::NO_SCARED;
             isSlowedDown_ = false;
         });

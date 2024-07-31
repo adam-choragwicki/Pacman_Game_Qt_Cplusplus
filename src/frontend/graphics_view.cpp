@@ -61,21 +61,10 @@ void GraphicsView::updateFPS()
 
 bool GraphicsView::eventFilter(QObject* obj, QEvent* event)
 {
-    if(event->type() == QEvent::MouseMove)
+    if(event->type() == QEvent::Wheel)
     {
-        auto* mouseEvent = dynamic_cast<QMouseEvent*>(event);
-        QPointF mousePositionOnScene = mapToScene(mouseEvent->pos());
-        emit mousePositionChangedEvent(mousePositionOnScene);
-    }
-    else if(event->type() == QEvent::MouseButtonPress)
-    {
-        auto* mouseEvent = dynamic_cast<QMouseEvent*>(event);
-        QPointF mousePositionOnScene = mapToScene(mouseEvent->pos());
-
-        if(mouseEvent->button() == Qt::MouseButton::LeftButton)
-        {
-            emit mouseLeftButtonClicked(mousePositionOnScene);
-        }
+        /* Ignore mouse wheel events to disable scene scrolling */
+        return true;
     }
 
     return QGraphicsView::eventFilter(obj, event);
